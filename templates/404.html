@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Page Not Found - SpookyOctober{% endblock %}
+
+{% block content %}
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <div class="max-w-2xl mx-auto text-center">
+            <!-- Ghost Animation -->
+            <div class="text-9xl mb-6 animate-bounce">
+                👻
+            </div>
+
+            <!-- Error Message -->
+            <h1 class="text-6xl font-bold text-gray-900 mb-4">
+                404
+            </h1>
+            <h2 class="text-3xl font-bold text-orange-600 mb-6">
+                Boo! Page Not Found
+            </h2>
+            <p class="text-xl text-gray-600 mb-8">
+                This page must have been haunted away... or maybe it never existed in the first place!
+            </p>
+
+            <!-- Suggested Actions -->
+            <div class="space-y-4">
+                <p class="text-gray-700 font-medium">Here's what you can do:</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{% url 'core:home' %}" class="btn-primary text-lg px-8 py-3 inline-block">
+                        Go Home
+                    </a>
+                    <button onclick="history.back()" class="btn-secondary text-lg px-8 py-3">
+                        Go Back
+                    </button>
+                </div>
+            </div>
+
+            <!-- Additional Help -->
+            <div class="mt-12 card">
+                <h3 class="text-xl font-bold mb-4 text-gray-900">Looking for something specific?</h3>
+                <ul class="space-y-2 text-left">
+                    <li class="flex items-center">
+                        <span class="mr-2">🎃</span>
+                        <a href="{% url 'core:home' %}" class="text-orange-600 hover:underline">Browse Halloween Events</a>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="mr-2">👻</span>
+                        <a href="#" class="text-orange-600 hover:underline">Explore Haunted Places</a>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="mr-2">🎁</span>
+                        <a href="#" class="text-orange-600 hover:underline">Find Business Deals</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="flex items-center">
+                        <span class="mr-2">📊</span>
+                        <a href="{% url 'core:dashboard' %}" class="text-orange-600 hover:underline">View Your Dashboard</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+    .animate-bounce {
+        animation: bounce 2s infinite;
+    }
+</style>
+{% endblock %}
