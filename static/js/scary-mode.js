@@ -47,6 +47,14 @@ class ScaryModeEasterEgg {
     }
 
     init() {
+        // Only activate on home page
+        const isHomePage = window.location.pathname === '/' || window.location.pathname === '';
+
+        if (!isHomePage) {
+            console.log('🎃 Scary Mode: Not on home page, easter egg disabled');
+            return;
+        }
+
         // Set up keyboard listener for activation
         document.addEventListener('keydown', (e) => this.handleKeyPress(e));
 
