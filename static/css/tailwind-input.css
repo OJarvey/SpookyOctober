@@ -1,0 +1,33 @@
+/* Tailwind CSS Input File */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Halloween Theme */
+@layer base {
+  :root {
+    --color-pumpkin: #FF6600;
+    --color-midnight: #1a1a1a;
+    --color-purple: #6B2D6B;
+    --color-ghost: #f5f5f5;
+  }
+}
+
+/* Custom Components */
+@layer components {
+  .btn-primary {
+    @apply bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded transition duration-300;
+  }
+
+  .btn-secondary {
+    @apply bg-purple-800 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded transition duration-300;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-lg p-6;
+  }
+
+  .halloween-gradient {
+    @apply bg-gradient-to-r from-orange-600 via-purple-800 to-gray-900;
+  }
+}
