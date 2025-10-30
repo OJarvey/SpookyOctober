@@ -825,7 +825,7 @@ class ScaryModeEasterEgg {
         // Load 3D skull model from GLB file
         return new Promise((resolve, reject) => {
             const loader = new THREE.GLTFLoader();
-            const modelPath = '/static/models/human-skull/human-skull.glb';
+            const modelPath = '/static/models/low-poly-skull/low-poly-skull.glb';
 
             console.log('🦴 Loading skull model from:', modelPath);
 
