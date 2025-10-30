@@ -1,8 +1,142 @@
+"""
+Core URL Configuration for SpookyOctober
+
+This file defines all the URL patterns (routes) for the core app.
+
+For developers new to Django:
+---------------------------------
+URLs in Django work like a map - they connect web addresses (URLs) to view functions.
+
+Basic structure:
+    path('url-pattern/', view_function, name='url-name')
+
+Where:
+    - 'url-pattern/' = The URL users will visit (e.g., /login/)
+    - view_function = The Python function that handles this URL (defined in views.py)
+    - name='url-name' = A name you can use to reference this URL in templates
+
+Example:
+    path('login/', views.user_login, name='login')
+
+    This means:
+    - When someone visits /login/, Django calls the user_login() function
+    - In templates, you can use {% url 'core:login' %} to get this URL
+"""
+
 from django.urls import path
 from . import views
 
+# App name for namespacing URLs
+# This allows us to use 'core:home', 'core:login', etc. in templates
+# Namespacing prevents conflicts if multiple apps have URLs with the same name
 app_name = 'core'
 
 urlpatterns = [
+    #################################################################
+    # HOME PAGE
+    #################################################################
+    # URL: /
+    # View: views.home
+    # Template: templates/home.html
+    # Purpose: Landing page showing platform overview and statistics
     path('', views.home, name='home'),
+
+    #################################################################
+    # AUTHENTICATION URLS
+    #################################################################
+
+    # LOGIN
+    # URL: /login/
+    # View: views.user_login
+    # Template: templates/login.html
+    # Purpose: Display login form and process user authentication
+    # Handles both GET (show form) and POST (process login)
+    path('login/', views.user_login, name='login'),
+
+    # LOGOUT
+    # URL: /logout/
+    # View: views.user_logout
+    # Purpose: Log out the current user and redirect to home
+    # Requires user to be logged in (@login_required decorator)
+    path('logout/', views.user_logout, name='logout'),
+
+    #################################################################
+    # USER DASHBOARD
+    #################################################################
+    # URL: /dashboard/
+    # View: views.dashboard
+    # Template: templates/dashboard.html
+    # Purpose: Show technical statistics and user information
+    # Requires login - will redirect to login page if not authenticated
+    path('dashboard/', views.dashboard, name='dashboard'),
+
+    #################################################################
+    # FUTURE URLs (Coming in later sprints)
+    #################################################################
+    # These will be added as we develop more features:
+
+    # Sprint 2 (Location & Map):
+    # path('map/', views.map_view, name='map'),
+    # path('locations/', views.location_list, name='location_list'),
+    # path('locations/<int:location_id>/', views.location_detail, name='location_detail'),
+
+    # Sprint 3 (Events):
+    # path('events/', views.event_list, name='event_list'),
+    # path('events/create/', views.event_create, name='event_create'),
+    # path('events/<int:event_id>/', views.event_detail, name='event_detail'),
+    # path('events/<int:event_id>/edit/', views.event_edit, name='event_edit'),
+
+    # Sprint 4 (Haunted Places):
+    # path('haunted/', views.haunted_list, name='haunted_list'),
+    # path('haunted/<int:place_id>/', views.haunted_detail, name='haunted_detail'),
+
+    # Sprint 5 (Business & Coupons):
+    # path('businesses/', views.business_list, name='business_list'),
+    # path('coupons/', views.coupon_list, name='coupon_list'),
+
+    # Sprint 6 (Social Features):
+    # path('feed/', views.feed, name='feed'),
+    # path('profile/<int:user_id>/', views.profile, name='profile'),
 ]
+
+"""
+HOW TO ADD NEW URLs:
+--------------------
+1. Create a new view function in views.py
+2. Import it if needed (or use views.function_name)
+3. Add a new path() to this urlpatterns list
+4. Give it a descriptive name parameter
+5. Create the corresponding template in templates/
+
+Example of adding a new "about" page:
+
+In views.py:
+    def about(request):
+        return render(request, 'about.html')
+
+In this file:
+    path('about/', views.about, name='about'),
+
+In templates:
+    Create templates/about.html
+
+In other templates, link to it:
+    <a href="{% url 'core:about' %}">About Us</a>
+
+URL PATTERNS WITH PARAMETERS:
+-----------------------------
+You can capture parts of the URL as parameters:
+
+    path('event/<int:event_id>/', views.event_detail, name='event_detail')
+
+    - <int:event_id> captures an integer from the URL
+    - It gets passed to the view as: event_detail(request, event_id)
+    - Example URL: /event/123/ would pass event_id=123 to the view
+
+Common pattern types:
+    - <int:name> = captures an integer
+    - <str:name> = captures a string (default)
+    - <slug:name> = captures a slug (letters, numbers, hyphens, underscores)
+    - <uuid:name> = captures a UUID
+
+"""
