@@ -281,15 +281,15 @@ class MyForm(forms.ModelForm):
 ## Production Environment
 
 ### Deployed Application
-- **URL**: https://shriekedin-2f7f54251dfc.herokuapp.com
-- **Admin**: https://shriekedin-2f7f54251dfc.herokuapp.com/admin/
-- **GitHub**: https://github.com/Hackathon-Team13/ShriekedIn
+- **URL**: https://shriekedin-266a1e320857.herokuapp.com
+- **Admin**: https://shriekedin-266a1e320857.herokuapp.com/admin/
+- **GitHub**: https://github.com/Hackathon-Team13/SpookyOctober
 - **Project Board**: https://github.com/orgs/Hackathon-Team13/projects/1
 
 ### Environment Variables (Heroku)
 - `SECRET_KEY` - Django secret key
 - `DEBUG` - Should be False in production
-- `ALLOWED_HOSTS` - shriekedin-2f7f54251dfc.herokuapp.com
+- `ALLOWED_HOSTS` - shriekedin-266a1e320857.herokuapp.com
 - `DATABASE_URL` - Auto-set by Heroku PostgreSQL addon
 
 ## When In Doubt
