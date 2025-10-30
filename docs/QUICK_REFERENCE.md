@@ -1,5 +1,25 @@
 # Quick Reference
 
+## Python Version Management
+
+**Current Version**: Python 3.12.7
+
+**Using pyenv (Recommended)**:
+```bash
+# Install Python 3.12.7
+pyenv install 3.12.7
+
+# Set for this project
+pyenv local 3.12.7
+
+# Verify
+python --version
+```
+
+See [.python-version-info.md](../.python-version-info.md) for detailed setup instructions.
+
+---
+
 ## Project Structure (Planned)
 ```
 SpookyOctober/

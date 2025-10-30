@@ -20,6 +20,8 @@ Hackathon project - Started: October 2025
 - [ ] Testing & refinement
 
 ## Quick Links
+- [Sprint Roadmap](./SPRINT_ROADMAP.md) - **START HERE** for development planning
+- [Requirements Document](./halloween-urs-doc.md) - Full URS specifications
 - [Technical Stack Details](./TECH_STACK.md)
 - [Feature Specifications](./FEATURES.md)
 - [Development Log](./DEVELOPMENT_LOG.md)
