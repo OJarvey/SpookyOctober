@@ -54,7 +54,7 @@ run:
 	@echo "💡 Visit: http://localhost:8000/"
 	@echo "⚠️  Important: Use HTTP (not HTTPS)"
 	@echo ""
-	@python manage.py runserver
+	@python manage.py runserver localhost:8000
 
 install:
 	@echo "📦 Installing dependencies..."
