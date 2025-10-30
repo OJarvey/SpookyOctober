@@ -1,5 +1,6 @@
 # ShriekedIn
-Professional Halloween networking platform built with Django and PostgreSQL
+Professional Halloween networking platform built with Django and PostgreSQL.   
+### https://shriekedin-266a1e320857.herokuapp.com
 
 ## Tech Stack
 - Django 5.2.7
