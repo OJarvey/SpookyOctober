@@ -1,7 +1,7 @@
 {
-  "name": "spookyoctober",
+  "name": "shriekedin",
   "version": "1.0.0",
-  "description": "Halloween Community Platform",
+  "description": "Professional Halloween Networking Platform",
   "scripts": {
     "build:css": "npx tailwindcss -i ./static/css/tailwind-input.css -o ./static/css/tailwind-output.css --minify",
     "watch:css": "npx tailwindcss -i ./static/css/tailwind-input.css -o ./static/css/tailwind-output.css --watch"

@@ -1,4 +1,4 @@
-# SpookyOctober - Project Overview
+# ShriekedIn - Project Overview
 
 ## Project Type
 Halloween-themed hackathon project

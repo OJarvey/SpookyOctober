@@ -80,7 +80,7 @@ The Scary-Face Extrusion Easter Egg is a hidden, interactive 3D effect that tran
 ### File Structure
 
 ```
-SpookyOctober/
+ShriekedIn/
 ├── static/js/
 │   └── scary-mode.js              # Main Easter egg implementation
 ├── templates/
@@ -174,7 +174,7 @@ void main() {
 ## Usage Examples
 
 ### Basic Activation
-1. Navigate to any page on SpookyOctober
+1. Navigate to any page on ShriekedIn
 2. Type: `SCARY`
 3. Allow camera access when prompted
 4. Wait for model to load
@@ -338,6 +338,6 @@ Webcam → Browser (TensorFlow.js) → Three.js Rendering → Screen
 
 ## Conclusion
 
-The Scary Mode Easter Egg is a fully functional, privacy-respecting, client-side 3D face effect that adds a fun, spooky element to the SpookyOctober platform. It demonstrates advanced web technologies (TensorFlow.js, Three.js, WebGL) while maintaining performance and user privacy.
+The Scary Mode Easter Egg is a fully functional, privacy-respecting, client-side 3D face effect that adds a fun, spooky element to the ShriekedIn platform. It demonstrates advanced web technologies (TensorFlow.js, Three.js, WebGL) while maintaining performance and user privacy.
 
 **Try it yourself**: Type `SCARY` on any page! 👻🎃

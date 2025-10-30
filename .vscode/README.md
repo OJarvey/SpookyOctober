@@ -1,4 +1,4 @@
-# VSCode Configuration for SpookyOctober
+# VSCode Configuration for ShriekedIn
 
 This folder contains VSCode workspace settings optimized for Django + Tailwind CSS development.
 

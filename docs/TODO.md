@@ -1,4 +1,4 @@
-# TODO - SpookyOctober Hackathon
+# TODO - ShriekedIn Hackathon
 
 ## Phase 1: Initial Setup
 - [ ] Install Django: `pip install django psycopg2-binary python-decouple gunicorn whitenoise`

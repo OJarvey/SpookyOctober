@@ -1,5 +1,5 @@
-# SpookyOctober
-Halloween-themed hackathon project built with Django and PostgreSQL
+# ShriekedIn
+Professional Halloween networking platform built with Django and PostgreSQL
 
 ## Tech Stack
 - Django 5.2.7

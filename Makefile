@@ -1,7 +1,7 @@
 .PHONY: help setup run install migrate makemigrations createsuperuser shell test clean collectstatic check deploy-check css css-watch
 
 help:
-	@echo "SpookyOctober - Django Project Makefile"
+	@echo "ShriekedIn - Django Project Makefile"
 	@echo ""
 	@echo "Available commands:"
 	@echo "  make setup            - Initial project setup (first time only)"
@@ -21,7 +21,7 @@ help:
 	@echo ""
 
 setup:
-	@echo "🎃 Setting up SpookyOctober for the first time..."
+	@echo "🎃 Setting up ShriekedIn for the first time..."
 	@if [ ! -f .env ]; then \
 		echo "📝 Creating .env file..."; \
 		cp .env.example .env; \
@@ -49,7 +49,7 @@ run:
 		echo "⚠️  .env file not found! Run 'make setup' first."; \
 		exit 1; \
 	fi
-	@echo "🎃 Starting SpookyOctober development server..."
+	@echo "🎃 Starting ShriekedIn development server..."
 	@echo ""
 	@echo "💡 Visit: http://localhost:8000/"
 	@echo "⚠️  Important: Use HTTP (not HTTPS)"

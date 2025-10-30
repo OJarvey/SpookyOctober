@@ -1,5 +1,5 @@
 """
-ASGI config for spookyoctober project.
+ASGI config for ShriekedIn project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

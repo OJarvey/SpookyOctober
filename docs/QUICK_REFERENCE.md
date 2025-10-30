@@ -22,7 +22,7 @@ See [.python-version-info.md](../.python-version-info.md) for detailed setup ins
 
 ## Project Structure (Planned)
 ```
-SpookyOctober/
+ShriekedIn/
 ├── docs/                    # Project documentation
 ├── [project_name]/         # Django project directory
 │   ├── settings.py

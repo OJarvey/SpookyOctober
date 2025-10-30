@@ -1,5 +1,5 @@
 """
-Core Views for SpookyOctober Platform
+Core Views for ShriekedIn Platform
 
 This file contains all the main views for the core functionality:
 - Home page

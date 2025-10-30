@@ -1,4 +1,4 @@
-# Project Context: SpookyOctober
+# Project Context: ShriekedIn
 
 ## Core Principles
 - Use conventional commits taxonomy for commit messages (feat:, fix:, docs:, etc.)
@@ -15,7 +15,7 @@
 
 ## Project Structure
 ```
-SpookyOctober/
+ShriekedIn/
 ├── spookyoctober/      # Django project settings
 ├── core/               # Main app (auth, home views)
 ├── templates/          # Global templates (base.html, 404.html)
@@ -202,7 +202,7 @@ git commit -m "chore: update dependencies"
 
 ### Heroku
 ```bash
-heroku logs --tail --app spookyoctober    # View logs
+heroku logs --tail --app shriekedin    # View logs
 heroku run python manage.py migrate       # Run migrations on production
 heroku run python manage.py shell         # Production shell
 heroku config                             # View environment variables
@@ -241,7 +241,7 @@ def my_view(request):
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Page Title - SpookyOctober{% endblock %}
+{% block title %}Page Title - ShriekedIn{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
@@ -281,15 +281,15 @@ class MyForm(forms.ModelForm):
 ## Production Environment
 
 ### Deployed Application
-- **URL**: https://spookyoctober-2f7f54251dfc.herokuapp.com
-- **Admin**: https://spookyoctober-2f7f54251dfc.herokuapp.com/admin/
-- **GitHub**: https://github.com/Hackathon-Team13/SpookyOctober
+- **URL**: https://shriekedin-2f7f54251dfc.herokuapp.com
+- **Admin**: https://shriekedin-2f7f54251dfc.herokuapp.com/admin/
+- **GitHub**: https://github.com/Hackathon-Team13/ShriekedIn
 - **Project Board**: https://github.com/orgs/Hackathon-Team13/projects/1
 
 ### Environment Variables (Heroku)
 - `SECRET_KEY` - Django secret key
 - `DEBUG` - Should be False in production
-- `ALLOWED_HOSTS` - spookyoctober-2f7f54251dfc.herokuapp.com
+- `ALLOWED_HOSTS` - shriekedin-2f7f54251dfc.herokuapp.com
 - `DATABASE_URL` - Auto-set by Heroku PostgreSQL addon
 
 ## When In Doubt

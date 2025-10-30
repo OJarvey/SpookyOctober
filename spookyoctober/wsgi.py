@@ -1,5 +1,5 @@
 """
-WSGI config for spookyoctober project.
+WSGI config for ShriekedIn project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

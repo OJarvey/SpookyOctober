@@ -1,4 +1,4 @@
-# Beginner's Guide to Django - SpookyOctober Edition
+# Beginner's Guide to Django - ShriekedIn Edition
 
 ## Welcome! 👋
 
@@ -9,7 +9,7 @@ This guide is for developers who are new to Django, especially those coming from
 ## 📁 Project Structure Explained
 
 ```
-SpookyOctober/
+ShriekedIn/
 ├── manage.py              # Command-line utility (like package.json scripts)
 ├── .env                   # Environment variables (SECRET_KEY, DEBUG, etc.)
 ├── requirements.txt       # Python dependencies (like package.json)

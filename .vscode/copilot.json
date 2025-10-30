@@ -10,7 +10,7 @@
   "chat": {
     "context": {
       "instructions": [
-        "# Project: SpookyOctober - Halloween Community Events Platform",
+        "# Project: ShriekedIn - Professional Halloween Networking Platform",
         "",
         "## Tech Stack",
         "- Backend: Django 5.2.7 with PostgreSQL",
