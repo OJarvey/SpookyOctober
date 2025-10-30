@@ -80,7 +80,7 @@
 
     // IntelliSense
     "editor.suggestSelection": "first",
-    "editor.wordBasedSuggestions": true,
+    "editor.wordBasedSuggestions": "matchingDocuments",
 
     // Django Template Syntax Highlighting
     "[django-html]": {
