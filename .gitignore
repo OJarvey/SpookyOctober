@@ -63,6 +63,11 @@ db.sqlite3-journal
 staticfiles/
 media/
 
+# Node / NPM
+node_modules/
+package-lock.json
+npm-debug.log
+
 # Flask stuff:
 instance/
 .webassets-cache

@@ -1,4 +1,4 @@
-.PHONY: help setup run install migrate makemigrations createsuperuser shell test clean collectstatic check deploy-check
+.PHONY: help setup run install migrate makemigrations createsuperuser shell test clean collectstatic check deploy-check css css-watch
 
 help:
 	@echo "SpookyOctober - Django Project Makefile"
@@ -14,6 +14,8 @@ help:
 	@echo "  make test             - Run tests"
 	@echo "  make check            - Run Django system checks"
 	@echo "  make collectstatic    - Collect static files"
+	@echo "  make css              - Build Tailwind CSS"
+	@echo "  make css-watch        - Watch and rebuild Tailwind CSS on changes"
 	@echo "  make clean            - Remove Python cache files and SQLite db"
 	@echo "  make deploy-check     - Verify Heroku deployment readiness"
 	@echo ""
@@ -27,8 +29,12 @@ setup:
 	else \
 		echo "✅ .env file already exists"; \
 	fi
-	@echo "📦 Installing dependencies..."
+	@echo "📦 Installing Python dependencies..."
 	@pip install -r requirements.txt
+	@echo "📦 Installing Node dependencies..."
+	@npm install
+	@echo "🎨 Building Tailwind CSS..."
+	@npm run build:css
 	@echo "🗄️  Running migrations..."
 	@python manage.py migrate
 	@echo "📦 Collecting static files..."
@@ -81,6 +87,14 @@ check:
 collectstatic:
 	@echo "📦 Collecting static files..."
 	python manage.py collectstatic --noinput
+
+css:
+	@echo "🎨 Building Tailwind CSS..."
+	npm run build:css
+
+css-watch:
+	@echo "👀 Watching Tailwind CSS for changes..."
+	npm run watch:css
 
 clean:
 	@echo "🧹 Cleaning up..."
