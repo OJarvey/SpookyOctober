@@ -1,0 +1,21 @@
+{
+    "recommendations": [
+        // Python & Django
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "batisteo.vscode-django",
+
+        // Tailwind CSS
+        "bradlc.vscode-tailwindcss",
+
+        // HTML/CSS
+        "ecmel.vscode-html-css",
+
+        // Git
+        "eamodio.gitlens",
+
+        // General Productivity
+        "usernamehw.errorlens",
+        "streetsidesoftware.code-spell-checker"
+    ]
+}
