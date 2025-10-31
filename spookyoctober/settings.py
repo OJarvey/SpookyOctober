@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "cookie_consent",
     # Local apps
     "core",
+    "games",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# Development-only: Auto-reload browser on file changes
+if DEBUG:
+    INSTALLED_APPS.insert(0, "django_browser_reload")
+    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 
 ROOT_URLCONF = "spookyoctober.urls"
 

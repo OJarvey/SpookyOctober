@@ -156,9 +156,15 @@ dev:
 	@djlint templates/ --check || true
 	@echo ""
 	@echo "=================================================="
-	@echo "🚀 Starting services:"
+	@echo "🚀 Starting services with LIVE RELOAD:"
 	@echo "  • Django dev server on http://127.0.0.1:8000/"
 	@echo "  • Tailwind CSS watcher (auto-rebuilds on changes)"
+	@echo "  • Browser auto-reload (on Python/template/static changes)"
+	@echo ""
+	@echo "✨ Features:"
+	@echo "  • 🔄 Browser refreshes automatically when files change"
+	@echo "  • 🎨 CSS updates without manual refresh"
+	@echo "  • 📄 Template changes reload instantly"
 	@echo ""
 	@echo "💡 Tip: Use http://127.0.0.1:8000/ (not localhost)"
 	@echo "💡 Press Ctrl+C to stop all services"
@@ -169,7 +175,7 @@ dev:
 	TAILWIND_PID=$$!; \
 	echo "✅ Tailwind CSS watcher started (PID: $$TAILWIND_PID)"; \
 	sleep 1; \
-	echo "✅ Django dev server starting..."; \
+	echo "✅ Django dev server starting with live reload enabled..."; \
 	echo ""; \
 	python manage.py runserver 127.0.0.1:8000; \
 	wait

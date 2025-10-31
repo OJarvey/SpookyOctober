@@ -191,15 +191,32 @@ textarea:focus,
 /**
  * Ensure links are distinguishable from regular text
  * Don't rely on color alone (WCAG 1.4.1)
+ * Only apply to paragraph/body text links
  */
-a:not(.btn-primary):not(.btn-secondary):not(.skip-link) {
+p a,
+li a:not([class*="btn"]),
+td a:not([class*="btn"]) {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
 }
 
-a:not(.btn-primary):not(.btn-secondary):not(.skip-link):hover {
+p a:hover,
+li a:not([class*="btn"]):hover,
+td a:not([class*="btn"]):hover {
     text-decoration-thickness: 2px;
+}
+
+/**
+ * Card and button-styled links - no underline
+ */
+.card a,
+a[class*="btn"],
+a[class*="bg-"],
+a[class*="border-"],
+a[class*="shadow"],
+a[class*="rounded"] {
+    text-decoration: none;
 }
 
 /**

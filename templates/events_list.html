@@ -43,7 +43,10 @@
                 <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
                     <h2 id="events-search-heading" class="text-2xl font-bold text-gray-800">🔍 Find Your Event</h2>
 
-                    <form role="search" method="GET" action="{% url 'core:events_list' %}" class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                    <form role="search"
+                          method="GET"
+                          action="{% url 'core:events_list' %}"
+                          class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                         <!-- Search input -->
                         <label for="events-search-input" class="sr-only">Search for events</label>
                         <input type="text"
@@ -94,7 +97,8 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
                 {% for event in events %}
                     {% cycle 'from-orange-500 to-red-600' 'from-purple-600 to-pink-600' 'from-orange-600 to-purple-700' 'from-red-600 to-orange-500' 'from-purple-700 to-indigo-600' 'from-pink-600 to-orange-500' as gradient silent %}
-                    <article class="event-card bg-white rounded-lg shadow-lg overflow-hidden border-2 border-purple-200" aria-labelledby="event-{{ event.id }}-title">
+                    <article class="event-card bg-white rounded-lg shadow-lg overflow-hidden border-2 border-purple-200"
+                             aria-labelledby="event-{{ event.id }}-title">
 
                         <!-- Event Image/Gradient Placeholder -->
                         <div class="relative w-full h-48 bg-gradient-to-br {{ gradient }} flex items-center justify-center" aria-hidden="true">

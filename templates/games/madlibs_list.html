@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Choose Your Mad Libs Story - ShriekedIn{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="halloween-gradient py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">📚 Choose Your Story 📚</h1>
+            <p class="text-xl md:text-2xl text-orange-200 mb-8">Pick a spooky template and fill in the blanks!</p>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-4 py-12">
+        <!-- Filter Section -->
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Filter by Difficulty:</h2>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="{% url 'games:madlibs_list' %}"
+                   class="px-6 py-2 rounded {% if not selected_difficulty %}bg-purple-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+                    All Stories
+                </a>
+                <a href="{% url 'games:madlibs_list' %}?difficulty=easy"
+                   class="px-6 py-2 rounded {% if selected_difficulty == 'easy' %}bg-green-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+                    Easy (5 blanks)
+                </a>
+                <a href="{% url 'games:madlibs_list' %}?difficulty=medium"
+                   class="px-6 py-2 rounded {% if selected_difficulty == 'medium' %}bg-orange-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+                    Medium (10 blanks)
+                </a>
+                <a href="{% url 'games:madlibs_list' %}?difficulty=hard"
+                   class="px-6 py-2 rounded {% if selected_difficulty == 'hard' %}bg-red-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+                    Hard (15+ blanks)
+                </a>
+            </div>
+        </div>
+
+        <!-- Templates Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for template in templates %}
+                <article class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-purple-200 hover:shadow-xl transition duration-300">
+                    <!-- Difficulty Badge -->
+                    <div class="{% if template.difficulty == 'easy' %}bg-green-500{% elif template.difficulty == 'medium' %}bg-orange-500{% else %}bg-red-500{% endif %} text-white px-4 py-2 text-center font-bold">
+                        {{ template.get_difficulty_display }}
+                    </div>
+
+                    <!-- Template Icon -->
+                    <div class="bg-purple-700 p-8 text-center text-white">
+                        <div class="text-5xl mb-2">
+                            {% if 'Poe' in template.author %}
+                                🖋️
+                            {% elif 'Ghost' in template.title %}
+                                👻
+                            {% elif 'Witch' in template.title %}
+                                🧙‍♀️
+                            {% elif 'Graveyard' in template.title %}
+                                ⚰️
+                            {% else %}
+                                🎃
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Template Info -->
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-purple-900 mb-2">{{ template.title }}</h3>
+                        <p class="text-gray-600 mb-4">
+                            <span class="font-semibold">By:</span> {{ template.author }}
+                        </p>
+
+                        <!-- Stats -->
+                        <div class="flex items-center justify-between mb-4 text-sm text-gray-600">
+                            <span>📝 {{ template.word_count }} blanks</span>
+                            <span>
+                                {% if template.difficulty == 'easy' %}
+                                    ⭐
+                                {% elif template.difficulty == 'medium' %}
+                                    ⭐⭐
+                                {% else %}
+                                    ⭐⭐⭐
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <!-- Preview Text -->
+                        {% if template.original_text %}
+                            <div class="bg-gray-50 p-3 rounded mb-4 text-sm text-gray-700 italic">
+                                "{{ template.original_text|truncatewords:15 }}..."
+                            </div>
+                        {% endif %}
+
+                        <!-- Play Button -->
+                        <a href="{% url 'games:madlibs_play' template.id %}" class="block w-full text-center btn-primary py-3">
+                            Play This Story →
+                        </a>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="col-span-full text-center py-12">
+                    <div class="text-6xl mb-4">📚</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">No Stories Found</h3>
+                    <p class="text-gray-600 mb-4">Try selecting a different difficulty level.</p>
+                    <a href="{% url 'games:madlibs_list' %}" class="btn-primary inline-block">Show All Stories</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Back Button -->
+        <div class="mt-12 text-center">
+            <a href="{% url 'games:games_home' %}" class="btn-secondary inline-block px-8 py-3">← Back to Games</a>
+        </div>
+    </div>
+
+{% endblock %}

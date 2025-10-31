@@ -51,6 +51,13 @@ urlpatterns = [
     path("cookies/", include("cookie_consent.urls")),
 
     #################################################################
+    # GAMES APP (Mad Libs and Halloween Games)
+    #################################################################
+    # Halloween-themed educational games
+    # Provides: /games/, /games/madlibs/, etc.
+    path("games/", include("games.urls")),
+
+    #################################################################
     # FUTURE APP URLs (to be added in later sprints)
     #################################################################
     # As we build more features, we'll add more apps here:
@@ -74,6 +81,11 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     # Media files will be added when we implement image uploads:
     # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # Auto-reload browser on file changes (development only)
+    urlpatterns = [
+        path("__reload__/", include("django_browser_reload.urls")),
+    ] + urlpatterns
 
 #################################################################
 # CUSTOM ERROR HANDLERS
