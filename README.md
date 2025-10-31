@@ -1,6 +1,8 @@
 # ShriekedIn
-Professional Halloween networking platform built with Django and PostgreSQL.   
-### https://shriekedin-266a1e320857.herokuapp.com
+Professional Halloween networking platform built with Django and PostgreSQL.
+
+**Live Site:** [https://shriekedin.uk](https://shriekedin.uk) | [https://www.shriekedin.uk](https://www.shriekedin.uk)
+**Heroku App:** https://spookyoctober-2f7f54251dfc.herokuapp.com
 
 ## Tech Stack
 - Django 5.2.7

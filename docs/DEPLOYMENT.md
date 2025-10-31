@@ -21,8 +21,28 @@ heroku addons:create heroku-postgresql:essential-0
 ```bash
 heroku config:set SECRET_KEY='your-secret-key'
 heroku config:set DEBUG=False
-heroku config:set ALLOWED_HOSTS='.herokuapp.com'
+heroku config:set ALLOWED_HOSTS='shriekedin.uk,www.shriekedin.uk,spookyoctober-2f7f54251dfc.herokuapp.com'
 ```
+
+**Note:** ALLOWED_HOSTS should include:
+- Your custom domain (shriekedin.uk)
+- The www subdomain (www.shriekedin.uk)
+- Your Heroku app domain (*.herokuapp.com)
+
+### 4. Configure Custom Domain (Optional)
+```bash
+# Add custom domains to Heroku
+heroku domains:add shriekedin.uk
+heroku domains:add www.shriekedin.uk
+
+# View DNS configuration instructions
+heroku domains
+```
+
+**DNS Configuration:**
+- Create an ALIAS/ANAME record for `shriekedin.uk` pointing to your Heroku app
+- Create a CNAME record for `www.shriekedin.uk` pointing to your Heroku app
+- Heroku will provide the specific DNS target when you run `heroku domains`
 
 ## Required Files
 
