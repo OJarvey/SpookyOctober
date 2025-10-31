@@ -7,11 +7,13 @@
         .event-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .event-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
     </style>
+
 {% endblock %}
 
 {% block content %}
@@ -85,7 +87,7 @@
         {% if events %}
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
                 {% for event in events %}
-                    {% cycle 'from-orange-500 to-red-600' 'from-purple-600 to-pink-600' 'from-orange-600 to-purple-700' 'from-red-600 to-orange-500' 'from-purple-700 to-indigo-600' 'from-pink-600 to-orange-500' as gradient %}
+                    {% cycle 'from-orange-500 to-red-600' 'from-purple-600 to-pink-600' 'from-orange-600 to-purple-700' 'from-red-600 to-orange-500' 'from-purple-700 to-indigo-600' 'from-pink-600 to-orange-500' as gradient silent %}
                     <div class="event-card bg-white rounded-lg shadow-lg overflow-hidden border-2 border-purple-200">
                         <!-- Event Header -->
                         <div class="bg-gradient-to-r {{ gradient }} text-white p-5">
@@ -201,4 +203,5 @@
             });
         });
     </script>
+
 {% endblock %}

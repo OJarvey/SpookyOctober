@@ -15,7 +15,7 @@
             <!-- Quick Actions Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <!-- Events Management -->
-                <div class="card bg-gradient-to-br from-orange-500 to-orange-600 text-white hover:shadow-xl transition-shadow duration-300">
+                <div class="card bg-orange-600 text-white hover:shadow-xl transition-shadow duration-300">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-2xl font-bold">Events</h3>
                         <div class="text-4xl">🎃</div>
@@ -27,20 +27,20 @@
                             📋 View All Events
                         </a>
                         {% if user.is_staff %}
-                        <a href="/admin/core/event/add/"
-                           class="block w-full text-center bg-orange-700 text-white px-4 py-2 rounded-lg hover:bg-orange-800 transition duration-300 font-semibold">
-                            ➕ Add New Event
-                        </a>
-                        <a href="/admin/core/event/"
-                           class="block w-full text-center bg-orange-800 text-white px-4 py-2 rounded-lg hover:bg-orange-900 transition duration-300">
-                            ✏️ Manage in Admin
-                        </a>
+                            <a href="/admin/core/event/add/"
+                               class="block w-full text-center bg-orange-700 text-white px-4 py-2 rounded-lg hover:bg-orange-800 transition duration-300 font-semibold">
+                                ➕ Add New Event
+                            </a>
+                            <a href="/admin/core/event/"
+                               class="block w-full text-center bg-orange-800 text-white px-4 py-2 rounded-lg hover:bg-orange-900 transition duration-300">
+                                ✏️ Manage in Admin
+                            </a>
                         {% endif %}
                     </div>
                 </div>
 
                 <!-- Haunted Places Management -->
-                <div class="card bg-gradient-to-br from-purple-500 to-purple-600 text-white hover:shadow-xl transition-shadow duration-300">
+                <div class="card bg-purple-600 text-white hover:shadow-xl transition-shadow duration-300">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-2xl font-bold">Haunted Places</h3>
                         <div class="text-4xl">👻</div>
@@ -52,20 +52,20 @@
                             📋 View All Places
                         </a>
                         {% if user.is_staff %}
-                        <a href="/admin/core/hauntedplace/add/"
-                           class="block w-full text-center bg-purple-700 text-white px-4 py-2 rounded-lg hover:bg-purple-800 transition duration-300 font-semibold">
-                            ➕ Add New Place
-                        </a>
-                        <a href="/admin/core/hauntedplace/"
-                           class="block w-full text-center bg-purple-800 text-white px-4 py-2 rounded-lg hover:bg-purple-900 transition duration-300">
-                            ✏️ Manage in Admin
-                        </a>
+                            <a href="/admin/core/hauntedplace/add/"
+                               class="block w-full text-center bg-purple-700 text-white px-4 py-2 rounded-lg hover:bg-purple-800 transition duration-300 font-semibold">
+                                ➕ Add New Place
+                            </a>
+                            <a href="/admin/core/hauntedplace/"
+                               class="block w-full text-center bg-purple-800 text-white px-4 py-2 rounded-lg hover:bg-purple-900 transition duration-300">
+                                ✏️ Manage in Admin
+                            </a>
                         {% endif %}
                     </div>
                 </div>
 
                 <!-- Businesses Management -->
-                <div class="card bg-gradient-to-br from-gray-700 to-gray-900 text-white hover:shadow-xl transition-shadow duration-300">
+                <div class="card bg-gray-800 text-white hover:shadow-xl transition-shadow duration-300">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-2xl font-bold">Businesses</h3>
                         <div class="text-4xl">🏪</div>
@@ -77,14 +77,14 @@
                             📋 View All Businesses
                         </a>
                         {% if user.is_staff %}
-                        <a href="/admin/core/business/add/"
-                           class="block w-full text-center bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300 font-semibold">
-                            ➕ Add New Business
-                        </a>
-                        <a href="/admin/core/business/"
-                           class="block w-full text-center bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition duration-300">
-                            ✏️ Manage in Admin
-                        </a>
+                            <a href="/admin/core/business/add/"
+                               class="block w-full text-center bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300 font-semibold">
+                                ➕ Add New Business
+                            </a>
+                            <a href="/admin/core/business/"
+                               class="block w-full text-center bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition duration-300">
+                                ✏️ Manage in Admin
+                            </a>
                         {% endif %}
                     </div>
                 </div>
@@ -135,85 +135,84 @@
 
             <!-- Additional Management Options -->
             {% if user.is_staff %}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <!-- Locations Management -->
-                <div class="card">
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                        <span class="mr-2">📍</span> Locations
-                    </h3>
-                    <p class="text-gray-600 mb-4">Manage geographic locations for events and places</p>
-                    <div class="space-y-2">
-                        <a href="/admin/core/location/"
-                           class="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                            Manage Locations
-                        </a>
-                        <a href="/admin/core/location/add/"
-                           class="block w-full text-center bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">
-                            Add New Location
-                        </a>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Locations Management -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                            <span class="mr-2">📍</span> Locations
+                        </h3>
+                        <p class="text-gray-600 mb-4">Manage geographic locations for events and places</p>
+                        <div class="space-y-2">
+                            <a href="/admin/core/location/"
+                               class="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                Manage Locations
+                            </a>
+                            <a href="/admin/core/location/add/"
+                               class="block w-full text-center bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+                                Add New Location
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Coupons Management -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                            <span class="mr-2">🎟️</span> Coupons & Offers
+                        </h3>
+                        <p class="text-gray-600 mb-4">Create promotional offers and discount codes</p>
+                        <div class="space-y-2">
+                            <a href="/admin/core/coupon/"
+                               class="block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300">
+                                Manage Coupons
+                            </a>
+                            <a href="/admin/core/coupon/add/"
+                               class="block w-full text-center bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+                                Add New Coupon
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Coupons Management -->
-                <div class="card">
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                        <span class="mr-2">🎟️</span> Coupons & Offers
-                    </h3>
-                    <p class="text-gray-600 mb-4">Create promotional offers and discount codes</p>
-                    <div class="space-y-2">
-                        <a href="/admin/core/coupon/"
-                           class="block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300">
-                            Manage Coupons
-                        </a>
-                        <a href="/admin/core/coupon/add/"
-                           class="block w-full text-center bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">
-                            Add New Coupon
+                <!-- Admin Panel Access -->
+                <div class="card bg-gradient-to-r from-red-900 to-orange-900 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">🎃 Full Admin Panel</h3>
+                            <p class="text-sm opacity-90">Access the complete Django admin interface with all management tools</p>
+                        </div>
+                        <a href="/admin/" class="bg-white text-red-900 px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300 font-bold">
+                            Open Admin →
                         </a>
                     </div>
                 </div>
-            </div>
-
-            <!-- Admin Panel Access -->
-            <div class="card bg-gradient-to-r from-red-900 to-orange-900 text-white">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-2">🎃 Full Admin Panel</h3>
-                        <p class="text-sm opacity-90">Access the complete Django admin interface with all management tools</p>
-                    </div>
-                    <a href="/admin/"
-                       class="bg-white text-red-900 px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300 font-bold">
-                        Open Admin →
-                    </a>
-                </div>
-            </div>
             {% endif %}
 
             <!-- User Activity Section -->
             {% if not user.is_staff %}
-            <div class="card bg-gray-50">
-                <h2 class="text-2xl font-bold mb-4 text-gray-900 flex items-center">
-                    <span class="mr-2">📊</span> Your Activity
-                </h2>
-                <div class="text-center py-12 text-gray-500">
-                    <div class="text-6xl mb-4">🎃</div>
-                    <p class="text-lg font-semibold">Explore Halloween content</p>
-                    <p class="text-sm mt-2 mb-6">Browse events, haunted places, and businesses to get started!</p>
-                    <div class="flex flex-wrap gap-4 justify-center">
-                        <a href="{% url 'core:events_list' %}"
-                           class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition duration-300 font-semibold">
-                            Browse Events
-                        </a>
-                        <a href="{% url 'core:haunted_places' %}"
-                           class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-300 font-semibold">
-                            Explore Haunted Places
-                        </a>
-                        <a href="{% url 'core:businesses_list' %}"
-                           class="bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition duration-300 font-semibold">
-                            Find Businesses
-                        </a>
+                <div class="card bg-gray-50">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900 flex items-center">
+                        <span class="mr-2">📊</span> Your Activity
+                    </h2>
+                    <div class="text-center py-12 text-gray-500">
+                        <div class="text-6xl mb-4">🎃</div>
+                        <p class="text-lg font-semibold">Explore Halloween content</p>
+                        <p class="text-sm mt-2 mb-6">Browse events, haunted places, and businesses to get started!</p>
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            <a href="{% url 'core:events_list' %}"
+                               class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition duration-300 font-semibold">
+                                Browse Events
+                            </a>
+                            <a href="{% url 'core:haunted_places' %}"
+                               class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-300 font-semibold">
+                                Explore Haunted Places
+                            </a>
+                            <a href="{% url 'core:businesses_list' %}"
+                               class="bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition duration-300 font-semibold">
+                                Find Businesses
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endif %}
 
         </div>
