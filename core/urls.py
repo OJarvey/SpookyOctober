@@ -85,6 +85,13 @@ urlpatterns = [
     # Purpose: Display Privacy Policy (GDPR compliant with Halloween theme)
     path('privacy/', views.privacy, name='privacy'),
 
+    # COOKIE SETTINGS
+    # URL: /cookie-settings/
+    # View: views.cookie_settings
+    # Template: templates/cookie_settings.html
+    # Purpose: Allow users to manage cookie preferences
+    path('cookie-settings/', views.cookie_settings, name='cookie_settings'),
+
     #################################################################
     # HAUNTED PLACES
     #################################################################

@@ -390,6 +390,19 @@ def privacy(request):
     return render(request, 'privacy.html')
 
 
+def cookie_settings(request):
+    """
+    Cookie Settings Page
+
+    Allows users to manage their cookie preferences and consent choices.
+    Users can accept or decline different categories of cookies.
+
+    Template: templates/cookie_settings.html
+    URL: /cookie-settings/
+    """
+    return render(request, 'cookie_settings.html')
+
+
 # Custom 404 error handler
 def custom_404(request, exception=None):
     """

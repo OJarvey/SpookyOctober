@@ -1,170 +1,187 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ShriekedIn - Professional Halloween Networking{% endblock %}</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
 
-    <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="{% static 'css/tailwind-output.css' %}">
+            {% block title %}ShriekedIn - Professional Halloween Networking{% endblock %}
+        </title>
 
-    <!-- Google Fonts for Halloween Theme -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+        <!-- Tailwind CSS -->
+        <link rel="stylesheet" href="{% static 'css/tailwind-output.css' %}">
 
-    <!-- Three.js for 3D effects (using r140 for legacy loader support) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <!-- Google Fonts for Halloween Theme -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 
-    <!-- Three.js GLTFLoader for loading 3D models -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <!-- Three.js for 3D effects (using r140 for legacy loader support) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- html2canvas for viewport capture -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <!-- Three.js GLTFLoader for loading 3D models -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
-    {% block extra_css %}{% endblock %}
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
+        <!-- html2canvas for viewport capture -->
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-    <!-- Cookie Consent Banner -->
-    {% include 'cookie_consent/cookiebar.html' %}
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body class="bg-gray-50 min-h-screen flex flex-col">
 
-    <!-- Navigation Bar -->
-    <nav class="bg-gradient-to-r from-orange-600 via-purple-800 to-gray-900 text-white shadow-lg">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
+        <!-- Cookie Consent Banner -->
+        {% include 'cookie_consent/cookiebar.html' %}
 
-                <!-- Logo / Brand -->
-                <div class="flex items-center space-x-2">
-                    <span class="text-3xl">🎃</span>
-                    <a href="{% url 'core:home' %}" class="text-2xl font-bold hover:text-orange-300 transition duration-300">
-                        ShriekedIn
-                    </a>
+
+        <!-- Navigation Bar -->
+        <nav class="bg-gradient-to-r from-orange-600 via-purple-800 to-gray-900 text-white shadow-lg">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center py-4">
+
+                    <!-- Logo / Brand -->
+                    <div class="flex items-center space-x-2">
+                        <span class="text-3xl">🎃</span>
+                        <a href="{% url 'core:home' %}" class="text-2xl font-bold hover:text-orange-300 transition duration-300">ShriekedIn</a>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Desktop Navigation Links -->
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="{% url 'core:home' %}" class="hover:text-orange-300 transition duration-300">Home</a>
+                        <a href="#events" class="hover:text-orange-300 transition duration-300">Events</a>
+                        <a href="{% url 'core:haunted_places' %}" class="hover:text-orange-300 transition duration-300">Haunted Places</a>
+                        <a href="#businesses" class="hover:text-orange-300 transition duration-300">Businesses</a>
+
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'core:dashboard' %}" class="hover:text-orange-300 transition duration-300">Dashboard</a>
+                            <span class="text-orange-300">👻 {{ user.username }}</span>
+                            <a href="{% url 'core:logout' %}" class="btn-secondary">Logout</a>
+                        {% else %}
+                            <a href="{% url 'core:login' %}" class="btn-primary">Login</a>
+                        {% endif %}
+                    </div>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <!-- Mobile Menu (Hidden by default) -->
+                <div id="mobile-menu" class="hidden md:hidden pb-4">
+                    <div class="flex flex-col space-y-2">
+                        <a href="{% url 'core:home' %}" class="hover:text-orange-300 transition duration-300 py-2">Home</a>
+                        <a href="#events" class="hover:text-orange-300 transition duration-300 py-2">Events</a>
+                        <a href="{% url 'core:haunted_places' %}" class="hover:text-orange-300 transition duration-300 py-2">Haunted Places</a>
+                        <a href="#businesses" class="hover:text-orange-300 transition duration-300 py-2">Businesses</a>
 
-                <!-- Desktop Navigation Links -->
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="{% url 'core:home' %}" class="hover:text-orange-300 transition duration-300">Home</a>
-                    <a href="#events" class="hover:text-orange-300 transition duration-300">Events</a>
-                    <a href="{% url 'core:haunted_places' %}" class="hover:text-orange-300 transition duration-300">Haunted Places</a>
-                    <a href="#businesses" class="hover:text-orange-300 transition duration-300">Businesses</a>
-
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'core:dashboard' %}" class="hover:text-orange-300 transition duration-300">Dashboard</a>
-                        <span class="text-orange-300">👻 {{ user.username }}</span>
-                        <a href="{% url 'core:logout' %}" class="btn-secondary">Logout</a>
-                    {% else %}
-                        <a href="{% url 'core:login' %}" class="btn-primary">Login</a>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Mobile Menu (Hidden by default) -->
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <div class="flex flex-col space-y-2">
-                    <a href="{% url 'core:home' %}" class="hover:text-orange-300 transition duration-300 py-2">Home</a>
-                    <a href="#events" class="hover:text-orange-300 transition duration-300 py-2">Events</a>
-                    <a href="{% url 'core:haunted_places' %}" class="hover:text-orange-300 transition duration-300 py-2">Haunted Places</a>
-                    <a href="#businesses" class="hover:text-orange-300 transition duration-300 py-2">Businesses</a>
-
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'core:dashboard' %}" class="hover:text-orange-300 transition duration-300 py-2">Dashboard</a>
-                        <span class="text-orange-300 py-2">👻 {{ user.username }}</span>
-                        <a href="{% url 'core:logout' %}" class="btn-secondary inline-block text-center mt-2">Logout</a>
-                    {% else %}
-                        <a href="{% url 'core:login' %}" class="btn-primary inline-block text-center mt-2">Login</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Flash Messages -->
-    {% if messages %}
-        <div class="container mx-auto px-4 mt-4">
-            {% for message in messages %}
-                <div class="{% if message.tags == 'error' %}bg-red-100 border-red-500 text-red-700{% elif message.tags == 'success' %}bg-green-100 border-green-500 text-green-700{% else %}bg-blue-100 border-blue-500 text-blue-700{% endif %} border-l-4 p-4 mb-4 rounded" role="alert">
-                    <p>{{ message }}</p>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    <!-- Main Content -->
-    <main class="flex-grow">
-        {% block content %}
-        <!-- Page-specific content goes here -->
-        {% endblock %}
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8 mt-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 text-orange-500">🎃 ShriekedIn</h3>
-                    <p class="text-gray-400">Your professional Halloween networking and event discovery platform.</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4 text-orange-500">Quick Links</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="{% url 'core:home' %}" class="hover:text-orange-300 transition">Home</a></li>
-                        <li><a href="{% url 'core:haunted_places' %}" class="hover:text-orange-300 transition">Haunted Places</a></li>
-                        <li><a href="#" class="hover:text-orange-300 transition">About</a></li>
-                        <li><a href="#" class="hover:text-orange-300 transition">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4 text-orange-500">Legal</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="{% url 'core:terms' %}" class="hover:text-orange-300 transition">Terms & Conditions</a></li>
-                        <li><a href="{% url 'core:privacy' %}" class="hover:text-orange-300 transition">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-orange-300 transition cookie-consent-settings">Cookie Settings</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4 text-orange-500">Built With</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>Django 5.2.7</li>
-                        <li>PostgreSQL</li>
-                        <li>Tailwind CSS</li>
-                        <li>Deployed on Heroku</li>
-                    </ul>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'core:dashboard' %}" class="hover:text-orange-300 transition duration-300 py-2">Dashboard</a>
+                            <span class="text-orange-300 py-2">👻 {{ user.username }}</span>
+                            <a href="{% url 'core:logout' %}" class="btn-secondary inline-block text-center mt-2">Logout</a>
+                        {% else %}
+                            <a href="{% url 'core:login' %}" class="btn-primary inline-block text-center mt-2">Login</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500">
-                <p>&copy; 2025 ShriekedIn. All rights reserved. Happy Haunting! 👻</p>
-                <p class="mt-2 text-sm">
-                    <a href="{% url 'core:privacy' %}" class="hover:text-orange-300 transition">Privacy</a>
-                    <span class="mx-2">•</span>
-                    <a href="{% url 'core:terms' %}" class="hover:text-orange-300 transition">Terms</a>
-                    <span class="mx-2">•</span>
-                    <a href="#" class="hover:text-orange-300 transition cookie-consent-settings">Cookies</a>
-                </p>
+        </nav>
+
+        <!-- Flash Messages -->
+        {% if messages %}
+            <div class="container mx-auto px-4 mt-4">
+                {% for message in messages %}
+                    <div class="{% if message.tags == 'error' %}bg-red-100 border-red-500 text-red-700{% elif message.tags == 'success' %}bg-green-100 border-green-500 text-green-700{% else %}bg-blue-100 border-blue-500 text-blue-700{% endif %} border-l-4 p-4 mb-4 rounded"
+                         role="alert">
+                        <p>{{ message }}</p>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-    </footer>
+        {% endif %}
 
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        // Simple vanilla JavaScript for mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
-    </script>
+        <!-- Main Content -->
+        <main class="flex-grow">
 
-    <!-- Scary Mode Easter Egg -->
-    <script src="{% static 'js/scary-mode.js' %}"></script>
+            {% block content %}<!-- Page-specific content goes here -->{% endblock %}
+        </main>
 
-    {% block extra_js %}{% endblock %}
-</body>
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-8 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-orange-500">🎃 ShriekedIn</h3>
+                        <p class="text-gray-400">Your professional Halloween networking and event discovery platform.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-orange-500">Quick Links</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li>
+                                <a href="{% url 'core:home' %}" class="hover:text-orange-300 transition">Home</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:haunted_places' %}" class="hover:text-orange-300 transition">Haunted Places</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-orange-300 transition">About</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-orange-300 transition">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-orange-500">Legal</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li>
+                                <a href="{% url 'core:terms' %}" class="hover:text-orange-300 transition">Terms & Conditions</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:privacy' %}" class="hover:text-orange-300 transition">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'core:cookie_settings' %}" class="hover:text-orange-300 transition">Cookie Settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-orange-500">Built With</h3>
+                        <ul class="space-y-2 text-gray-400">
+                            <li>Django 5.2.7</li>
+                            <li>PostgreSQL</li>
+                            <li>Tailwind CSS</li>
+                            <li>Deployed on Heroku</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500">
+                    <p>&copy; 2025 ShriekedIn. All rights reserved. Happy Haunting! 👻</p>
+                    <p class="mt-2 text-sm">
+                        <a href="{% url 'core:privacy' %}" class="hover:text-orange-300 transition">Privacy</a>
+                        <span class="mx-2">•</span>
+                        <a href="{% url 'core:terms' %}" class="hover:text-orange-300 transition">Terms</a>
+                        <span class="mx-2">•</span>
+                        <a href="{% url 'core:cookie_settings' %}" class="hover:text-orange-300 transition">Cookies</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Mobile Menu Toggle Script -->
+        <script>
+            // Simple vanilla JavaScript for mobile menu toggle
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            });
+        </script>
+
+        <!-- Scary Mode Easter Egg -->
+        <script src="{% static 'js/scary-mode.js' %}"></script>
+
+        {% block extra_js %}{% endblock %}
+    </body>
 </html>
