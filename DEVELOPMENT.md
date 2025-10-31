@@ -152,6 +152,15 @@ Before committing code:
 - Press Ctrl+C in the terminal running `make dev`
 - If stuck, run: `pkill -f "python manage.py runserver"` and `pkill -f "tailwindcss"`
 
+**"Browser redirects http://localhost:8000/ to HTTPS"**
+- Chrome/Edge may force HTTPS on localhost
+- **Quick fix:** Use `http://127.0.0.1:8000/` instead
+- **Full guide:** See `docs/LOCALHOST_HTTPS_FIX.md`
+- Common causes:
+  - HSTS cache (clear at `chrome://net-internals/#hsts`)
+  - DEBUG=False in .env (should be DEBUG=True)
+  - Browser's "Always use secure connections" setting
+
 ## Environment Variables
 
 Development environment variables are in `.env`:

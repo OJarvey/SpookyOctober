@@ -54,10 +54,11 @@ run:
 	fi
 	@echo "🎃 Starting ShriekedIn development server..."
 	@echo ""
-	@echo "💡 Visit: http://localhost:8000/"
+	@echo "💡 Visit: http://127.0.0.1:8000/ or http://localhost:8000/"
 	@echo "⚠️  Important: Use HTTP (not HTTPS)"
+	@echo "💡 Tip: If your browser redirects to HTTPS, use 127.0.0.1 instead of localhost"
 	@echo ""
-	@python manage.py runserver localhost:8000
+	@python manage.py runserver 127.0.0.1:8000
 
 install:
 	@echo "📦 Installing dependencies..."
@@ -156,9 +157,10 @@ dev:
 	@echo ""
 	@echo "=================================================="
 	@echo "🚀 Starting services:"
-	@echo "  • Django dev server on http://localhost:8000/"
+	@echo "  • Django dev server on http://127.0.0.1:8000/"
 	@echo "  • Tailwind CSS watcher (auto-rebuilds on changes)"
 	@echo ""
+	@echo "💡 Tip: Use http://127.0.0.1:8000/ (not localhost)"
 	@echo "💡 Press Ctrl+C to stop all services"
 	@echo "=================================================="
 	@echo ""
@@ -169,5 +171,5 @@ dev:
 	sleep 1; \
 	echo "✅ Django dev server starting..."; \
 	echo ""; \
-	python manage.py runserver localhost:8000; \
+	python manage.py runserver 127.0.0.1:8000; \
 	wait
