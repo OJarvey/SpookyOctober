@@ -37,49 +37,37 @@
 
     <div class="container mx-auto px-4 py-8">
 
-        <!-- Filters Section -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-            <div class="grid md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
-                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option value="">All Categories</option>
-                        <option value="festival">Festival</option>
-                        <option value="haunted_house">Haunted House</option>
-                        <option value="tour">Tour</option>
-                        <option value="party">Party</option>
-                        <option value="family_friendly">Family Friendly</option>
-                        <option value="paranormal">Paranormal</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Age Group</label>
-                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option value="">All Ages</option>
-                        <option value="all_ages">All Ages</option>
-                        <option value="16_plus">16+</option>
-                        <option value="adults_only">Adults Only</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Price</label>
-                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option value="">Any Price</option>
-                        <option value="free">Free</option>
-                        <option value="paid">Paid</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Search</label>
-                    <input type="text"
-                           id="events-search-input"
-                           placeholder="Search events..."
-                           value="{{ search_query }}"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                    <p class="text-xs text-gray-500 mt-1">Start typing (min 3 chars) to search...</p>
+        <!-- Filter/Search Section -->
+        <section class="py-8 bg-white border-b">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <h2 class="text-2xl font-bold text-gray-800">🔍 Find Your Event</h2>
+
+                    <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                        <!-- Search input -->
+                        <input type="text"
+                               id="events-search-input"
+                               placeholder="Search events..."
+                               value="{{ search_query }}"
+                               class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
+
+                        <!-- Category filter -->
+                        <select class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
+                            <option value="">All Categories</option>
+                            <option value="festival">Festival</option>
+                            <option value="haunted_house">Haunted House</option>
+                            <option value="tour">Tour</option>
+                            <option value="party">Party</option>
+                            <option value="family_friendly">Family Friendly</option>
+                            <option value="paranormal">Paranormal</option>
+                        </select>
+
+                        <!-- Search button -->
+                        <button class="btn-primary px-6 py-2">Search</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Stats Bar -->
         <div class="bg-gradient-to-r from-orange-100 to-purple-100 rounded-lg p-4 mb-8 text-center">
@@ -101,9 +89,7 @@
                         <!-- Event Image/Gradient Placeholder -->
                         <div class="relative w-full h-48 bg-gradient-to-br {{ gradient }} flex items-center justify-center">
                             <span class="text-6xl">🎃</span>
-                            {% if event.is_featured %}
-                                <span class="absolute top-3 right-3 text-4xl">⭐</span>
-                            {% endif %}
+                            {% if event.is_featured %}<span class="absolute top-3 right-3 text-4xl">⭐</span>{% endif %}
                         </div>
 
                         <!-- Event Content -->
@@ -156,10 +142,7 @@
                             </div>
 
                             <!-- Action Button -->
-                            <a href="{% url 'core:event_detail' event.id %}"
-                               class="block w-full text-center btn-primary py-2">
-                                View Details →
-                            </a>
+                            <a href="{% url 'core:event_detail' event.id %}" class="block w-full text-center btn-primary py-2">View Details →</a>
                         </div>
                     </div>
                 {% endfor %}
