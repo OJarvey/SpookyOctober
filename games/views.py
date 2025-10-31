@@ -11,10 +11,16 @@ def games_home(request):
     """
     Games homepage with links to available games.
     """
+    # Get recent completed stories (limit to 5)
+    recent_stories = CompletedMadLib.objects.select_related(
+        'template', 'user'
+    ).order_by('-created_at')[:5]
+
     context = {
         'total_templates': StoryTemplate.objects.filter(is_active=True).count(),
         'total_words': VocabularyWord.objects.count(),
         'total_completed': CompletedMadLib.objects.count(),
+        'recent_stories': recent_stories,
     }
     return render(request, 'games/games_home.html', context)
 
