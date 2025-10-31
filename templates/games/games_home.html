@@ -140,9 +140,7 @@
                                         {% endif %}
                                         • {{ story.created_at|timesince }} ago
                                     </p>
-                                    <p class="text-gray-700 text-sm line-clamp-2">
-                                        {{ story.completed_text|truncatewords:20 }}
-                                    </p>
+                                    <p class="text-gray-700 text-sm line-clamp-2">{{ story.completed_text|truncatewords:20 }}</p>
                                 </div>
                                 <div class="ml-4 flex-shrink-0">
                                     <a href="{% url 'games:madlibs_result' story.share_code %}"
@@ -158,9 +156,7 @@
                 <div class="text-center py-8 text-gray-500">
                     <p class="text-lg mb-2">🎃 No stories yet!</p>
                     <p class="text-sm">Be the first to create a spooky story.</p>
-                    <a href="{% url 'games:madlibs_list' %}" class="inline-block mt-4 btn-primary">
-                        Create Your First Story
-                    </a>
+                    <a href="{% url 'games:madlibs_list' %}" class="inline-block mt-4 btn-primary">Create Your First Story</a>
                 </div>
             {% endif %}
         </div>
