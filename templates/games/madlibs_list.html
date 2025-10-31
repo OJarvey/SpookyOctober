@@ -7,9 +7,7 @@
     <section class="halloween-gradient py-20">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">📚 Choose Your Story 📚</h1>
-            <p class="text-xl md:text-2xl text-orange-200 mb-8">
-                Pick a spooky template and fill in the blanks!
-            </p>
+            <p class="text-xl md:text-2xl text-orange-200 mb-8">Pick a spooky template and fill in the blanks!</p>
         </div>
     </section>
 
@@ -47,7 +45,7 @@
                     </div>
 
                     <!-- Template Icon -->
-                    <div class="bg-gradient-to-br from-purple-600 to-purple-800 p-8 text-center">
+                    <div class="bg-gradient-to-br from-purple-600 to-purple-800 p-8 text-center text-white">
                         <div class="text-5xl mb-2">
                             {% if 'Poe' in template.author %}
                                 🖋️
@@ -92,8 +90,7 @@
                         {% endif %}
 
                         <!-- Play Button -->
-                        <a href="{% url 'games:madlibs_play' template.id %}"
-                           class="block w-full text-center btn-primary py-3">
+                        <a href="{% url 'games:madlibs_play' template.id %}" class="block w-full text-center btn-primary py-3">
                             Play This Story →
                         </a>
                     </div>
@@ -103,18 +100,15 @@
                     <div class="text-6xl mb-4">📚</div>
                     <h3 class="text-2xl font-bold text-gray-900 mb-2">No Stories Found</h3>
                     <p class="text-gray-600 mb-4">Try selecting a different difficulty level.</p>
-                    <a href="{% url 'games:madlibs_list' %}" class="btn-primary inline-block">
-                        Show All Stories
-                    </a>
+                    <a href="{% url 'games:madlibs_list' %}" class="btn-primary inline-block">Show All Stories</a>
                 </div>
             {% endfor %}
         </div>
 
         <!-- Back Button -->
         <div class="mt-12 text-center">
-            <a href="{% url 'games:games_home' %}" class="btn-secondary inline-block px-8 py-3">
-                ← Back to Games
-            </a>
+            <a href="{% url 'games:games_home' %}" class="btn-secondary inline-block px-8 py-3">← Back to Games</a>
         </div>
     </div>
+
 {% endblock %}
