@@ -21,7 +21,7 @@ heroku addons:create heroku-postgresql:essential-0
 ```bash
 heroku config:set SECRET_KEY='your-secret-key'
 heroku config:set DEBUG=False
-heroku config:set ALLOWED_HOSTS='shriekedin.uk,www.shriekedin.uk,spookyoctober-2f7f54251dfc.herokuapp.com'
+heroku config:set ALLOWED_HOSTS='shriekedin.uk,www.shriekedin.uk'
 ```
 
 **Note:** ALLOWED_HOSTS should include:
