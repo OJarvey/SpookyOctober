@@ -19,6 +19,7 @@
         from {
             transform: translateY(100%);
         }
+
         to {
             transform: translateY(0);
         }
@@ -139,15 +140,9 @@
             </p>
         </div>
         <div class="cookie-consent-buttons">
-            <button class="cookie-consent-btn cookie-consent-btn-accept" onclick="acceptCookies()">
-                ✓ Accept All
-            </button>
-            <button class="cookie-consent-btn cookie-consent-btn-decline" onclick="declineCookies()">
-                ✗ Essential Only
-            </button>
-            <a href="{% url 'core:privacy' %}#cookies" class="cookie-consent-btn cookie-consent-btn-settings">
-                ⚙️ Learn More
-            </a>
+            <button class="cookie-consent-btn cookie-consent-btn-accept" onclick="acceptCookies()">✓ Accept All</button>
+            <button class="cookie-consent-btn cookie-consent-btn-decline" onclick="declineCookies()">✗ Essential Only</button>
+            <a href="{% url 'core:privacy' %}#cookies" class="cookie-consent-btn cookie-consent-btn-settings">⚙️ Learn More</a>
         </div>
     </div>
 </div>
