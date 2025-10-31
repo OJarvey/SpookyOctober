@@ -18,12 +18,20 @@
 
 {% block content %}
     <!-- Hero Section -->
-    <section class="halloween-gradient py-16">
+    <section class="halloween-gradient py-20">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">🎃 Halloween Events 🎃</h1>
-            <p class="text-xl md:text-2xl text-orange-200 mb-4">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">🎃 Halloween Events 🎃</h1>
+            <p class="text-xl md:text-2xl text-orange-200 mb-8">
                 Discover spooky events, haunted attractions, and Halloween celebrations near you
             </p>
+
+            {% if user.is_authenticated %}
+                <p class="text-lg text-white">Welcome back, {{ user.username }}! Ready for some spooky fun? 🎉</p>
+            {% else %}
+                <p class="text-lg text-orange-100">
+                    <a href="{% url 'core:login' %}" class="underline hover:text-white transition">Sign in</a> to create and manage your own Halloween events!
+                </p>
+            {% endif %}
         </div>
     </section>
 

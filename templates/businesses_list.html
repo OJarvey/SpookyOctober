@@ -18,12 +18,20 @@
 
 {% block content %}
     <!-- Hero Section -->
-    <section class="halloween-gradient py-16">
+    <section class="halloween-gradient py-20">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">🏪 Halloween Businesses 🏪</h1>
-            <p class="text-xl md:text-2xl text-orange-200 mb-4">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">🏪 Halloween Businesses 🏪</h1>
+            <p class="text-xl md:text-2xl text-orange-200 mb-8">
                 Discover costume shops, haunted attractions, party supplies, and more from verified Halloween businesses
             </p>
+
+            {% if user.is_authenticated %}
+                <p class="text-lg text-white">Welcome back, {{ user.username }}! Find the best Halloween deals! 🎁</p>
+            {% else %}
+                <p class="text-lg text-orange-100">
+                    <a href="{% url 'core:login' %}" class="underline hover:text-white transition">Sign in</a> to list your Halloween business and share exclusive offers!
+                </p>
+            {% endif %}
         </div>
     </section>
 
