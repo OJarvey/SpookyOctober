@@ -47,8 +47,11 @@
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Search</label>
                     <input type="text"
+                           id="events-search-input"
                            placeholder="Search events..."
+                           value="{{ search_query }}"
                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <p class="text-xs text-gray-500 mt-1">Start typing (min 3 chars) to search...</p>
                 </div>
             </div>
         </div>
@@ -154,4 +157,32 @@
         {% endif %}
     </div>
 
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('events-search-input');
+            let debounceTimer;
+
+            searchInput.addEventListener('input', function(e) {
+                clearTimeout(debounceTimer);
+                const query = e.target.value.trim();
+
+                // Only search if 3+ characters or empty (to show all)
+                if (query.length >= 3 || query.length === 0) {
+                    debounceTimer = setTimeout(() => {
+                        // Update URL with search parameter
+                        const url = new URL(window.location.href);
+                        if (query.length > 0) {
+                            url.searchParams.set('search', query);
+                        } else {
+                            url.searchParams.delete('search');
+                        }
+                        window.location.href = url.toString();
+                    }, 500); // 500ms debounce delay
+                }
+            });
+        });
+    </script>
 {% endblock %}

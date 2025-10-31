@@ -286,12 +286,30 @@ def events_list(request):
     Events Listing View
 
     Displays all active Halloween events with filtering options.
+    Supports search query parameter.
 
     Template: templates/events_list.html
     URL: /events/
     """
-    # Get all active events, ordered by date
-    events = Event.objects.filter(is_active=True).select_related('location', 'created_by').order_by('event_date')
+    from django.db.models import Q
+
+    # Start with all active events
+    events = Event.objects.filter(is_active=True).select_related('location', 'created_by')
+
+    # Handle search query
+    search_query = request.GET.get('search', '').strip()
+    if search_query:
+        # Search across multiple fields
+        events = events.filter(
+            Q(title__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(location__city__icontains=search_query) |
+            Q(location__state__icontains=search_query) |
+            Q(location__name__icontains=search_query)
+        )
+
+    # Order by date
+    events = events.order_by('event_date')
 
     # Count featured events
     featured_count = events.filter(is_featured=True).count()
@@ -299,6 +317,7 @@ def events_list(request):
     context = {
         'events': events,
         'featured_count': featured_count,
+        'search_query': search_query,
     }
 
     return render(request, 'events_list.html', context)
@@ -332,12 +351,30 @@ def businesses_list(request):
     Businesses Listing View
 
     Displays all active Halloween businesses with filtering options.
+    Supports search query parameter.
 
     Template: templates/businesses_list.html
     URL: /businesses/
     """
-    # Get all active businesses, ordered by name
-    businesses = Business.objects.filter(is_active=True).select_related('location', 'user').prefetch_related('coupons').order_by('business_name')
+    from django.db.models import Q
+
+    # Start with all active businesses
+    businesses = Business.objects.filter(is_active=True).select_related('location', 'user').prefetch_related('coupons')
+
+    # Handle search query
+    search_query = request.GET.get('search', '').strip()
+    if search_query:
+        # Search across multiple fields
+        businesses = businesses.filter(
+            Q(business_name__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(location__city__icontains=search_query) |
+            Q(location__state__icontains=search_query) |
+            Q(business_type__icontains=search_query)
+        )
+
+    # Order by name
+    businesses = businesses.order_by('business_name')
 
     # Count verified businesses
     verified_count = businesses.filter(verified=True).count()
@@ -345,6 +382,7 @@ def businesses_list(request):
     context = {
         'businesses': businesses,
         'verified_count': verified_count,
+        'search_query': search_query,
     }
 
     return render(request, 'businesses_list.html', context)
