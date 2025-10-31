@@ -90,7 +90,7 @@ WSGI_APPLICATION = "spookyoctober.wsgi.application"
 # Heroku automatically provides DATABASE_URL environment variable
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3'),
+        default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR}/db.sqlite3'), # type: ignore
         conn_max_age=600,
         conn_health_checks=True,
     )
