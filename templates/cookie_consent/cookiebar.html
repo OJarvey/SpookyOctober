@@ -1,0 +1,210 @@
+{% load cookie_consent_tags i18n %}
+
+<style>
+    .cookie-consent-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #7c2d12 0%, #9333ea 50%, #ea580c 100%);
+        color: white;
+        padding: 1.5rem;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        animation: slideUp 0.4s ease-out;
+        border-top: 3px solid #f97316;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .cookie-consent-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .cookie-consent-text {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .cookie-consent-text h3 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .cookie-consent-text p {
+        font-size: 0.875rem;
+        opacity: 0.95;
+        line-height: 1.5;
+    }
+
+    .cookie-consent-buttons {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .cookie-consent-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        font-size: 0.875rem;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .cookie-consent-btn-accept {
+        background-color: #f97316;
+        color: white;
+    }
+
+    .cookie-consent-btn-accept:hover {
+        background-color: #ea580c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(249, 115, 22, 0.3);
+    }
+
+    .cookie-consent-btn-decline {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .cookie-consent-btn-decline:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .cookie-consent-btn-settings {
+        background-color: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        text-decoration: underline;
+    }
+
+    .cookie-consent-btn-settings:hover {
+        border-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .cookie-consent-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .cookie-consent-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .cookie-consent-btn {
+            flex: 1;
+            min-width: 120px;
+        }
+    }
+</style>
+
+<div class="cookie-consent-bar" id="cookie-consent-bar" style="display: none;">
+    <div class="cookie-consent-content">
+        <div class="cookie-consent-text">
+            <h3>
+                <span style="font-size: 1.5rem;">🍪</span>
+                Cookie Notice (Not the Edible Kind!)
+            </h3>
+            <p>
+                We use cookies to enhance your spooky experience and keep our platform running smoothly.
+                By accepting, you agree to our use of cookies as described in our
+                <a href="{% url 'core:privacy' %}" style="color: #fed7aa; text-decoration: underline;">Privacy Policy</a>.
+                Essential cookies are required for the site to function.
+            </p>
+        </div>
+        <div class="cookie-consent-buttons">
+            <button class="cookie-consent-btn cookie-consent-btn-accept" onclick="acceptCookies()">
+                ✓ Accept All
+            </button>
+            <button class="cookie-consent-btn cookie-consent-btn-decline" onclick="declineCookies()">
+                ✗ Essential Only
+            </button>
+            <a href="{% url 'core:privacy' %}#cookies" class="cookie-consent-btn cookie-consent-btn-settings">
+                ⚙️ Learn More
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Check if consent has been given
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+    }
+
+    function acceptCookies() {
+        setCookie('cookie_consent', 'accepted', 365);
+        document.getElementById('cookie-consent-bar').style.display = 'none';
+        // You can add analytics or other tracking code here
+        console.log('🍪 Cookies accepted! Thanks for trusting us with your mortal data.');
+    }
+
+    function declineCookies() {
+        setCookie('cookie_consent', 'declined', 365);
+        document.getElementById('cookie-consent-bar').style.display = 'none';
+        console.log('🍪 Cookie preferences saved. Essential cookies only.');
+    }
+
+    // Show the banner if consent hasn't been given
+    document.addEventListener('DOMContentLoaded', function() {
+        const consent = getCookie('cookie_consent');
+        if (!consent) {
+            document.getElementById('cookie-consent-bar').style.display = 'block';
+        }
+    });
+
+    // Allow cookie settings to be reopened from footer
+    document.querySelectorAll('.cookie-consent-settings').forEach(function(element) {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('cookie-consent-bar').style.display = 'block';
+        });
+    });
+</script>

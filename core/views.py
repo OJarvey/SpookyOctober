@@ -364,6 +364,32 @@ def haunted_detail(request, place_id):
     return render(request, 'haunted_detail.html', context)
 
 
+def terms(request):
+    """
+    Terms and Conditions Page
+
+    Displays the platform's terms and conditions with spooky theming
+    but legally compliant content.
+
+    Template: templates/terms.html
+    URL: /terms/
+    """
+    return render(request, 'terms.html')
+
+
+def privacy(request):
+    """
+    Privacy Policy Page
+
+    Displays the platform's privacy policy, fully compliant with GDPR
+    and UK Data Protection laws, with Halloween-themed presentation.
+
+    Template: templates/privacy.html
+    URL: /privacy/
+    """
+    return render(request, 'privacy.html')
+
+
 # Custom 404 error handler
 def custom_404(request, exception=None):
     """

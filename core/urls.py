@@ -71,6 +71,21 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
 
     #################################################################
+    # LEGAL PAGES
+    #################################################################
+    # URL: /terms/
+    # View: views.terms
+    # Template: templates/terms.html
+    # Purpose: Display Terms and Conditions (spooky but legally binding)
+    path('terms/', views.terms, name='terms'),
+
+    # URL: /privacy/
+    # View: views.privacy
+    # Template: templates/privacy.html
+    # Purpose: Display Privacy Policy (GDPR compliant with Halloween theme)
+    path('privacy/', views.privacy, name='privacy'),
+
+    #################################################################
     # HAUNTED PLACES
     #################################################################
     # URL: /haunted/

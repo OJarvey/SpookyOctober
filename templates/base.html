@@ -1,4 +1,5 @@
 {% load static %}
+{% load cookie_consent_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +27,9 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
+
+    <!-- Cookie Consent Banner -->
+    {% show_cookie_bar %}
 
     <!-- Navigation Bar -->
     <nav class="bg-gradient-to-r from-orange-600 via-purple-800 to-gray-900 text-white shadow-lg">
@@ -105,7 +109,7 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8 mt-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4 text-orange-500">🎃 ShriekedIn</h3>
                     <p class="text-gray-400">Your professional Halloween networking and event discovery platform.</p>
@@ -114,8 +118,17 @@
                     <h3 class="text-xl font-bold mb-4 text-orange-500">Quick Links</h3>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="{% url 'core:home' %}" class="hover:text-orange-300 transition">Home</a></li>
+                        <li><a href="{% url 'core:haunted_places' %}" class="hover:text-orange-300 transition">Haunted Places</a></li>
                         <li><a href="#" class="hover:text-orange-300 transition">About</a></li>
                         <li><a href="#" class="hover:text-orange-300 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-orange-500">Legal</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="{% url 'core:terms' %}" class="hover:text-orange-300 transition">Terms & Conditions</a></li>
+                        <li><a href="{% url 'core:privacy' %}" class="hover:text-orange-300 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-300 transition cookie-consent-settings">Cookie Settings</a></li>
                     </ul>
                 </div>
                 <div>
@@ -130,6 +143,13 @@
             </div>
             <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500">
                 <p>&copy; 2025 ShriekedIn. All rights reserved. Happy Haunting! 👻</p>
+                <p class="mt-2 text-sm">
+                    <a href="{% url 'core:privacy' %}" class="hover:text-orange-300 transition">Privacy</a>
+                    <span class="mx-2">•</span>
+                    <a href="{% url 'core:terms' %}" class="hover:text-orange-300 transition">Terms</a>
+                    <span class="mx-2">•</span>
+                    <a href="#" class="hover:text-orange-300 transition cookie-consent-settings">Cookies</a>
+                </p>
             </div>
         </div>
     </footer>

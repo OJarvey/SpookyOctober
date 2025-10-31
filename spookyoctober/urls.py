@@ -44,6 +44,13 @@ urlpatterns = [
     path("", include("core.urls")),
 
     #################################################################
+    # COOKIE CONSENT (GDPR Compliance)
+    #################################################################
+    # URLs for cookie consent management
+    # Provides: /cookies/accept/, /cookies/decline/, etc.
+    path("cookies/", include("cookie_consent.urls")),
+
+    #################################################################
     # FUTURE APP URLs (to be added in later sprints)
     #################################################################
     # As we build more features, we'll add more apps here:
