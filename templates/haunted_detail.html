@@ -3,51 +3,6 @@
 {% block title %}{{ place.story_title }} - ShriekedIn{% endblock %}
 
 {% block content %}
-    <!-- SVG ClipPath for Torn Paper Edges -->
-    <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
-        <defs>
-            <clipPath id="torn-paper" clipPathUnits="objectBoundingBox">
-                <path d="M0.01,0 L0.02,0.005 L0.04,0 L0.06,0.008 L0.08,0.002 L0.10,0.01
-                         L0.12,0.003 L0.14,0.009 L0.16,0.001 L0.18,0.007 L0.20,0.002
-                         L0.22,0.01 L0.24,0 L0.26,0.008 L0.28,0.003 L0.30,0.009
-                         L0.32,0.001 L0.34,0.01 L0.36,0.004 L0.38,0.007 L0.40,0.002
-                         L0.42,0.009 L0.44,0 L0.46,0.008 L0.48,0.005 L0.50,0.01
-                         L0.52,0.002 L0.54,0.007 L0.56,0.001 L0.58,0.009 L0.60,0.004
-                         L0.62,0.008 L0.64,0 L0.66,0.01 L0.68,0.003 L0.70,0.007
-                         L0.72,0.002 L0.74,0.009 L0.76,0 L0.78,0.008 L0.80,0.005
-                         L0.82,0.01 L0.84,0.002 L0.86,0.007 L0.88,0.001 L0.90,0.009
-                         L0.92,0.004 L0.94,0.008 L0.96,0 L0.98,0.01 L0.99,0.005
-                         L1,0.01 L0.999,0.02 L1,0.04 L0.998,0.06 L1,0.08 L0.997,0.10
-                         L1,0.12 L0.999,0.14 L1,0.16 L0.998,0.18 L1,0.20 L0.997,0.22
-                         L1,0.24 L0.999,0.26 L1,0.28 L0.998,0.30 L1,0.32 L0.997,0.34
-                         L1,0.36 L0.999,0.38 L1,0.40 L0.998,0.42 L1,0.44 L0.997,0.46
-                         L1,0.48 L0.999,0.50 L1,0.52 L0.998,0.54 L1,0.56 L0.997,0.58
-                         L1,0.60 L0.999,0.62 L1,0.64 L0.998,0.66 L1,0.68 L0.997,0.70
-                         L1,0.72 L0.999,0.74 L1,0.76 L0.998,0.78 L1,0.80 L0.997,0.82
-                         L1,0.84 L0.999,0.86 L1,0.88 L0.998,0.90 L1,0.92 L0.997,0.94
-                         L1,0.96 L0.999,0.98 L1,0.99 L0.99,1 L0.98,0.995 L0.96,1
-                         L0.94,0.992 L0.92,0.998 L0.90,0.991 L0.88,0.997 L0.86,0.993
-                         L0.84,0.999 L0.82,0.992 L0.80,0.998 L0.78,0.995 L0.76,1
-                         L0.74,0.993 L0.72,0.999 L0.70,0.991 L0.68,0.997 L0.66,0.992
-                         L0.64,1 L0.62,0.994 L0.60,0.998 L0.58,0.993 L0.56,0.999
-                         L0.54,0.991 L0.52,0.997 L0.50,0.99 L0.48,0.996 L0.46,0.992
-                         L0.44,1 L0.42,0.993 L0.40,0.999 L0.38,0.995 L0.36,0.998
-                         L0.34,0.992 L0.32,1 L0.30,0.993 L0.28,0.999 L0.26,0.994
-                         L0.24,0.998 L0.22,0.991 L0.20,0.997 L0.18,0.995 L0.16,1
-                         L0.14,0.993 L0.12,0.999 L0.10,0.991 L0.08,0.997 L0.06,0.994
-                         L0.04,1 L0.02,0.996 L0.01,0.99 L0,0.99 L0.002,0.98 L0,0.96
-                         L0.003,0.94 L0,0.92 L0.001,0.90 L0,0.88 L0.003,0.86 L0,0.84
-                         L0.002,0.82 L0,0.80 L0.001,0.78 L0,0.76 L0.003,0.74 L0,0.72
-                         L0.002,0.70 L0,0.68 L0.001,0.66 L0,0.64 L0.003,0.62 L0,0.60
-                         L0.002,0.58 L0,0.56 L0.001,0.54 L0,0.52 L0.003,0.50 L0,0.48
-                         L0.002,0.46 L0,0.44 L0.001,0.42 L0,0.40 L0.003,0.38 L0,0.36
-                         L0.002,0.34 L0,0.32 L0.001,0.30 L0,0.28 L0.003,0.26 L0,0.24
-                         L0.002,0.22 L0,0.20 L0.001,0.18 L0,0.16 L0.003,0.14 L0,0.12
-                         L0.002,0.10 L0,0.08 L0.001,0.06 L0,0.04 L0.003,0.02 Z" />
-            </clipPath>
-        </defs>
-    </svg>
-
     <div class="container mx-auto px-4 py-8">
         <!-- Breadcrumb -->
         <div class="text-sm text-gray-600 mb-4">
@@ -100,17 +55,15 @@
                     <!-- Wax Seal -->
                     <svg class="absolute -bottom-6 right-8 w-14 h-14 transform rotate-12"
                          viewBox="0 0 100 100"
-                         style="filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.3));">
+                         style="filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.3))">
                         <!-- Outer wax circle -->
-                        <circle cx="50" cy="50" r="45" fill="#8B0000" opacity="0.95"/>
+                        <circle cx="50" cy="50" r="45" fill="#8B0000" opacity="0.95" />
                         <!-- Inner wax circle -->
-                        <circle cx="50" cy="50" r="40" fill="#A52A2A" opacity="0.8"/>
+                        <circle cx="50" cy="50" r="40" fill="#A52A2A" opacity="0.8" />
                         <!-- Wax drips texture -->
-                        <circle cx="50" cy="50" r="35" fill="#6B0000" opacity="0.3"/>
+                        <circle cx="50" cy="50" r="35" fill="#6B0000" opacity="0.3" />
                         <!-- Monogram "S" for ShriekedIn -->
-                        <text x="50" y="65" text-anchor="middle" fill="#D4AF37"
-                              font-size="40" font-weight="bold" font-family="serif"
-                              style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">S</text>
+                        <text x="50" y="65" text-anchor="middle" fill="#D4AF37" font-size="40" font-weight="bold" font-family="serif" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">S</text>
                     </svg>
                 </div>
 
@@ -256,12 +209,7 @@
             pointer-events: none;
         }
 
-        /* Ragged/torn edge effect using SVG clipPath */
-        .parchment-card {
-            clip-path: url(#torn-paper);
-        }
-
-        /* Enhanced border with slight irregularity */
+        /* Subtle border decoration */
         .parchment-card::after {
             content: '';
             position: absolute;
@@ -270,15 +218,9 @@
             right: -2px;
             bottom: -2px;
             background: transparent;
-            border: 1px solid rgba(139, 115, 85, 0.3);
-            border-radius: 2px;
+            border: 1px dashed rgba(139, 115, 85, 0.2);
+            border-radius: 4px;
             pointer-events: none;
-            /* Add slight texture to border */
-            box-shadow:
-                1px 0 0 0 rgba(139, 115, 85, 0.15),
-                -1px 0 0 0 rgba(139, 115, 85, 0.15),
-                0 1px 0 0 rgba(139, 115, 85, 0.15),
-                0 -1px 0 0 rgba(139, 115, 85, 0.15);
         }
 
         /* Handwritten Font for Text */
