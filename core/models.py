@@ -601,3 +601,67 @@ class Comment(models.Model):
     @property
     def is_reply(self):
         return self.parent_comment is not None
+
+
+# ================================================================
+# CONTACT MESSAGE (Sprint 7)
+# ================================================================
+
+class ContactMessage(models.Model):
+    """
+    Contact form submissions with security protections.
+
+    Stores messages sent through the contact form with anti-spam measures
+    and IP tracking for security.
+    """
+
+    # Basic fields
+    name = models.CharField(max_length=200, help_text="Sender's name")
+    email = models.EmailField(help_text="Sender's email address")
+    subject = models.CharField(max_length=300, help_text="Message subject")
+    message = models.TextField(help_text="Message content", max_length=5000)
+
+    # Security fields
+    ip_address = models.GenericIPAddressField(help_text="Sender's IP address for security tracking")
+    user_agent = models.CharField(max_length=500, blank=True, help_text="Browser user agent")
+    honeypot = models.CharField(max_length=100, blank=True, help_text="Honeypot field - should be empty")
+
+    # Submission tracking
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    # Management fields
+    is_read = models.BooleanField(default=False, help_text="Has this been read by an admin?")
+    is_responded = models.BooleanField(default=False, help_text="Has this been responded to?")
+    is_spam = models.BooleanField(default=False, help_text="Flagged as spam")
+    response_notes = models.TextField(blank=True, help_text="Admin notes about response")
+
+    # Optional user link (if submitted by logged-in user)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='contact_messages')
+
+    class Meta:
+        verbose_name = "Contact Message"
+        verbose_name_plural = "Contact Messages"
+        ordering = ['-submitted_at']
+        indexes = [
+            models.Index(fields=['-submitted_at']),
+            models.Index(fields=['is_read', 'is_spam']),
+            models.Index(fields=['ip_address', 'submitted_at']),
+        ]
+
+    def __str__(self):
+        return f"Message from {self.name} - {self.subject[:50]}"
+
+    def mark_as_read(self):
+        """Mark this message as read."""
+        self.is_read = True
+        self.save(update_fields=['is_read'])
+
+    def mark_as_responded(self):
+        """Mark this message as responded to."""
+        self.is_responded = True
+        self.save(update_fields=['is_responded'])
+
+    def flag_as_spam(self):
+        """Flag this message as spam."""
+        self.is_spam = True
+        self.save(update_fields=['is_spam'])

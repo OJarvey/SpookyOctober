@@ -119,7 +119,7 @@ def dashboard(request):
     """
 
     # Gather content statistics
-    from .models import Coupon
+    from .models import Coupon, ContactMessage
 
     stats = {
         'total_events': Event.objects.filter(is_active=True).count(),
@@ -128,8 +128,24 @@ def dashboard(request):
         'total_coupons': Coupon.objects.filter(is_active=True).count(),
     }
 
+    # Contact messages for staff users
+    contact_messages_data = None
+    if request.user.is_staff:
+        unread_messages = ContactMessage.objects.filter(
+            is_read=False,
+            is_spam=False
+        ).order_by('-submitted_at')
+
+        stats['unread_messages'] = unread_messages.count()
+        stats['total_messages'] = ContactMessage.objects.filter(is_spam=False).count()
+
+        contact_messages_data = {
+            'recent_messages': unread_messages[:5],  # Show 5 most recent unread
+        }
+
     return render(request, 'dashboard.html', {
-        'stats': stats
+        'stats': stats,
+        'contact_messages': contact_messages_data,
     })
 
 
@@ -251,6 +267,11 @@ def haunted_places(request):
             Q(location__name__icontains=search_query)
         )
 
+    # Handle scare level filter
+    scare_level = request.GET.get('scare_level', '').strip()
+    if scare_level:
+        haunted_places_list = haunted_places_list.filter(scare_level=scare_level)
+
     # Order by view count (most popular first)
     haunted_places_list = haunted_places_list.order_by('-view_count', 'story_title')
 
@@ -258,6 +279,7 @@ def haunted_places(request):
     context = {
         'haunted_places': haunted_places_list,
         'search_query': search_query,
+        'scare_level': scare_level,
     }
 
     # Render the template with the context
@@ -326,6 +348,11 @@ def events_list(request):
             Q(location__name__icontains=search_query)
         )
 
+    # Handle category filter
+    category = request.GET.get('category', '').strip()
+    if category:
+        events = events.filter(event_category=category)
+
     # Order by date
     events = events.order_by('event_date')
 
@@ -336,6 +363,7 @@ def events_list(request):
         'events': events,
         'featured_count': featured_count,
         'search_query': search_query,
+        'category': category,
     }
 
     return render(request, 'events_list.html', context)
@@ -391,6 +419,11 @@ def businesses_list(request):
             Q(business_type__icontains=search_query)
         )
 
+    # Handle business type filter
+    business_type = request.GET.get('business_type', '').strip()
+    if business_type:
+        businesses = businesses.filter(business_type=business_type)
+
     # Order by name
     businesses = businesses.order_by('business_name')
 
@@ -401,6 +434,7 @@ def businesses_list(request):
         'businesses': businesses,
         'verified_count': verified_count,
         'search_query': search_query,
+        'business_type': business_type,
     }
 
     return render(request, 'businesses_list.html', context)
@@ -466,6 +500,127 @@ def cookie_settings(request):
     URL: /cookie-settings/
     """
     return render(request, 'cookie_settings.html')
+
+
+def about(request):
+    """
+    About Page
+
+    Information about ShriekedIn platform, its mission, and team.
+
+    Template: templates/about.html
+    URL: /about/
+    """
+    # Get some platform statistics for display
+    stats = {
+        'total_users': User.objects.count(),
+        'total_events': Event.objects.filter(is_active=True).count(),
+        'total_haunted_places': HauntedPlace.objects.count(),
+        'total_businesses': Business.objects.filter(is_active=True).count(),
+    }
+
+    return render(request, 'about.html', {'stats': stats})
+
+
+def contact(request):
+    """
+    Contact Page with Form Submission
+
+    Handles contact form submissions with multiple security protections:
+    - Rate limiting (max 3 submissions per IP per hour)
+    - Honeypot field for bot detection
+    - Input sanitization and validation
+    - IP address and user agent tracking
+    - XSS and CSRF protection
+
+    Template: templates/contact.html
+    URL: /contact/
+    """
+    from django.utils import timezone
+    from datetime import timedelta
+    from .forms import ContactForm
+    from .models import ContactMessage
+
+    def get_client_ip(request):
+        """
+        Get the client's IP address from the request.
+        Handles proxy headers for accurate IP detection.
+        """
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+    # Get client IP and user agent
+    client_ip = get_client_ip(request)
+    user_agent = request.META.get('HTTP_USER_AGENT', '')[:500]  # Limit length
+
+    # Rate limiting: Check submissions from this IP in the last hour
+    one_hour_ago = timezone.now() - timedelta(hours=1)
+    recent_submissions = ContactMessage.objects.filter(
+        ip_address=client_ip,
+        submitted_at__gte=one_hour_ago
+    ).count()
+
+    # Allow max 3 submissions per hour per IP
+    if recent_submissions >= 3:
+        messages.error(
+            request,
+            'Too many contact form submissions. Please wait an hour before submitting again.'
+        )
+        return render(request, 'contact.html', {'form': ContactForm(), 'rate_limited': True})
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            # Create contact message
+            contact_message = ContactMessage(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message'],
+                ip_address=client_ip,
+                user_agent=user_agent,
+                honeypot=form.cleaned_data.get('website', ''),  # Should be empty
+            )
+
+            # Link to user if authenticated
+            if request.user.is_authenticated:
+                contact_message.user = request.user
+
+            # Auto-flag as spam if honeypot is filled
+            if contact_message.honeypot:
+                contact_message.is_spam = True
+
+            contact_message.save()
+
+            # Show success message (even for spam, to avoid revealing detection)
+            messages.success(
+                request,
+                'Thank you for your message! We\'ll get back to you soon. 👻'
+            )
+
+            # Redirect to prevent form resubmission
+            return redirect('core:contact')
+
+        else:
+            # Form validation failed
+            messages.error(
+                request,
+                'Please correct the errors below and try again.'
+            )
+
+    else:
+        # GET request - display empty form
+        form = ContactForm()
+
+    return render(request, 'contact.html', {
+        'form': form,
+        'rate_limited': False,
+    })
 
 
 # Custom 404 error handler

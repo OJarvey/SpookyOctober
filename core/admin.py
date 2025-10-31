@@ -17,7 +17,8 @@ from .models import (
     Coupon,
     Post,
     Like,
-    Comment
+    Comment,
+    ContactMessage
 )
 
 
@@ -393,6 +394,94 @@ class CommentAdmin(admin.ModelAdmin):
             return format_html('<span style="color: blue;">↳ Reply</span>')
         return format_html('<span style="color: gray;">Top-level</span>')
     is_reply_display.short_description = 'Type'
+
+
+# ================================================================
+# CONTACT MESSAGE ADMIN
+# ================================================================
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['status_display', 'name', 'email', 'subject_preview', 'submitted_at', 'is_spam_display', 'user']
+    list_filter = ['is_read', 'is_spam', 'is_responded', 'submitted_at']
+    search_fields = ['name', 'email', 'subject', 'message', 'ip_address']
+    readonly_fields = ['submitted_at', 'ip_address', 'user_agent', 'honeypot', 'user']
+    date_hierarchy = 'submitted_at'
+    actions = ['mark_as_read', 'mark_as_unread', 'mark_as_spam', 'mark_as_not_spam', 'mark_as_responded']
+
+    fieldsets = (
+        ('Message Information', {
+            'fields': ('name', 'email', 'subject', 'message')
+        }),
+        ('Status', {
+            'fields': ('is_read', 'is_responded', 'is_spam', 'response_notes')
+        }),
+        ('Security Information', {
+            'fields': ('ip_address', 'user_agent', 'honeypot', 'submitted_at'),
+            'classes': ('collapse',),
+            'description': 'Security tracking data for spam prevention'
+        }),
+        ('User Link', {
+            'fields': ('user',),
+            'classes': ('collapse',),
+            'description': 'Linked user if submitted while logged in'
+        }),
+    )
+
+    def status_display(self, obj):
+        """Display read/unread status with color coding."""
+        if obj.is_spam:
+            return format_html('<span style="background-color: #DC2626; color: white; padding: 3px 8px; border-radius: 3px;">SPAM</span>')
+        elif obj.is_responded:
+            return format_html('<span style="background-color: #059669; color: white; padding: 3px 8px; border-radius: 3px;">✓ RESPONDED</span>')
+        elif obj.is_read:
+            return format_html('<span style="background-color: #3B82F6; color: white; padding: 3px 8px; border-radius: 3px;">READ</span>')
+        else:
+            return format_html('<span style="background-color: #F59E0B; color: white; padding: 3px 8px; border-radius: 3px; font-weight: bold;">● NEW</span>')
+    status_display.short_description = 'Status'
+
+    def subject_preview(self, obj):
+        """Show truncated subject."""
+        return obj.subject[:50] + '...' if len(obj.subject) > 50 else obj.subject
+    subject_preview.short_description = 'Subject'
+
+    def is_spam_display(self, obj):
+        """Display spam flag with icon."""
+        if obj.is_spam:
+            return format_html('<span style="color: red;">🚫 Yes</span>')
+        return format_html('<span style="color: green;">✓ No</span>')
+    is_spam_display.short_description = 'Spam?'
+
+    # Admin actions
+    def mark_as_read(self, request, queryset):
+        """Mark selected messages as read."""
+        updated = queryset.update(is_read=True)
+        self.message_user(request, f'{updated} message(s) marked as read.')
+    mark_as_read.short_description = 'Mark selected as read'
+
+    def mark_as_unread(self, request, queryset):
+        """Mark selected messages as unread."""
+        updated = queryset.update(is_read=False)
+        self.message_user(request, f'{updated} message(s) marked as unread.')
+    mark_as_unread.short_description = 'Mark selected as unread'
+
+    def mark_as_spam(self, request, queryset):
+        """Flag selected messages as spam."""
+        updated = queryset.update(is_spam=True)
+        self.message_user(request, f'{updated} message(s) flagged as spam.')
+    mark_as_spam.short_description = 'Flag as spam'
+
+    def mark_as_not_spam(self, request, queryset):
+        """Unflag selected messages as spam."""
+        updated = queryset.update(is_spam=False)
+        self.message_user(request, f'{updated} message(s) unflagged as spam.')
+    mark_as_not_spam.short_description = 'Unflag as spam'
+
+    def mark_as_responded(self, request, queryset):
+        """Mark selected messages as responded."""
+        updated = queryset.update(is_responded=True, is_read=True)
+        self.message_user(request, f'{updated} message(s) marked as responded.')
+    mark_as_responded.short_description = 'Mark as responded'
 
 
 # ================================================================

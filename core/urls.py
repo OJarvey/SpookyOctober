@@ -93,6 +93,21 @@ urlpatterns = [
     path('cookie-settings/', views.cookie_settings, name='cookie_settings'),
 
     #################################################################
+    # INFORMATIONAL PAGES
+    #################################################################
+    # URL: /about/
+    # View: views.about
+    # Template: templates/about.html
+    # Purpose: Display information about ShriekedIn platform and team
+    path('about/', views.about, name='about'),
+
+    # URL: /contact/
+    # View: views.contact
+    # Template: templates/contact.html
+    # Purpose: Display contact form with security protections and handle submissions
+    path('contact/', views.contact, name='contact'),
+
+    #################################################################
     # HAUNTED PLACES
     #################################################################
     # URL: /haunted/
