@@ -82,6 +82,11 @@ if settings.DEBUG:
     # Media files will be added when we implement image uploads:
     # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+    # Auto-reload browser on file changes (development only)
+    urlpatterns = [
+        path("__reload__/", include("django_browser_reload.urls")),
+    ] + urlpatterns
+
 #################################################################
 # CUSTOM ERROR HANDLERS
 #################################################################
