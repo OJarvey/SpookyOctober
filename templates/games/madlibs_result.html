@@ -8,9 +8,7 @@
         <div class="container mx-auto px-4 text-center">
             <div class="text-5xl mb-3">🎉</div>
             <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Your Story is Ready!</h1>
-            <p class="text-base md:text-lg text-orange-200">
-                {{ madlib.template.title }}
-            </p>
+            <p class="text-base md:text-lg text-orange-200">{{ madlib.template.title }}</p>
         </div>
     </section>
 
@@ -33,9 +31,7 @@
 
             <!-- The Completed Story -->
             <div class="px-6 py-8">
-                <div class="text-lg leading-8 text-gray-800 whitespace-pre-line">
-                    {{ madlib.completed_text }}
-                </div>
+                <div class="text-lg leading-8 text-gray-800 whitespace-pre-line">{{ madlib.completed_text }}</div>
             </div>
 
             <!-- Stats Footer -->
@@ -100,60 +96,68 @@
             </a>
         </div>
     </div>
+
 {% endblock %}
 
 {% block extra_js %}
-<script>
-function copyShareLink() {
-    const input = document.getElementById('share-link');
-    const feedback = document.getElementById('copy-feedback');
+    <script>
+        function copyShareLink() {
+            const input = document.getElementById('share-link');
+            const feedback = document.getElementById('copy-feedback');
 
-    // Select and copy the text
-    input.select();
-    input.setSelectionRange(0, 99999); // For mobile devices
+            // Select and copy the text
+            input.select();
+            input.setSelectionRange(0, 99999); // For mobile devices
 
-    try {
-        document.execCommand('copy');
+            try {
+                document.execCommand('copy');
 
-        // Show feedback
-        feedback.classList.remove('hidden');
+                // Show feedback
+                feedback.classList.remove('hidden');
 
-        // Hide feedback after 3 seconds
-        setTimeout(() => {
-            feedback.classList.add('hidden');
-        }, 3000);
-    } catch (err) {
-        alert('Failed to copy link. Please copy manually.');
-    }
+                // Hide feedback after 3 seconds
+                setTimeout(() => {
+                    feedback.classList.add('hidden');
+                }, 3000);
+            } catch (err) {
+                alert('Failed to copy link. Please copy manually.');
+            }
 
-    // Deselect
-    window.getSelection().removeAllRanges();
-}
+            // Deselect
+            window.getSelection().removeAllRanges();
+        }
 
-// Print styles
-window.addEventListener('beforeprint', function() {
-    // Could add custom print formatting here if needed
-});
-</script>
+        // Print styles
+        window.addEventListener('beforeprint', function() {
+            // Could add custom print formatting here if needed
+        });
+    </script>
 
-<style>
-@media print {
-    /* Hide navigation, footer, and action buttons when printing */
-    nav, footer, .btn-primary, .btn-secondary, button {
-        display: none !important;
-    }
+    <style>
+        @media print {
 
-    /* Make story text larger for printing */
-    .prose {
-        font-size: 14pt;
-        line-height: 1.8;
-    }
+            /* Hide navigation, footer, and action buttons when printing */
+            nav,
+            footer,
+            .btn-primary,
+            .btn-secondary,
+            button {
+                display: none !important;
+            }
 
-    /* Remove shadows and borders for cleaner print */
-    .shadow-2xl, .border-4 {
-        box-shadow: none !important;
-        border: 1px solid #ccc !important;
-    }
-}
-</style>
+            /* Make story text larger for printing */
+            .prose {
+                font-size: 14pt;
+                line-height: 1.8;
+            }
+
+            /* Remove shadows and borders for cleaner print */
+            .shadow-2xl,
+            .border-4 {
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+            }
+        }
+    </style>
+
 {% endblock %}
