@@ -1,0 +1,331 @@
+/**
+ * Accessibility Utilities for ShriekedIn
+ *
+ * This file contains CSS classes and styles to improve accessibility
+ * compliance with WCAG 2.1 Level AA standards.
+ */
+
+/* ============================================================================
+   SCREEN READER ONLY UTILITIES
+   ============================================================================ */
+
+/**
+ * .sr-only - Hide content visually but keep it accessible to screen readers
+ *
+ * Use this class when you need to provide information to screen reader users
+ * but don't want it visible on screen.
+ *
+ * Example:
+ *   <label for="search" class="sr-only">Search for events</label>
+ *   <input id="search" type="text" placeholder="Search...">
+ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/**
+ * .sr-only-focusable - Screen reader only, but visible when focused
+ *
+ * Use for skip navigation links and other elements that should be hidden
+ * until focused by keyboard navigation.
+ */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* ============================================================================
+   SKIP NAVIGATION LINK
+   ============================================================================ */
+
+/**
+ * Skip link styling - appears when focused via keyboard
+ */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    z-index: 9999;
+    padding: 1rem 2rem;
+    background: #ffffff;
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
+    border: 3px solid #f97316;
+    border-radius: 0 0 0.5rem 0.5rem;
+    transition: left 0.2s ease;
+}
+
+.skip-link:focus {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    outline: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================================
+   ENHANCED FOCUS INDICATORS
+   ============================================================================ */
+
+/**
+ * Global focus styles for keyboard navigation
+ * Ensures all interactive elements have visible focus indicators
+ */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[tabindex]:not([tabindex="-1"]):focus {
+    outline: 3px solid #f97316;
+    outline-offset: 2px;
+}
+
+/**
+ * Custom focus for button elements with class styles
+ */
+.btn-primary:focus,
+.btn-secondary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.5),
+                0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/**
+ * Focus for card elements that are clickable
+ */
+.event-card:focus-within,
+.business-card:focus-within,
+.haunted-card:focus-within {
+    outline: 2px solid #f97316;
+    outline-offset: 2px;
+}
+
+/**
+ * Ensure focus is never completely removed
+ * Some designs remove outline, this is a fallback
+ */
+*:focus-visible {
+    outline: 3px solid #f97316;
+    outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users (keeps it for keyboard) */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/**
+ * Mobile menu button focus
+ */
+#mobile-menu-button:focus {
+    outline: 3px solid #f97316;
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+}
+
+/* ============================================================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================================================ */
+
+/**
+ * Ensure borders are visible in Windows High Contrast Mode
+ */
+@media (prefers-contrast: high) {
+    .card,
+    .event-card,
+    .business-card,
+    .haunted-card {
+        border: 2px solid currentColor;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        border: 2px solid currentColor;
+    }
+}
+
+/* ============================================================================
+   REDUCED MOTION SUPPORT
+   ============================================================================ */
+
+/**
+ * Disable animations for users who prefer reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .skip-link {
+        transition: none;
+    }
+}
+
+/* ============================================================================
+   LINK UNDERLINES FOR ACCESSIBILITY
+   ============================================================================ */
+
+/**
+ * Ensure links are distinguishable from regular text
+ * Don't rely on color alone (WCAG 1.4.1)
+ */
+a:not(.btn-primary):not(.btn-secondary):not(.skip-link) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+a:not(.btn-primary):not(.btn-secondary):not(.skip-link):hover {
+    text-decoration-thickness: 2px;
+}
+
+/**
+ * Navigation links exception - already distinguishable by context
+ */
+nav a {
+    text-decoration: none;
+}
+
+nav a:focus,
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================================
+   FORM FOCUS STYLES
+   ============================================================================ */
+
+/**
+ * Enhanced focus for form inputs
+ */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+    outline: none;
+}
+
+/**
+ * Error state for form inputs
+ */
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border-color: #dc2626;
+    border-width: 2px;
+}
+
+input[aria-invalid="true"]:focus,
+select[aria-invalid="true"]:focus,
+textarea[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+/* ============================================================================
+   LIVE REGION UTILITIES
+   ============================================================================ */
+
+/**
+ * Polite announcements - don't interrupt current speech
+ */
+[aria-live="polite"] {
+    /* Content will be announced when screen reader is idle */
+}
+
+/**
+ * Assertive announcements - interrupt current speech
+ */
+[aria-live="assertive"] {
+    /* Content will be announced immediately */
+}
+
+/* ============================================================================
+   MOBILE MENU ACCESSIBILITY
+   ============================================================================ */
+
+/**
+ * Ensure mobile menu is properly hidden when not expanded
+ */
+#mobile-menu[aria-hidden="true"] {
+    display: none;
+    visibility: hidden;
+}
+
+/**
+ * Mobile menu focus trap
+ */
+#mobile-menu:focus-within {
+    outline: 2px solid #f97316;
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+/**
+ * Show skip links and sr-only content in print
+ */
+@media print {
+    .sr-only,
+    .skip-link {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+    }
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+/**
+ * For elements that should be completely hidden from everyone
+ */
+.hidden-accessible {
+    display: none;
+    visibility: hidden;
+}
+
+/**
+ * For decorative elements that should be hidden from screen readers
+ */
+[aria-hidden="true"] {
+    /* Aria attribute handles this, but adding for clarity */
+}
+
+/**
+ * Focus trap helper - prevents focus from leaving a modal/dialog
+ */
+.focus-trap-boundary {
+    /* JavaScript will handle focus trapping */
+}

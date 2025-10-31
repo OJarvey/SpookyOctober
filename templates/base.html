@@ -13,6 +13,9 @@
         <!-- Tailwind CSS -->
         <link rel="stylesheet" href="{% static 'css/tailwind-output.css' %}">
 
+        <!-- Accessibility CSS -->
+        <link rel="stylesheet" href="{% static 'css/accessibility.css' %}">
+
         <!-- Google Fonts for Halloween Theme -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +34,9 @@
     </head>
     <body class="bg-gray-50 min-h-screen flex flex-col">
 
+        <!-- Skip Navigation Link for Keyboard Users -->
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+
         <!-- Cookie Consent Banner -->
         {% include 'cookie_consent/cookiebar.html' %}
 
@@ -47,8 +53,12 @@
                     </div>
 
                     <!-- Mobile Menu Button -->
-                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button id="mobile-menu-button"
+                            class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded p-2"
+                            aria-expanded="false"
+                            aria-controls="mobile-menu"
+                            aria-label="Toggle navigation menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
@@ -71,7 +81,7 @@
                 </div>
 
                 <!-- Mobile Menu (Hidden by default) -->
-                <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <nav id="mobile-menu" class="hidden md:hidden pb-4" aria-label="Mobile navigation">
                     <div class="flex flex-col space-y-2">
                         <a href="{% url 'core:home' %}" class="hover:text-orange-300 transition duration-300 py-2">Home</a>
                         <a href="{% url 'core:events_list' %}" class="hover:text-orange-300 transition duration-300 py-2">Events</a>
@@ -86,7 +96,7 @@
                             <a href="{% url 'core:login' %}" class="btn-primary inline-block text-center mt-2">Login</a>
                         {% endif %}
                     </div>
-                </div>
+                </nav>
             </div>
         </nav>
 
@@ -103,7 +113,7 @@
         {% endif %}
 
         <!-- Main Content -->
-        <main class="flex-grow">
+        <main id="main-content" class="flex-grow" tabindex="-1">
 
             {% block content %}<!-- Page-specific content goes here -->{% endblock %}
         </main>
@@ -172,10 +182,30 @@
 
         <!-- Mobile Menu Toggle Script -->
         <script>
-            // Simple vanilla JavaScript for mobile menu toggle
+            // Mobile menu toggle with accessibility improvements
             document.getElementById('mobile-menu-button').addEventListener('click', function() {
                 const menu = document.getElementById('mobile-menu');
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+                // Toggle menu visibility
                 menu.classList.toggle('hidden');
+
+                // Update ARIA state
+                this.setAttribute('aria-expanded', !isExpanded);
+            });
+
+            // Close menu on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const button = document.getElementById('mobile-menu-button');
+                    const menu = document.getElementById('mobile-menu');
+
+                    if (!menu.classList.contains('hidden')) {
+                        menu.classList.add('hidden');
+                        button.setAttribute('aria-expanded', 'false');
+                        button.focus(); // Return focus to button
+                    }
+                }
             });
         </script>
 

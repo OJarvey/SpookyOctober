@@ -185,32 +185,40 @@ FILTER/SEARCH SECTION
 Purpose: Allow users to filter haunted places by criteria
 This is a placeholder for future functionality (Sprint 4)
 -->
-    <section class="py-8 bg-white border-b">
+    <section class="py-8 bg-white border-b" aria-labelledby="haunted-search-heading">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <h2 class="text-2xl font-bold text-gray-800">🔍 Find Your Fright</h2>
+                <h2 id="haunted-search-heading" class="text-2xl font-bold text-gray-800">🔍 Find Your Fright</h2>
 
-                {# Simple filter form (placeholder for now) #}
-                <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                {# Search form with accessibility improvements #}
+                <form role="search" method="GET" action="{% url 'core:haunted_places' %}" class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                     {# Search input #}
+                    <label for="haunted-search-input" class="sr-only">Search for haunted places</label>
                     <input type="text"
                            id="haunted-search-input"
+                           name="search"
                            placeholder="Search haunted places..."
                            value="{{ search_query }}"
+                           aria-label="Search for haunted places by name, location, or story"
                            class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
 
-                    {# Filter dropdown #}
-                    <select class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
-                        <option value="">All Types</option>
-                        <option value="house">Haunted Houses</option>
-                        <option value="cemetery">Cemeteries</option>
-                        <option value="building">Historic Buildings</option>
-                        <option value="landmark">Local Landmarks</option>
+                    {# Scare level filter dropdown #}
+                    <label for="haunted-scare-filter" class="sr-only">Filter by scare level</label>
+                    <select id="haunted-scare-filter"
+                            name="scare_level"
+                            aria-label="Filter haunted places by scare level"
+                            class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
+                        <option value="">All Scare Levels</option>
+                        <option value="1" {% if scare_level == '1' %}selected{% endif %}>1 - Not Scary (Family Friendly)</option>
+                        <option value="2" {% if scare_level == '2' %}selected{% endif %}>2 - Mildly Spooky</option>
+                        <option value="3" {% if scare_level == '3' %}selected{% endif %}>3 - Moderately Scary</option>
+                        <option value="4" {% if scare_level == '4' %}selected{% endif %}>4 - Very Scary</option>
+                        <option value="5" {% if scare_level == '5' %}selected{% endif %}>5 - Terrifying (Adults Only)</option>
                     </select>
 
                     {# Search button #}
-                    <button class="btn-primary px-6 py-2">Search</button>
-                </div>
+                    <button type="submit" class="btn-primary px-6 py-2" aria-label="Search for haunted places">Search</button>
+                </form>
             </div>
         </div>
     </section>
@@ -240,46 +248,46 @@ In the view, you define: context = {'haunted_places': [...]}
 
                     {# Loop through each haunted place #}
                     {% for place in haunted_places %}
-                        <div class="haunted-card bg-white rounded-lg shadow-lg overflow-hidden spooky-border">
+                        <article class="haunted-card bg-white rounded-lg shadow-lg overflow-hidden spooky-border" aria-labelledby="haunted-{{ place.id }}-title">
 
                             {# Place image or placeholder #}
                             {% if place.image %}
-                                <img src="{{ place.image.url }}" alt="{{ place.name }}" class="w-full h-48 object-cover">
+                                <img src="{{ place.image.url }}" alt="{{ place.story_title }}" class="w-full h-48 object-cover">
                             {% else %}
                                 {# Placeholder if no image #}
-                                <div class="w-full h-48 bg-gradient-to-br from-purple-800 to-orange-600 flex items-center justify-center">
-                                    <span class="text-6xl">👻</span>
+                                <div class="w-full h-48 bg-gradient-to-br from-purple-800 to-orange-600 flex items-center justify-center" aria-hidden="true">
+                                    <span class="text-6xl" aria-hidden="true">👻</span>
                                 </div>
                             {% endif %}
 
                             {# Card content #}
                             <div class="p-6">
                                 {# Place name/title #}
-                                <h3 class="text-2xl font-bold text-purple-900 mb-2">{{ place.name }}</h3>
+                                <h3 id="haunted-{{ place.id }}-title" class="text-2xl font-bold text-purple-900 mb-2">{{ place.story_title }}</h3>
 
                                 {# Location #}
                                 <p class="text-gray-600 mb-3 flex items-center">
-                                    <span class="mr-2">📍</span>
-                                    {{ place.location|default:"Unknown Location" }}
+                                    <span class="mr-2" aria-hidden="true">📍</span>
+                                    {{ place.location.city }}, {{ place.location.state }}
                                 </p>
 
-                                {# Place type badge #}
+                                {# Scare level badge #}
                                 <span class="inline-block px-3 py-1 bg-orange-200 text-orange-800 rounded-full text-sm font-semibold mb-4">
-                                    {{ place.place_type|default:"Haunted Location" }}
+                                    Scare Level: {{ place.get_scare_level_display }}
                                 </span>
 
-                                {# Description with truncate filter - limits to 30 words and adds "..." #}
-                                <p class="text-gray-700 mb-4">{{ place.description|truncatewords:30 }}</p>
+                                {# Story excerpt with truncate filter - limits to 30 words and adds "..." #}
+                                <p class="text-gray-700 mb-4">{{ place.story_content|truncatewords:30 }}</p>
 
-                                {# Scary rating displayed as ghost emojis #}
-                                <div class="flex items-center mb-4">
-                                    <span class="text-sm font-semibold text-gray-700 mr-2">Scary Rating:</span>
+                                {# Scare rating displayed as ghost emojis #}
+                                <div class="flex items-center mb-4" role="img" aria-label="Scare level {{ place.scare_level }} out of 5">
+                                    <span class="text-sm font-semibold text-gray-700 mr-2">Scare Level:</span>
                                     {# Display 5 ghosts, colored based on rating #}
                                     {% for i in "12345"|make_list %}
-                                        {% if forloop.counter <= place.scary_rating|default:3 %}
-                                            <span class="text-orange-500">👻</span>
+                                        {% if forloop.counter <= place.scare_level %}
+                                            <span class="text-orange-500" aria-hidden="true">👻</span>
                                         {% else %}
-                                            <span class="text-gray-300">👻</span>
+                                            <span class="text-gray-300" aria-hidden="true">👻</span>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
@@ -287,13 +295,19 @@ In the view, you define: context = {'haunted_places': [...]}
                                 {# Action buttons #}
                                 <div class="flex gap-3">
                                     {# Dynamic URL with parameter - passes place.id to detail view #}
-                                    <a href="{% url 'core:haunted_detail' place.id %}" class="flex-1 btn-primary text-center py-2">Read Story</a>
+                                    <a href="{% url 'core:haunted_detail' place.id %}"
+                                       class="flex-1 btn-primary text-center py-2"
+                                       aria-label="Read the story of {{ place.story_title }}">
+                                        Read Story <span aria-hidden="true">→</span>
+                                    </a>
 
                                     <button class="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-600 hover:text-white transition duration-300"
-                                            title="Save to favorites">🔖</button>
+                                            aria-label="Save {{ place.story_title }} to favorites">
+                                        <span aria-hidden="true">🔖</span>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </article>
                     {% endfor %}
                     {# End of for loop #}
 

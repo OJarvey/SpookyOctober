@@ -38,39 +38,49 @@
     <div class="container mx-auto px-4 py-8">
 
         <!-- Filter/Search Section -->
-        <section class="py-8 bg-white border-b">
+        <section class="py-8 bg-white border-b" aria-labelledby="events-search-heading">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-                    <h2 class="text-2xl font-bold text-gray-800">🔍 Find Your Event</h2>
+                    <h2 id="events-search-heading" class="text-2xl font-bold text-gray-800">🔍 Find Your Event</h2>
 
-                    <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                    <form role="search" method="GET" action="{% url 'core:events_list' %}" class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                         <!-- Search input -->
+                        <label for="events-search-input" class="sr-only">Search for events</label>
                         <input type="text"
                                id="events-search-input"
+                               name="search"
                                placeholder="Search events..."
                                value="{{ search_query }}"
+                               aria-label="Search for Halloween events by name or location"
                                class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
 
                         <!-- Category filter -->
-                        <select class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
+                        <label for="events-category-filter" class="sr-only">Filter by event category</label>
+                        <select id="events-category-filter"
+                                name="category"
+                                aria-label="Filter events by category"
+                                class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
                             <option value="">All Categories</option>
-                            <option value="festival">Festival</option>
-                            <option value="haunted_house">Haunted House</option>
-                            <option value="tour">Tour</option>
-                            <option value="party">Party</option>
-                            <option value="family_friendly">Family Friendly</option>
-                            <option value="paranormal">Paranormal</option>
+                            <option value="haunted_house" {% if category == 'haunted_house' %}selected{% endif %}>Haunted House</option>
+                            <option value="costume_party" {% if category == 'costume_party' %}selected{% endif %}>Costume Party</option>
+                            <option value="trick_or_treat" {% if category == 'trick_or_treat' %}selected{% endif %}>Trick or Treat</option>
+                            <option value="ghost_tour" {% if category == 'ghost_tour' %}selected{% endif %}>Ghost Tour</option>
+                            <option value="pumpkin_carving" {% if category == 'pumpkin_carving' %}selected{% endif %}>Pumpkin Carving</option>
+                            <option value="halloween_market" {% if category == 'halloween_market' %}selected{% endif %}>Halloween Market</option>
+                            <option value="film_screening" {% if category == 'film_screening' %}selected{% endif %}>Film Screening</option>
+                            <option value="parade" {% if category == 'parade' %}selected{% endif %}>Halloween Parade</option>
+                            <option value="other" {% if category == 'other' %}selected{% endif %}>Other</option>
                         </select>
 
                         <!-- Search button -->
-                        <button class="btn-primary px-6 py-2">Search</button>
-                    </div>
+                        <button type="submit" class="btn-primary px-6 py-2" aria-label="Search for events">Search</button>
+                    </form>
                 </div>
             </div>
         </section>
 
         <!-- Stats Bar -->
-        <div class="bg-gradient-to-r from-orange-100 to-purple-100 rounded-lg p-4 mb-8 text-center">
+        <div class="bg-gradient-to-r from-orange-100 to-purple-100 rounded-lg p-4 mb-8 text-center" role="status" aria-live="polite">
             <p class="text-gray-700">
                 <strong>{{ events.count }}</strong> event{{ events.count|pluralize }} found
                 {% if featured_count %}
@@ -84,18 +94,20 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
                 {% for event in events %}
                     {% cycle 'from-orange-500 to-red-600' 'from-purple-600 to-pink-600' 'from-orange-600 to-purple-700' 'from-red-600 to-orange-500' 'from-purple-700 to-indigo-600' 'from-pink-600 to-orange-500' as gradient silent %}
-                    <div class="event-card bg-white rounded-lg shadow-lg overflow-hidden border-2 border-purple-200">
+                    <article class="event-card bg-white rounded-lg shadow-lg overflow-hidden border-2 border-purple-200" aria-labelledby="event-{{ event.id }}-title">
 
                         <!-- Event Image/Gradient Placeholder -->
-                        <div class="relative w-full h-48 bg-gradient-to-br {{ gradient }} flex items-center justify-center">
-                            <span class="text-6xl">🎃</span>
-                            {% if event.is_featured %}<span class="absolute top-3 right-3 text-4xl">⭐</span>{% endif %}
+                        <div class="relative w-full h-48 bg-gradient-to-br {{ gradient }} flex items-center justify-center" aria-hidden="true">
+                            <span class="text-6xl" aria-hidden="true">🎃</span>
+                            {% if event.is_featured %}
+                                <span class="absolute top-3 right-3 text-4xl" role="img" aria-label="Featured event">⭐</span>
+                            {% endif %}
                         </div>
 
                         <!-- Event Content -->
                         <div class="p-6">
                             <!-- Title -->
-                            <h3 class="text-2xl font-bold text-purple-900 mb-3">{{ event.title }}</h3>
+                            <h3 id="event-{{ event.id }}-title" class="text-2xl font-bold text-purple-900 mb-3">{{ event.title }}</h3>
 
                             <!-- Location -->
                             <p class="text-gray-600 mb-3 flex items-center">
@@ -142,9 +154,13 @@
                             </div>
 
                             <!-- Action Button -->
-                            <a href="{% url 'core:event_detail' event.id %}" class="block w-full text-center btn-primary py-2">View Details →</a>
+                            <a href="{% url 'core:event_detail' event.id %}"
+                               class="block w-full text-center btn-primary py-2"
+                               aria-label="View details for {{ event.title }}">
+                                View Details <span aria-hidden="true">→</span>
+                            </a>
                         </div>
-                    </div>
+                    </article>
                 {% endfor %}
             </div>
         {% else %}
