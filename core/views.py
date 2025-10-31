@@ -233,13 +233,31 @@ def haunted_places(request):
     Template: templates/haunted_places.html
     URL: /haunted/
     """
+    from django.db.models import Q
 
-    # Get all haunted places from the database, ordered by view count (most popular first)
-    haunted_places_list = HauntedPlace.objects.select_related('location').order_by('-view_count', 'story_title')
+    # Get all haunted places from the database
+    haunted_places_list = HauntedPlace.objects.select_related('location')
+
+    # Handle search query
+    search_query = request.GET.get('search', '').strip()
+    if search_query:
+        # Search across multiple fields
+        haunted_places_list = haunted_places_list.filter(
+            Q(story_title__icontains=search_query) |
+            Q(story_content__icontains=search_query) |
+            Q(historical_context__icontains=search_query) |
+            Q(location__city__icontains=search_query) |
+            Q(location__state__icontains=search_query) |
+            Q(location__name__icontains=search_query)
+        )
+
+    # Order by view count (most popular first)
+    haunted_places_list = haunted_places_list.order_by('-view_count', 'story_title')
 
     # Context dictionary - data passed to the template
     context = {
         'haunted_places': haunted_places_list,
+        'search_query': search_query,
     }
 
     # Render the template with the context

@@ -194,8 +194,11 @@ This is a placeholder for future functionality (Sprint 4)
                 <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                     {# Search input #}
                     <input type="text"
+                           id="haunted-search-input"
                            placeholder="Search haunted places..."
+                           value="{{ search_query }}"
                            class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
+                    <p class="text-xs text-gray-500 mt-1">Start typing (min 3 chars) to search...</p>
 
                     {# Filter dropdown #}
                     <select class="px-4 py-2 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition">
@@ -400,13 +403,28 @@ TIPS SECTION - Educational Content
             });
         });
 
-        // Example: Simple search functionality (placeholder)
-        const searchInput = document.querySelector('input[type="text"]');
+        // Debounced search functionality
+        const searchInput = document.getElementById('haunted-search-input');
         if (searchInput) {
+            let debounceTimer;
+
             searchInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                console.log('User searching for:', searchTerm);
-                // In production, you'd filter results or make an AJAX call here
+                clearTimeout(debounceTimer);
+                const query = e.target.value.trim();
+
+                // Only search if 3+ characters or empty (to show all)
+                if (query.length >= 3 || query.length === 0) {
+                    debounceTimer = setTimeout(() => {
+                        // Update URL with search parameter
+                        const url = new URL(window.location.href);
+                        if (query.length > 0) {
+                            url.searchParams.set('search', query);
+                        } else {
+                            url.searchParams.delete('search');
+                        }
+                        window.location.href = url.toString();
+                    }, 500); // 500ms debounce delay
+                }
             });
         }
     </script>
