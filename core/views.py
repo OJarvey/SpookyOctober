@@ -203,6 +203,167 @@ def get_technical_stats():
     }
 
 
+def haunted_places(request):
+    """
+    Haunted Places Listing View
+
+    This view displays a list of haunted locations with ghost stories and legends.
+    Currently shows sample data - in Sprint 4, this will pull from the database.
+
+    For junior developers:
+    ----------------------
+    This is a simple view that renders a template with context data.
+
+    Context data is a dictionary that gets passed to the template.
+    In the template, you can access these variables using {{ variable_name }}
+
+    Example:
+        context = {'name': 'Ghost House'}
+        In template: {{ name }} displays "Ghost House"
+
+    Template: templates/haunted_places.html
+    URL: /haunted/
+    """
+
+    # Sample data for demonstration
+    # TODO: In Sprint 4, replace this with: HauntedPlace.objects.all()
+    sample_haunted_places = [
+        {
+            'id': 1,
+            'name': 'The Winchester Mystery House',
+            'location': 'San Jose, California',
+            'description': 'A sprawling mansion with staircases to nowhere, doors that open to walls, and countless architectural oddities. Built by Sarah Winchester who believed she was haunted by the spirits of those killed by Winchester rifles.',
+            'place_type': 'Historic Mansion',
+            'scary_rating': 4,
+            'image': None,
+        },
+        {
+            'id': 2,
+            'name': 'Eastern State Penitentiary',
+            'location': 'Philadelphia, Pennsylvania',
+            'description': 'Once the most famous and expensive prison in the world, this Gothic fortress now stands in ruins. Visitors report shadow figures, cackling laughter, and ghostly faces appearing in cell doorways.',
+            'place_type': 'Historic Prison',
+            'scary_rating': 5,
+            'image': None,
+        },
+        {
+            'id': 3,
+            'name': 'The Stanley Hotel',
+            'location': 'Estes Park, Colorado',
+            'description': 'The hotel that inspired Stephen King to write "The Shining." Guests report hearing children playing in empty hallways, piano music from the music room, and ghost sightings throughout the building.',
+            'place_type': 'Historic Hotel',
+            'scary_rating': 3,
+            'image': None,
+        },
+        {
+            'id': 4,
+            'name': 'Bachelor\'s Grove Cemetery',
+            'location': 'Midlothian, Illinois',
+            'description': 'One of the most haunted cemeteries in America. Paranormal investigators have documented over 100 different phenomena including ghost lights, apparitions, and mysterious glowing orbs.',
+            'place_type': 'Cemetery',
+            'scary_rating': 5,
+            'image': None,
+        },
+        {
+            'id': 5,
+            'name': 'The Myrtles Plantation',
+            'location': 'St. Francisville, Louisiana',
+            'description': 'Built in 1796, this plantation is reportedly home to at least 12 ghosts. The most famous is Chloe, a former slave whose spirit is said to roam the grounds. Visitors report handprints on mirrors and furniture that moves on its own.',
+            'place_type': 'Historic Plantation',
+            'scary_rating': 4,
+            'image': None,
+        },
+        {
+            'id': 6,
+            'name': 'Waverly Hills Sanatorium',
+            'location': 'Louisville, Kentucky',
+            'description': 'A former tuberculosis hospital where thousands died. The building features a "body chute" used to remove corpses. Paranormal activity is rampant, with reports of shadow people, full-bodied apparitions, and disembodied voices.',
+            'place_type': 'Abandoned Hospital',
+            'scary_rating': 5,
+            'image': None,
+        },
+    ]
+
+    # Context dictionary - data passed to the template
+    context = {
+        'haunted_places': sample_haunted_places,
+    }
+
+    # Render the template with the context
+    return render(request, 'haunted_places.html', context)
+
+
+def haunted_detail(request, place_id):
+    """
+    Haunted Place Detail View
+
+    This view displays detailed information about a specific haunted place.
+    Currently shows sample data - in Sprint 4, this will pull from the database.
+
+    For junior developers:
+    ----------------------
+    This view receives a parameter (place_id) from the URL.
+
+    URL pattern:  /haunted/<int:place_id>/
+    Example URL:  /haunted/42/
+    Result:       haunted_detail(request, place_id=42)
+
+    The place_id is captured from the URL and passed as a function parameter.
+
+    Template: templates/haunted_detail.html (to be created)
+    URL: /haunted/<int:place_id>/
+    """
+
+    # Sample data lookup (simulating database query)
+    # TODO: In Sprint 4, replace with: HauntedPlace.objects.get(id=place_id)
+    sample_places = {
+        1: {
+            'id': 1,
+            'name': 'The Winchester Mystery House',
+            'location': 'San Jose, California',
+            'full_description': '''
+                The Winchester Mystery House is a sprawling 160-room Victorian mansion that defies all
+                architectural logic. Built by Sarah Winchester, widow of gun magnate William Wirt Winchester,
+                construction continued 24 hours a day for 38 years.
+
+                Sarah believed she was haunted by the ghosts of those killed by Winchester rifles. A medium
+                told her that continuous construction would appease the spirits. The result is a bizarre
+                maze of staircases leading to ceilings, doors opening to walls, and windows overlooking
+                other rooms.
+
+                Reported paranormal activity includes:
+                - Footsteps in empty hallways
+                - Doorknobs turning on their own
+                - Mysterious whispers and cold spots
+                - Apparitions of Sarah Winchester herself
+                - The ghostly sounds of construction continuing at night
+
+                The house spans 6 acres with 10,000 windows, 2,000 doors, 47 stairways and fireplaces,
+                and 17 chimneys. Some staircases have steps only 2 inches high. Secret passages and
+                hidden rooms are found throughout.
+            ''',
+            'place_type': 'Historic Mansion',
+            'scary_rating': 4,
+            'image': None,
+            'year_built': 1884,
+            'visits_count': 1337,
+        }
+    }
+
+    # Get the place (or return 404 if not found)
+    place = sample_places.get(place_id)
+
+    if place is None:
+        # If place doesn't exist, show 404 error
+        return render(request, '404.html', status=404)
+
+    context = {
+        'place': place,
+    }
+
+    return render(request, 'haunted_detail.html', context)
+
+
 # Custom 404 error handler
 def custom_404(request, exception=None):
     """

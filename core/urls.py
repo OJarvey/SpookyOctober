@@ -71,6 +71,44 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
 
     #################################################################
+    # HAUNTED PLACES
+    #################################################################
+    # URL: /haunted/
+    # View: views.haunted_places
+    # Template: templates/haunted_places.html
+    # Purpose: Display a list of all haunted locations with ghost stories
+    #
+    # For junior developers:
+    # This is a simple URL pattern that maps /haunted/ to a view function
+    # The name='haunted_places' allows you to reference this URL in templates:
+    # Example: <a href="{% url 'core:haunted_places' %}">Haunted Places</a>
+    path('haunted/', views.haunted_places, name='haunted_places'),
+
+    # HAUNTED PLACE DETAIL
+    # URL: /haunted/<int:place_id>/
+    # View: views.haunted_detail
+    # Template: templates/haunted_detail.html (to be created)
+    # Purpose: Display detailed information about a specific haunted place
+    #
+    # For junior developers:
+    # This URL pattern captures an integer from the URL as 'place_id'
+    #
+    # How it works:
+    #   - User visits: /haunted/42/
+    #   - Django captures: place_id = 42
+    #   - Django calls: views.haunted_detail(request, place_id=42)
+    #   - View can use place_id to look up the specific haunted place
+    #
+    # The <int:place_id> syntax means:
+    #   - <...> = capture this part of the URL
+    #   - int: = convert to an integer (rejects non-numeric values)
+    #   - place_id = the parameter name passed to the view
+    #
+    # Example template usage:
+    #   <a href="{% url 'core:haunted_detail' place.id %}">View Details</a>
+    path('haunted/<int:place_id>/', views.haunted_detail, name='haunted_detail'),
+
+    #################################################################
     # FUTURE URLs (Coming in later sprints)
     #################################################################
     # These will be added as we develop more features:
@@ -85,10 +123,6 @@ urlpatterns = [
     # path('events/create/', views.event_create, name='event_create'),
     # path('events/<int:event_id>/', views.event_detail, name='event_detail'),
     # path('events/<int:event_id>/edit/', views.event_edit, name='event_edit'),
-
-    # Sprint 4 (Haunted Places):
-    # path('haunted/', views.haunted_list, name='haunted_list'),
-    # path('haunted/<int:place_id>/', views.haunted_detail, name='haunted_detail'),
 
     # Sprint 5 (Business & Coupons):
     # path('businesses/', views.business_list, name='business_list'),
