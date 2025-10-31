@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "cookie_consent",
     # Local apps
     "core",
+    "games",
 ]
 
 MIDDLEWARE = [

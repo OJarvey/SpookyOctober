@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ template.title }} - Mad Libs{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="halloween-gradient py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">{{ template.title }}</h1>
+            <p class="text-lg md:text-xl text-orange-200 mb-2">
+                By {{ template.author }}
+            </p>
+            <div class="inline-block px-4 py-2 {% if template.difficulty == 'easy' %}bg-green-500{% elif template.difficulty == 'medium' %}bg-orange-500{% else %}bg-red-500{% endif %} text-white rounded-full font-bold">
+                {{ template.get_difficulty_display }}
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+        <!-- Instructions -->
+        <div class="bg-purple-50 border-2 border-purple-300 rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-purple-900 mb-3">📝 How to Play:</h2>
+            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                <li>Fill in each blank with a word that matches the part of speech shown</li>
+                <li>Click the "Random Word" button if you need inspiration!</li>
+                <li>Be creative - the funnier or spookier, the better!</li>
+                <li>Click "Create Story" when you're done to see your masterpiece</li>
+            </ol>
+        </div>
+
+        <!-- Mad Libs Form -->
+        <form method="POST" action="{% url 'games:madlibs_submit' template.id %}" class="bg-white rounded-lg shadow-lg p-8">
+            {% csrf_token %}
+
+            <div class="space-y-6">
+                {% for placeholder in placeholders %}
+                    <div class="border-l-4 border-purple-500 pl-6 py-4 bg-purple-50 rounded-r">
+                        <label for="{{ placeholder.field_name }}" class="block text-lg font-bold text-gray-800 mb-2">
+                            {{ forloop.counter }}. Enter a
+                            <span class="{% if placeholder.type == 'noun' %}text-blue-600{% elif placeholder.type == 'verb' %}text-green-600{% elif placeholder.type == 'adjective' %}text-orange-600{% else %}text-purple-600{% endif %}">
+                                {{ placeholder.label }}
+                            </span>
+                        </label>
+
+                        <!-- Helper text -->
+                        <p class="text-sm text-gray-600 mb-3">
+                            {% if placeholder.type == 'noun' %}
+                                💡 A person, place, or thing (e.g., ghost, castle, pumpkin)
+                            {% elif placeholder.type == 'verb' %}
+                                💡 An action word (e.g., scream, haunt, run)
+                            {% elif placeholder.type == 'adjective' %}
+                                💡 A describing word (e.g., spooky, dark, scary)
+                            {% elif placeholder.type == 'adverb' %}
+                                💡 Describes how something happens (e.g., quickly, mysteriously, slowly)
+                            {% endif %}
+                        </p>
+
+                        <div class="flex gap-3">
+                            <input type="text"
+                                   id="{{ placeholder.field_name }}"
+                                   name="{{ placeholder.field_name }}"
+                                   required
+                                   class="flex-1 px-4 py-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-600 transition text-lg"
+                                   placeholder="Type your word here...">
+
+                            <button type="button"
+                                    class="random-word-btn px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-bold whitespace-nowrap"
+                                    data-field="{{ placeholder.field_name }}"
+                                    data-pos="{{ placeholder.type }}">
+                                🎲 Random
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-8 text-center">
+                <button type="submit" class="btn-primary px-12 py-4 text-xl">
+                    🎃 Create My Story! 🎃
+                </button>
+            </div>
+        </form>
+
+        <!-- Back Button -->
+        <div class="mt-8 text-center">
+            <a href="{% url 'games:madlibs_list' %}" class="btn-secondary inline-block px-8 py-3">
+                ← Choose Different Story
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all random word buttons
+    const randomButtons = document.querySelectorAll('.random-word-btn');
+
+    randomButtons.forEach(button => {
+        button.addEventListener('click', async function() {
+            const fieldName = this.getAttribute('data-field');
+            const partOfSpeech = this.getAttribute('data-pos');
+            const inputField = document.getElementById(fieldName);
+
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '⏳';
+            this.disabled = true;
+
+            try {
+                // Fetch random word from API
+                const response = await fetch(`/games/api/random-word/${partOfSpeech}/`);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch word');
+                }
+
+                const data = await response.json();
+
+                // Fill in the input field
+                inputField.value = data.word;
+                inputField.focus();
+
+                // Brief success indication
+                this.innerHTML = '✅';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }, 500);
+
+            } catch (error) {
+                console.error('Error fetching random word:', error);
+
+                // Show error
+                this.innerHTML = '❌';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }, 1000);
+
+                alert('Oops! Could not get a random word. Please try again.');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

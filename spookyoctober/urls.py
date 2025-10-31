@@ -51,6 +51,13 @@ urlpatterns = [
     path("cookies/", include("cookie_consent.urls")),
 
     #################################################################
+    # GAMES APP (Mad Libs and Halloween Games)
+    #################################################################
+    # Halloween-themed educational games
+    # Provides: /games/, /games/madlibs/, etc.
+    path("games/", include("games.urls")),
+
+    #################################################################
     # FUTURE APP URLs (to be added in later sprints)
     #################################################################
     # As we build more features, we'll add more apps here:
