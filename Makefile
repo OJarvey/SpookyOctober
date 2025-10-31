@@ -1,4 +1,4 @@
-.PHONY: help setup run install migrate makemigrations createsuperuser shell test clean collectstatic check deploy-check css css-watch
+.PHONY: help setup run dev install migrate makemigrations createsuperuser shell test clean collectstatic check deploy-check css css-watch lint-templates format-templates
 
 help:
 	@echo "ShriekedIn - Django Project Makefile"
@@ -6,6 +6,7 @@ help:
 	@echo "Available commands:"
 	@echo "  make setup            - Initial project setup (first time only)"
 	@echo "  make run              - Run the Django development server"
+	@echo "  make dev              - 🚀 Run dev server with auto-reload (CSS + templates)"
 	@echo "  make install          - Install project dependencies"
 	@echo "  make migrate          - Run database migrations"
 	@echo "  make makemigrations   - Create new database migrations"
@@ -16,6 +17,8 @@ help:
 	@echo "  make collectstatic    - Collect static files"
 	@echo "  make css              - Build Tailwind CSS"
 	@echo "  make css-watch        - Watch and rebuild Tailwind CSS on changes"
+	@echo "  make lint-templates   - Check Django templates with djlint"
+	@echo "  make format-templates - Auto-format Django templates with djlint"
 	@echo "  make clean            - Remove Python cache files and SQLite db"
 	@echo "  make deploy-check     - Verify Heroku deployment readiness"
 	@echo ""
@@ -126,3 +129,45 @@ deploy-check:
 	@echo "  - DATABASE_URL (auto-set by Heroku PostgreSQL)"
 	@echo ""
 	@echo "Ready to deploy! Run: git push heroku main"
+
+lint-templates:
+	@echo "🔍 Checking Django templates with djlint..."
+	@djlint templates/ --check || true
+	@echo ""
+	@echo "💡 To auto-format templates, run: make format-templates"
+
+format-templates:
+	@echo "✨ Formatting Django templates with djlint..."
+	@djlint templates/ --reformat
+	@echo ""
+	@echo "✅ Templates formatted!"
+
+dev:
+	@if [ ! -f .env ]; then \
+		echo "⚠️  .env file not found! Run 'make setup' first."; \
+		exit 1; \
+	fi
+	@echo "🎃 Starting ShriekedIn Development Environment..."
+	@echo "=================================================="
+	@echo ""
+	@echo "🔍 Running initial template checks..."
+	@echo ""
+	@djlint templates/ --check || true
+	@echo ""
+	@echo "=================================================="
+	@echo "🚀 Starting services:"
+	@echo "  • Django dev server on http://localhost:8000/"
+	@echo "  • Tailwind CSS watcher (auto-rebuilds on changes)"
+	@echo ""
+	@echo "💡 Press Ctrl+C to stop all services"
+	@echo "=================================================="
+	@echo ""
+	@trap 'echo ""; echo "🛑 Stopping all services..."; jobs -p | xargs -r kill 2>/dev/null; exit 0' INT TERM EXIT; \
+	npm run watch:css > /dev/null 2>&1 & \
+	TAILWIND_PID=$$!; \
+	echo "✅ Tailwind CSS watcher started (PID: $$TAILWIND_PID)"; \
+	sleep 1; \
+	echo "✅ Django dev server starting..."; \
+	echo ""; \
+	python manage.py runserver localhost:8000; \
+	wait
