@@ -1,0 +1,754 @@
+[
+  {
+    "model": "core.location",
+    "pk": 1,
+    "fields": {
+      "name": "Winchester Mystery House",
+      "address": "525 South Winchester Boulevard",
+      "city": "San Jose",
+      "state": "California",
+      "zip_code": "95128",
+      "country": "USA",
+      "latitude": "37.3184",
+      "longitude": "-121.9511",
+      "location_type": "haunted",
+      "description": "A sprawling Victorian mansion with architectural oddities",
+      "created_by": 1,
+      "created_date": "2025-10-01T10:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 2,
+    "fields": {
+      "name": "Eastern State Penitentiary",
+      "address": "2027 Fairmount Avenue",
+      "city": "Philadelphia",
+      "state": "Pennsylvania",
+      "zip_code": "19130",
+      "country": "USA",
+      "latitude": "39.9684",
+      "longitude": "-75.1727",
+      "location_type": "haunted",
+      "description": "Historic Gothic fortress prison",
+      "created_by": 1,
+      "created_date": "2025-10-01T11:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 3,
+    "fields": {
+      "name": "The Stanley Hotel",
+      "address": "333 E Wonderview Avenue",
+      "city": "Estes Park",
+      "state": "Colorado",
+      "zip_code": "80517",
+      "country": "USA",
+      "latitude": "40.3838",
+      "longitude": "-105.5166",
+      "location_type": "haunted",
+      "description": "The hotel that inspired Stephen King's The Shining",
+      "created_by": 1,
+      "created_date": "2025-10-01T12:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 4,
+    "fields": {
+      "name": "Bachelor's Grove Cemetery",
+      "address": "Midlothian Turnpike",
+      "city": "Midlothian",
+      "state": "Illinois",
+      "zip_code": "60445",
+      "country": "USA",
+      "latitude": "41.6318",
+      "longitude": "-87.7714",
+      "location_type": "haunted",
+      "description": "One of America's most haunted cemeteries",
+      "created_by": 1,
+      "created_date": "2025-10-01T13:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 5,
+    "fields": {
+      "name": "Waverly Hills Sanatorium",
+      "address": "4400 Paralee Drive",
+      "city": "Louisville",
+      "state": "Kentucky",
+      "zip_code": "40272",
+      "country": "USA",
+      "latitude": "38.1475",
+      "longitude": "-85.8206",
+      "location_type": "haunted",
+      "description": "Former tuberculosis hospital with reported paranormal activity",
+      "created_by": 1,
+      "created_date": "2025-10-01T14:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 6,
+    "fields": {
+      "name": "Salem Town Square",
+      "address": "Washington Square",
+      "city": "Salem",
+      "state": "Massachusetts",
+      "zip_code": "01970",
+      "country": "USA",
+      "latitude": "42.5195",
+      "longitude": "-70.8967",
+      "location_type": "venue",
+      "description": "Historic town center of Salem",
+      "created_by": 1,
+      "created_date": "2025-10-01T15:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 7,
+    "fields": {
+      "name": "Sleepy Hollow Cemetery",
+      "address": "540 North Broadway",
+      "city": "Sleepy Hollow",
+      "state": "New York",
+      "zip_code": "10591",
+      "country": "USA",
+      "latitude": "41.0976",
+      "longitude": "-73.8632",
+      "location_type": "venue",
+      "description": "Historic cemetery made famous by Washington Irving",
+      "created_by": 1,
+      "created_date": "2025-10-02T10:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 8,
+    "fields": {
+      "name": "Downtown New Orleans French Quarter",
+      "address": "Decatur Street",
+      "city": "New Orleans",
+      "state": "Louisiana",
+      "zip_code": "70116",
+      "country": "USA",
+      "latitude": "29.9584",
+      "longitude": "-90.0644",
+      "location_type": "venue",
+      "description": "Historic French Quarter district",
+      "created_by": 1,
+      "created_date": "2025-10-02T11:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 9,
+    "fields": {
+      "name": "Spooky Costumes & More",
+      "address": "1234 Halloween Lane",
+      "city": "Austin",
+      "state": "Texas",
+      "zip_code": "78701",
+      "country": "USA",
+      "latitude": "30.2672",
+      "longitude": "-97.7431",
+      "location_type": "business",
+      "description": "Premier costume shop",
+      "created_by": 1,
+      "created_date": "2025-10-02T12:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.location",
+    "pk": 10,
+    "fields": {
+      "name": "The Haunted Pumpkin Patch",
+      "address": "5678 Harvest Road",
+      "city": "Portland",
+      "state": "Oregon",
+      "zip_code": "97201",
+      "country": "USA",
+      "latitude": "45.5152",
+      "longitude": "-122.6784",
+      "location_type": "business",
+      "description": "Family-friendly pumpkin patch with haunted attractions",
+      "created_by": 1,
+      "created_date": "2025-10-02T13:00:00Z",
+      "is_verified": true
+    }
+  },
+  {
+    "model": "core.hauntedplace",
+    "pk": 1,
+    "fields": {
+      "location": 1,
+      "story_title": "The Winchester Mystery House",
+      "story_content": "A sprawling mansion with staircases to nowhere, doors that open to walls, and countless architectural oddities. Built by Sarah Winchester who believed she was haunted by the spirits of those killed by Winchester rifles.\n\nConstruction continued 24 hours a day for 38 years. Sarah believed continuous construction would appease the spirits. The result is a bizarre maze of architectural impossibilities.",
+      "historical_context": "Built starting in 1884 by Sarah Winchester, widow of gun magnate William Wirt Winchester. The mansion grew from an 8-room farmhouse to a 160-room Victorian mansion.",
+      "scare_level": 4,
+      "is_educational": true,
+      "year_established": 1884,
+      "reported_phenomena": "Footsteps in empty hallways, doorknobs turning on their own, mysterious whispers and cold spots, apparitions of Sarah Winchester herself",
+      "famous_for": "Architectural oddities including staircases to nowhere, doors opening to walls, and windows overlooking other rooms",
+      "created_by": 1,
+      "created_date": "2025-10-03T10:00:00Z",
+      "modified_date": "2025-10-03T10:00:00Z",
+      "view_count": 1337,
+      "visit_count": 245
+    }
+  },
+  {
+    "model": "core.hauntedplace",
+    "pk": 2,
+    "fields": {
+      "location": 2,
+      "story_title": "Eastern State Penitentiary",
+      "story_content": "Once the most famous and expensive prison in the world, this Gothic fortress now stands in ruins. Visitors report shadow figures, cackling laughter, and ghostly faces appearing in cell doorways.\n\nThe prison pioneered the separate system of incarceration, keeping inmates in solitary confinement for years at a time.",
+      "historical_context": "Opened in 1829 and operated until 1971. At its height, it held notorious criminals including Al Capone and Willie Sutton.",
+      "scare_level": 5,
+      "is_educational": true,
+      "year_established": 1829,
+      "reported_phenomena": "Shadow figures, cackling laughter, ghostly faces in cells, mysterious footsteps, slamming cell doors",
+      "famous_for": "Revolutionary wheel-shaped prison design and its famous inmates including Al Capone",
+      "created_by": 1,
+      "created_date": "2025-10-03T11:00:00Z",
+      "modified_date": "2025-10-03T11:00:00Z",
+      "view_count": 892,
+      "visit_count": 156
+    }
+  },
+  {
+    "model": "core.hauntedplace",
+    "pk": 3,
+    "fields": {
+      "location": 3,
+      "story_title": "The Stanley Hotel",
+      "story_content": "The hotel that inspired Stephen King to write 'The Shining.' Guests report hearing children playing in empty hallways, piano music from the music room, and ghost sightings throughout the building.\n\nStephen King stayed in room 217 in 1974, where he had a nightmare that became the basis for his famous novel.",
+      "historical_context": "Built in 1909 by Freelan Oscar Stanley, co-inventor of the Stanley Steamer automobile. The hotel has been operating continuously for over 100 years.",
+      "scare_level": 3,
+      "is_educational": true,
+      "year_established": 1909,
+      "reported_phenomena": "Children's laughter in empty hallways, piano playing in the music room with no one present, apparitions in period clothing",
+      "famous_for": "Inspiration for Stephen King's The Shining and its continuing paranormal activity",
+      "created_by": 1,
+      "created_date": "2025-10-03T12:00:00Z",
+      "modified_date": "2025-10-03T12:00:00Z",
+      "view_count": 1024,
+      "visit_count": 312
+    }
+  },
+  {
+    "model": "core.hauntedplace",
+    "pk": 4,
+    "fields": {
+      "location": 4,
+      "story_title": "Bachelor's Grove Cemetery",
+      "story_content": "One of the most haunted cemeteries in America. Paranormal investigators have documented over 100 different phenomena including ghost lights, apparitions, and mysterious glowing orbs.\n\nThe cemetery has been abandoned since the 1960s and has fallen into disrepair, making it even more eerie.",
+      "historical_context": "Established in 1844, the cemetery served the Bachelor's Grove community until the 1960s when it was abandoned. Vandalism and neglect have added to its haunted reputation.",
+      "scare_level": 5,
+      "is_educational": false,
+      "year_established": 1844,
+      "reported_phenomena": "Ghost lights, full-bodied apparitions, mysterious orbs, phantom farmhouse that appears and disappears",
+      "famous_for": "Being one of the most documented haunted locations in America with over 100 reported paranormal phenomena",
+      "created_by": 1,
+      "created_date": "2025-10-03T13:00:00Z",
+      "modified_date": "2025-10-03T13:00:00Z",
+      "view_count": 756,
+      "visit_count": 89
+    }
+  },
+  {
+    "model": "core.hauntedplace",
+    "pk": 5,
+    "fields": {
+      "location": 5,
+      "story_title": "Waverly Hills Sanatorium",
+      "story_content": "A former tuberculosis hospital where thousands died. The building features a 'body chute' used to remove corpses. Paranormal activity is rampant, with reports of shadow people, full-bodied apparitions, and disembodied voices.\n\nAt its peak during the tuberculosis epidemic, one patient died every hour.",
+      "historical_context": "Opened in 1910 as a tuberculosis hospital. Before antibiotics were developed, tuberculosis was a deadly disease. The hospital closed in 1961 and later became a geriatric facility before closing permanently in 1982.",
+      "scare_level": 5,
+      "is_educational": true,
+      "year_established": 1910,
+      "reported_phenomena": "Shadow people, full-bodied apparitions, disembodied voices, children playing in abandoned rooms, the ghost of room 502",
+      "famous_for": "The death tunnel (body chute) and the ghost of room 502",
+      "created_by": 1,
+      "created_date": "2025-10-03T14:00:00Z",
+      "modified_date": "2025-10-03T14:00:00Z",
+      "view_count": 1523,
+      "visit_count": 412
+    }
+  },
+  {
+    "model": "core.event",
+    "pk": 1,
+    "fields": {
+      "title": "Salem Haunted Happenings",
+      "slug": "salem-haunted-happenings",
+      "description": "Month-long Halloween celebration in the heart of historic Salem, Massachusetts. Features haunted houses, ghost tours, psychic fairs, costume balls, and family-friendly activities throughout October.",
+      "location": 6,
+      "event_date": "2025-10-15",
+      "start_time": "10:00:00",
+      "end_time": "22:00:00",
+      "cost": "0.00",
+      "event_category": "festival",
+      "age_appropriateness": "all_ages",
+      "capacity": 50000,
+      "performing_artists": "Various local performers and entertainers",
+      "contact_info": "info@hauntedhappenings.com",
+      "website_url": "https://www.hauntedhappenings.com",
+      "created_by": 1,
+      "created_date": "2025-10-04T10:00:00Z",
+      "modified_date": "2025-10-04T10:00:00Z",
+      "is_active": true,
+      "is_featured": true,
+      "view_count": 2456,
+      "like_count": 342
+    }
+  },
+  {
+    "model": "core.event",
+    "pk": 2,
+    "fields": {
+      "title": "Sleepy Hollow Cemetery Tour",
+      "slug": "sleepy-hollow-cemetery-tour",
+      "description": "Guided tour through the historic Sleepy Hollow Cemetery, including visits to the graves of Washington Irving, Andrew Carnegie, and other notable figures. Learn about local legends and ghost stories.",
+      "location": 7,
+      "event_date": "2025-10-20",
+      "start_time": "19:00:00",
+      "end_time": "21:00:00",
+      "cost": "25.00",
+      "event_category": "tour",
+      "age_appropriateness": "adults_only",
+      "capacity": 30,
+      "performing_artists": "",
+      "contact_info": "tours@sleepyhollow.org",
+      "website_url": "https://www.sleepyhollow.org",
+      "created_by": 1,
+      "created_date": "2025-10-04T11:00:00Z",
+      "modified_date": "2025-10-04T11:00:00Z",
+      "is_active": true,
+      "is_featured": true,
+      "view_count": 892,
+      "like_count": 127
+    }
+  },
+  {
+    "model": "core.event",
+    "pk": 3,
+    "fields": {
+      "title": "New Orleans Voodoo Experience",
+      "slug": "new-orleans-voodoo-experience",
+      "description": "Explore the mysterious world of New Orleans voodoo culture with visits to historic voodoo shops, museums, and ceremonies. Learn about Marie Laveau and the city's rich occult history.",
+      "location": 8,
+      "event_date": "2025-10-25",
+      "start_time": "18:00:00",
+      "end_time": "21:00:00",
+      "cost": "45.00",
+      "event_category": "tour",
+      "age_appropriateness": "adults_only",
+      "capacity": 20,
+      "performing_artists": "",
+      "contact_info": "info@voodooneworleans.com",
+      "website_url": "https://www.voodooneworleans.com",
+      "created_by": 1,
+      "created_date": "2025-10-04T12:00:00Z",
+      "modified_date": "2025-10-04T12:00:00Z",
+      "is_active": true,
+      "is_featured": false,
+      "view_count": 645,
+      "like_count": 89
+    }
+  },
+  {
+    "model": "core.event",
+    "pk": 4,
+    "fields": {
+      "title": "Winchester Mystery House Night Tour",
+      "slug": "winchester-mystery-house-night-tour",
+      "description": "Experience the Winchester Mystery House after dark with flashlight-only tours through the mansion's most haunted rooms. Limited capacity for an intimate, spine-chilling experience.",
+      "location": 1,
+      "event_date": "2025-10-31",
+      "start_time": "20:00:00",
+      "end_time": "22:30:00",
+      "cost": "60.00",
+      "event_category": "haunted_house",
+      "age_appropriateness": "16_plus",
+      "capacity": 15,
+      "performing_artists": "",
+      "contact_info": "tours@winchestermysteryhouse.com",
+      "website_url": "https://www.winchestermysteryhouse.com",
+      "created_by": 1,
+      "created_date": "2025-10-04T13:00:00Z",
+      "modified_date": "2025-10-04T13:00:00Z",
+      "is_active": true,
+      "is_featured": true,
+      "view_count": 1834,
+      "like_count": 267
+    }
+  },
+  {
+    "model": "core.event",
+    "pk": 5,
+    "fields": {
+      "title": "Family Pumpkin Carving Contest",
+      "slug": "family-pumpkin-carving-contest",
+      "description": "Bring the whole family for a fun pumpkin carving competition! Pumpkins provided, along with carving tools and stencils. Prizes for most creative, scariest, and funniest designs.",
+      "location": 10,
+      "event_date": "2025-10-18",
+      "start_time": "14:00:00",
+      "end_time": "17:00:00",
+      "cost": "15.00",
+      "event_category": "family_friendly",
+      "age_appropriateness": "all_ages",
+      "capacity": 50,
+      "performing_artists": "",
+      "contact_info": "events@hauntedpumpkinpatch.com",
+      "website_url": "",
+      "created_by": 1,
+      "created_date": "2025-10-04T14:00:00Z",
+      "modified_date": "2025-10-04T14:00:00Z",
+      "is_active": true,
+      "is_featured": false,
+      "view_count": 423,
+      "like_count": 78
+    }
+  },
+  {
+    "model": "core.event",
+    "pk": 6,
+    "fields": {
+      "title": "Waverly Hills Paranormal Investigation",
+      "slug": "waverly-hills-paranormal-investigation",
+      "description": "Join professional paranormal investigators for a full night investigation of Waverly Hills Sanatorium. Use ghost hunting equipment and explore the most haunted locations in the building.",
+      "location": 5,
+      "event_date": "2025-10-28",
+      "start_time": "22:00:00",
+      "end_time": "04:00:00",
+      "cost": "125.00",
+      "event_category": "paranormal",
+      "age_appropriateness": "adults_only",
+      "capacity": 25,
+      "performing_artists": "",
+      "contact_info": "ghost@waverlyhills.com",
+      "website_url": "https://www.therealwaverlyhills.com",
+      "created_by": 1,
+      "created_date": "2025-10-04T15:00:00Z",
+      "modified_date": "2025-10-04T15:00:00Z",
+      "is_active": true,
+      "is_featured": true,
+      "view_count": 1567,
+      "like_count": 234
+    }
+  },
+  {
+    "model": "core.business",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "business_name": "Spooky Costumes & More",
+      "slug": "spooky-costumes-more",
+      "business_type": "costume_shop",
+      "description": "Your one-stop shop for all Halloween costumes, accessories, and decorations. We carry everything from classic monsters to the latest pop culture characters. Custom costume design services available.",
+      "location": 9,
+      "phone": "(512) 555-SPOOK",
+      "email": "info@spookycostumes.com",
+      "website": "https://www.spookycostumes.com",
+      "hours_of_operation": "Mon-Sat: 10am-8pm, Sun: 11am-6pm",
+      "facebook_url": "https://facebook.com/spookycostumes",
+      "instagram_handle": "@spookycostumestx",
+      "verified": true,
+      "verified_date": "2025-10-05T10:00:00Z",
+      "created_date": "2025-10-05T09:00:00Z",
+      "modified_date": "2025-10-05T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.business",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "business_name": "The Haunted Pumpkin Patch",
+      "slug": "haunted-pumpkin-patch",
+      "business_type": "pumpkin_patch",
+      "description": "Family-friendly pumpkin patch with corn maze, hayrides, petting zoo, and evening haunted attractions for older kids and adults. Pick your own pumpkins from our 20-acre farm.",
+      "location": 10,
+      "phone": "(503) 555-PUMP",
+      "email": "info@hauntedpumpkinpatch.com",
+      "website": "",
+      "hours_of_operation": "Daily: 9am-9pm throughout October",
+      "facebook_url": "",
+      "instagram_handle": "@hauntedpumpkinpatch",
+      "verified": true,
+      "verified_date": "2025-10-05T11:00:00Z",
+      "created_date": "2025-10-05T09:30:00Z",
+      "modified_date": "2025-10-05T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.business",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "business_name": "Midnight Magic Party Supplies",
+      "slug": "midnight-magic-party-supplies",
+      "business_type": "party_supply",
+      "description": "Complete Halloween party planning services. We offer decorations, tableware, party favors, and event planning consultation. Special orders for large events welcome.",
+      "location": 6,
+      "phone": "(978) 555-MAGIC",
+      "email": "parties@midnightmagic.com",
+      "website": "https://www.midnightmagic.com",
+      "hours_of_operation": "Mon-Fri: 9am-6pm, Sat: 10am-5pm, Closed Sun",
+      "facebook_url": "https://facebook.com/midnightmagicparties",
+      "instagram_handle": "@midnightmagicparties",
+      "verified": false,
+      "verified_date": null,
+      "created_date": "2025-10-05T10:00:00Z",
+      "modified_date": "2025-10-05T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.coupon",
+    "pk": 1,
+    "fields": {
+      "business": 1,
+      "title": "Grand Opening Special - 20% Off",
+      "description": "Celebrate our grand opening with 20% off your entire purchase! Valid on all costumes, accessories, and decorations.",
+      "discount_code": "SPOOKY20",
+      "discount_percentage": 20,
+      "discount_amount": null,
+      "valid_from": "2025-10-01",
+      "valid_until": "2025-10-31",
+      "terms_and_conditions": "One coupon per customer. Cannot be combined with other offers. Excludes sale items.",
+      "max_uses": 500,
+      "current_uses": 127,
+      "created_date": "2025-10-06T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.coupon",
+    "pk": 2,
+    "fields": {
+      "business": 2,
+      "title": "$5 Off Family Day Pass",
+      "description": "Save $5 on our family day pass! Includes pumpkin picking, corn maze, hayride, and petting zoo admission.",
+      "discount_code": "FAMILY5",
+      "discount_percentage": null,
+      "discount_amount": "5.00",
+      "valid_from": "2025-10-01",
+      "valid_until": "2025-10-25",
+      "terms_and_conditions": "Valid for family pass only (2 adults + up to 4 children). Not valid on weekends.",
+      "max_uses": 200,
+      "current_uses": 45,
+      "created_date": "2025-10-06T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.coupon",
+    "pk": 3,
+    "fields": {
+      "business": 1,
+      "title": "Kids Costume Sale",
+      "description": "All kids costumes (sizes 2T-12) are 30% off for a limited time!",
+      "discount_code": "KIDS30",
+      "discount_percentage": 30,
+      "discount_amount": null,
+      "valid_from": "2025-10-10",
+      "valid_until": "2025-10-20",
+      "terms_and_conditions": "Valid on kids costumes only. Cannot be combined with other offers.",
+      "max_uses": null,
+      "current_uses": 89,
+      "created_date": "2025-10-06T12:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.coupon",
+    "pk": 4,
+    "fields": {
+      "business": 3,
+      "title": "Party Package Deal",
+      "description": "Book a complete party package and get 15% off! Includes decorations, tableware, and party favors.",
+      "discount_code": "PARTY15",
+      "discount_percentage": 15,
+      "discount_amount": null,
+      "valid_from": "2025-10-01",
+      "valid_until": "2025-10-31",
+      "terms_and_conditions": "Minimum $200 purchase required. Must book at least 1 week in advance.",
+      "max_uses": 50,
+      "current_uses": 12,
+      "created_date": "2025-10-06T13:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.post",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "post_type": "text",
+      "content": "Just visited the Winchester Mystery House for the first time and WOW! The architecture is absolutely mind-blowing. Staircases that lead to nowhere, doors that open to walls... Sarah Winchester was either a genius or completely haunted. Probably both!",
+      "reference_type": "haunted_place",
+      "reference_id": 1,
+      "is_public": true,
+      "is_active": true,
+      "created_date": "2025-10-07T10:00:00Z",
+      "modified_date": "2025-10-07T10:00:00Z",
+      "like_count": 45,
+      "comment_count": 8,
+      "share_count": 12
+    }
+  },
+  {
+    "model": "core.post",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "post_type": "text",
+      "content": "Salem Haunted Happenings is coming up! Who else is planning to go? This year looks amazing with tons of new events and attractions. Already got my tickets for the haunted walking tour!",
+      "reference_type": "event",
+      "reference_id": 1,
+      "is_public": true,
+      "is_active": true,
+      "created_date": "2025-10-07T11:00:00Z",
+      "modified_date": "2025-10-07T11:00:00Z",
+      "like_count": 67,
+      "comment_count": 15,
+      "share_count": 23
+    }
+  },
+  {
+    "model": "core.post",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "post_type": "text",
+      "content": "PSA: If you haven't visited Eastern State Penitentiary, put it on your bucket list NOW. The Halloween tours are incredible. Saw a shadow figure in cell block 7 that still gives me chills...",
+      "reference_type": "haunted_place",
+      "reference_id": 2,
+      "is_public": true,
+      "is_active": true,
+      "created_date": "2025-10-07T12:00:00Z",
+      "modified_date": "2025-10-07T12:00:00Z",
+      "like_count": 89,
+      "comment_count": 23,
+      "share_count": 34
+    }
+  },
+  {
+    "model": "core.comment",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "entity_type": "post",
+      "entity_id": 1,
+      "content": "I went last year and it was incredible! Did you take the night tour? That's even more spooky!",
+      "parent_comment": null,
+      "is_active": true,
+      "is_flagged": false,
+      "is_edited": false,
+      "created_date": "2025-10-07T13:00:00Z",
+      "modified_date": "2025-10-07T13:00:00Z",
+      "like_count": 12
+    }
+  },
+  {
+    "model": "core.comment",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "entity_type": "post",
+      "entity_id": 2,
+      "content": "Count me in! I've been going for the past 5 years. It's the best Halloween celebration in the country!",
+      "parent_comment": null,
+      "is_active": true,
+      "is_flagged": false,
+      "is_edited": false,
+      "created_date": "2025-10-07T14:00:00Z",
+      "modified_date": "2025-10-07T14:00:00Z",
+      "like_count": 8
+    }
+  },
+  {
+    "model": "core.comment",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "entity_type": "event",
+      "entity_id": 4,
+      "content": "This looks amazing! Already booked my tickets. Can't wait for the flashlight tour!",
+      "parent_comment": null,
+      "is_active": true,
+      "is_flagged": false,
+      "is_edited": false,
+      "created_date": "2025-10-07T15:00:00Z",
+      "modified_date": "2025-10-07T15:00:00Z",
+      "like_count": 5
+    }
+  },
+  {
+    "model": "core.like",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "entity_type": "post",
+      "entity_id": 1,
+      "created_date": "2025-10-08T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.like",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "entity_type": "post",
+      "entity_id": 2,
+      "created_date": "2025-10-08T11:00:00Z"
+    }
+  },
+  {
+    "model": "core.like",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "entity_type": "event",
+      "entity_id": 1,
+      "created_date": "2025-10-08T12:00:00Z"
+    }
+  },
+  {
+    "model": "core.like",
+    "pk": 4,
+    "fields": {
+      "user": 1,
+      "entity_type": "event",
+      "entity_id": 4,
+      "created_date": "2025-10-08T13:00:00Z"
+    }
+  },
+  {
+    "model": "core.like",
+    "pk": 5,
+    "fields": {
+      "user": 1,
+      "entity_type": "haunted_place",
+      "entity_id": 1,
+      "created_date": "2025-10-08T14:00:00Z"
+    }
+  }
+]
