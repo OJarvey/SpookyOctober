@@ -11,10 +11,13 @@
                 The professional network for Halloween enthusiasts, event organizers, and spooky business connections!
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#events" class="btn-primary text-lg px-8 py-3 inline-block">Explore Events</a>
+                <a href="{% url 'core:events_list' %}" class="btn-primary text-lg px-8 py-3 inline-block">Explore Events</a>
                 {% if not user.is_authenticated %}
                     <a href="{% url 'core:login' %}"
                        class="bg-white text-purple-800 hover:bg-gray-100 font-bold py-3 px-8 rounded transition duration-300 inline-block">Get Started</a>
+                {% else %}
+                    <a href="{% url 'core:dashboard' %}"
+                       class="bg-white text-purple-800 hover:bg-gray-100 font-bold py-3 px-8 rounded transition duration-300 inline-block">Go to Dashboard</a>
                 {% endif %}
             </div>
         </div>
@@ -27,31 +30,40 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Feature 1: Events -->
-                <div class="card hover:shadow-xl transition duration-300">
+                <a href="{% url 'core:events_list' %}" class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">🎉</div>
                     <h3 class="text-2xl font-bold mb-3 text-orange-600">Halloween Events</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 mb-4">
                         Discover costume parties, trick-or-treating spots, haunted houses, and family-friendly Halloween events near you.
                     </p>
-                </div>
+                    <div class="text-center mt-4">
+                        <span class="text-orange-600 font-semibold hover:text-orange-700">Browse Events →</span>
+                    </div>
+                </a>
 
                 <!-- Feature 2: Haunted Places -->
-                <div class="card hover:shadow-xl transition duration-300">
+                <a href="{% url 'core:haunted_places' %}" class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">👻</div>
                     <h3 class="text-2xl font-bold mb-3 text-purple-800">Haunted Places</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 mb-4">
                         Explore local haunted locations with scary stories, legends, and historical context about your area's spooky past.
                     </p>
-                </div>
+                    <div class="text-center mt-4">
+                        <span class="text-purple-800 font-semibold hover:text-purple-900">Explore Haunted Places →</span>
+                    </div>
+                </a>
 
                 <!-- Feature 3: Business Deals -->
-                <div class="card hover:shadow-xl transition duration-300">
+                <a href="{% url 'core:businesses_list' %}" class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">🎁</div>
                     <h3 class="text-2xl font-bold mb-3 text-orange-600">Business Deals</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 mb-4">
                         Find Halloween discounts, promotions, and coupons from local businesses. Save money on costumes and party supplies!
                     </p>
-                </div>
+                    <div class="text-center mt-4">
+                        <span class="text-orange-600 font-semibold hover:text-orange-700">Find Businesses →</span>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -62,25 +74,28 @@
             <h2 class="text-4xl font-bold text-center mb-12 text-gray-900">Platform Statistics</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300">
                     <div class="text-4xl font-bold text-orange-600 mb-2">{{ stats.total_users }}</div>
                     <div class="text-gray-600">Registered Users</div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <a href="{% url 'core:events_list' %}" class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-4xl font-bold text-purple-800 mb-2">{{ stats.total_events }}</div>
                     <div class="text-gray-600">Halloween Events</div>
-                </div>
+                    <div class="text-sm text-purple-600 mt-2 font-semibold">View all →</div>
+                </a>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <a href="{% url 'core:haunted_places' %}" class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-4xl font-bold text-orange-600 mb-2">{{ stats.total_locations }}</div>
                     <div class="text-gray-600">Spooky Locations</div>
-                </div>
+                    <div class="text-sm text-orange-600 mt-2 font-semibold">Explore →</div>
+                </a>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <a href="{% url 'core:businesses_list' %}" class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-4xl font-bold text-purple-800 mb-2">{{ stats.total_businesses }}</div>
                     <div class="text-gray-600">Partner Businesses</div>
-                </div>
+                    <div class="text-sm text-purple-600 mt-2 font-semibold">Browse →</div>
+                </a>
             </div>
         </div>
     </section>
