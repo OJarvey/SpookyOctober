@@ -30,7 +30,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Feature 1: Events -->
-                <a href="{% url 'core:events_list' %}" class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
+                <a href="{% url 'core:events_list' %}"
+                   class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">🎉</div>
                     <h3 class="text-2xl font-bold mb-3 text-orange-600">Halloween Events</h3>
                     <p class="text-gray-600 mb-4">
@@ -42,7 +43,8 @@
                 </a>
 
                 <!-- Feature 2: Haunted Places -->
-                <a href="{% url 'core:haunted_places' %}" class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
+                <a href="{% url 'core:haunted_places' %}"
+                   class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">👻</div>
                     <h3 class="text-2xl font-bold mb-3 text-purple-800">Haunted Places</h3>
                     <p class="text-gray-600 mb-4">
@@ -54,7 +56,8 @@
                 </a>
 
                 <!-- Feature 3: Business Deals -->
-                <a href="{% url 'core:businesses_list' %}" class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
+                <a href="{% url 'core:businesses_list' %}"
+                   class="card hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-5xl mb-4 text-center">🎁</div>
                     <h3 class="text-2xl font-bold mb-3 text-orange-600">Business Deals</h3>
                     <p class="text-gray-600 mb-4">
@@ -79,19 +82,22 @@
                     <div class="text-gray-600">Registered Users</div>
                 </div>
 
-                <a href="{% url 'core:events_list' %}" class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
+                <a href="{% url 'core:events_list' %}"
+                   class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-4xl font-bold text-purple-800 mb-2">{{ stats.total_events }}</div>
                     <div class="text-gray-600">Halloween Events</div>
                     <div class="text-sm text-purple-600 mt-2 font-semibold">View all →</div>
                 </a>
 
-                <a href="{% url 'core:haunted_places' %}" class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
+                <a href="{% url 'core:haunted_places' %}"
+                   class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-4xl font-bold text-orange-600 mb-2">{{ stats.total_locations }}</div>
                     <div class="text-gray-600">Spooky Locations</div>
                     <div class="text-sm text-orange-600 mt-2 font-semibold">Explore →</div>
                 </a>
 
-                <a href="{% url 'core:businesses_list' %}" class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
+                <a href="{% url 'core:businesses_list' %}"
+                   class="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition duration-300 transform hover:-translate-y-1 cursor-pointer">
                     <div class="text-4xl font-bold text-purple-800 mb-2">{{ stats.total_businesses }}</div>
                     <div class="text-gray-600">Partner Businesses</div>
                     <div class="text-sm text-purple-600 mt-2 font-semibold">Browse →</div>

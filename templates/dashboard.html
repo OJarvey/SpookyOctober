@@ -179,9 +179,7 @@
                                 <span class="mr-2">📧</span> Contact Messages
                             </span>
                             {% if stats.unread_messages > 0 %}
-                                <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                                    {{ stats.unread_messages }} new
-                                </span>
+                                <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{{ stats.unread_messages }} new</span>
                             {% endif %}
                         </h3>
                         <p class="text-gray-600 mb-4">Review and respond to contact form submissions</p>
@@ -215,22 +213,16 @@
                                                 ({{ message.email }})
                                             </p>
                                         </div>
-                                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                                            {{ message.submitted_at|timesince }} ago
-                                        </span>
+                                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">{{ message.submitted_at|timesince }} ago</span>
                                     </div>
-                                    <p class="text-gray-700 text-sm mb-3">
-                                        {{ message.message|truncatewords:30 }}
-                                    </p>
+                                    <p class="text-gray-700 text-sm mb-3">{{ message.message|truncatewords:30 }}</p>
                                     <div class="flex gap-2">
                                         <a href="/admin/core/contactmessage/{{ message.id }}/change/"
                                            class="bg-orange-600 text-white text-sm px-4 py-1 rounded hover:bg-orange-700 transition duration-300">
                                             View & Respond
                                         </a>
                                         {% if message.user %}
-                                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">
-                                                Registered User
-                                            </span>
+                                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Registered User</span>
                                         {% endif %}
                                     </div>
                                 </div>
