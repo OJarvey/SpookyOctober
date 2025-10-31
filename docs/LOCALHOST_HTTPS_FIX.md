@@ -1,35 +1,56 @@
 # Fixing localhost HTTPS Redirect Issues
 
 ## Problem
-Chrome/Edge automatically redirects `http://localhost:8000/` to `https://localhost:8000/`, causing connection failures during development.
+Chrome/Edge automatically redirects `http://localhost:8000/` to `https://localhost:8000/`, causing connection failures during development with errors like:
+- `You're accessing the development server over HTTPS, but it only supports HTTP`
+- `ERR_SSL_PROTOCOL_ERROR`
+- Site shows as "Not Secure" or won't load
 
 ## Root Causes
 
-1. **HSTS (HTTP Strict Transport Security) cache** - Browser remembers to use HTTPS for localhost
-2. **Chrome's automatic HTTPS upgrades** - Forces HTTPS on known domains
-3. **Wrong DEBUG setting** - If DEBUG=False in your .env, Django forces HTTPS
+1. **Wrong DEBUG setting** - If DEBUG=False in your .env, Django forces HTTPS redirects
+2. **HSTS (HTTP Strict Transport Security) cache** - Browser remembers to use HTTPS for localhost
+3. **Chrome's automatic HTTPS upgrades** - Forces HTTPS on known domains
 
-## Solutions (Try in Order)
+## ✅ SOLUTION: Proper Local Development Setup
 
-### 1. Verify Your .env File (Most Common Issue)
+### Step 1: Verify Your .env File (MOST IMPORTANT!)
 
-**Check your .env file:**
+**Check your .env file exists and has the correct settings:**
 ```bash
 cat .env
 ```
 
-**Should contain:**
+**Must contain:**
 ```bash
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Optional but recommended - explicitly disable HTTPS for local dev:
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
 ```
 
-**NOT:**
+**⚠️ Common mistake:**
 ```bash
-DEBUG=False  # ❌ This forces HTTPS!
+DEBUG=False  # ❌ This forces HTTPS redirects!
 ```
 
-If DEBUG=False, change it to DEBUG=True and restart the server.
+**After fixing .env:**
+```bash
+# Restart the server
+python manage.py runserver
+```
+
+### Step 2: Access via HTTP (not HTTPS)
+
+Always type the full URL with `http://` in your browser:
+```
+http://127.0.0.1:8000/
+```
+
+**Don't type:** `localhost` or just `127.0.0.1` - browsers may auto-upgrade to HTTPS.
 
 ---
 
