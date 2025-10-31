@@ -13,29 +13,29 @@
         </div>
     </section>
 
-    <div class="container mx-auto px-4 py-12 max-w-4xl">
+    <div class="container mx-auto px-4 py-12 max-w-2xl">
         <!-- Story Display -->
-        <div class="bg-white rounded-lg shadow-2xl p-8 md:p-12 mb-8 border-4 border-purple-300">
+        <div class="bg-white rounded-lg shadow-xl p-6 md:p-10 mb-8 border-2 border-purple-300">
             <!-- Story Header -->
-            <div class="text-center mb-8 pb-6 border-b-2 border-purple-200">
-                <h2 class="text-3xl font-bold text-purple-900 mb-2">{{ madlib.template.title }}</h2>
-                <p class="text-gray-600">Original by {{ madlib.template.author }}</p>
+            <div class="text-center mb-6 pb-4 border-b-2 border-purple-200">
+                <h2 class="text-2xl md:text-3xl font-bold text-purple-900 mb-2">{{ madlib.template.title }}</h2>
+                <p class="text-sm text-gray-600">Original by {{ madlib.template.author }}</p>
                 {% if madlib.user %}
-                    <p class="text-gray-600 mt-2">Created by <span class="font-bold">{{ madlib.user.username }}</span></p>
+                    <p class="text-sm text-gray-600 mt-1">Created by <span class="font-bold">{{ madlib.user.username }}</span></p>
                 {% else %}
-                    <p class="text-gray-600 mt-2">Created by <span class="font-bold">Anonymous</span></p>
+                    <p class="text-sm text-gray-600 mt-1">Created by <span class="font-bold">Anonymous</span></p>
                 {% endif %}
             </div>
 
             <!-- The Completed Story -->
-            <div class="prose max-w-none">
-                <div class="text-lg md:text-xl leading-relaxed text-gray-800 whitespace-pre-line font-serif">
+            <div class="prose prose-lg max-w-none">
+                <div class="text-base md:text-lg leading-relaxed text-gray-800 whitespace-pre-line">
                     {{ madlib.completed_text }}
                 </div>
             </div>
 
             <!-- Stats -->
-            <div class="mt-8 pt-6 border-t-2 border-purple-200 text-center text-gray-600">
+            <div class="mt-6 pt-4 border-t-2 border-purple-200 text-center text-sm text-gray-600">
                 <p>
                     <span class="font-bold">Views:</span> {{ madlib.view_count }} |
                     <span class="font-bold">Created:</span> {{ madlib.created_at|date:"F d, Y" }}
@@ -44,43 +44,43 @@
         </div>
 
         <!-- Share Section -->
-        <div class="bg-orange-50 border-2 border-orange-300 rounded-lg p-6 mb-8">
-            <h3 class="text-2xl font-bold text-orange-900 mb-4 flex items-center">
+        <div class="bg-orange-50 border-2 border-orange-300 rounded-lg p-5 mb-6">
+            <h3 class="text-lg font-bold text-orange-900 mb-3 flex items-center">
                 <span class="mr-2">🔗</span> Share Your Story
             </h3>
-            <p class="text-gray-700 mb-4">Copy this link to share your spooky masterpiece with friends!</p>
+            <p class="text-sm text-gray-700 mb-3">Copy this link to share your spooky masterpiece!</p>
 
             <div class="flex gap-2">
                 <input type="text"
                        id="share-link"
                        value="{{ request.build_absolute_uri }}"
                        readonly
-                       class="flex-1 px-4 py-3 border-2 border-orange-300 rounded-lg bg-white text-gray-700">
+                       class="flex-1 px-3 py-2 border-2 border-orange-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-200">
 
                 <button onclick="copyShareLink()"
-                        class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-bold whitespace-nowrap">
+                        class="flex-shrink-0 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all font-semibold text-sm shadow-md hover:shadow-lg whitespace-nowrap">
                     📋 Copy
                 </button>
             </div>
 
-            <p id="copy-feedback" class="text-green-600 font-bold mt-2 hidden">✅ Link copied!</p>
+            <p id="copy-feedback" class="text-green-600 font-semibold text-sm mt-2 hidden">✅ Link copied!</p>
         </div>
 
         <!-- Action Buttons -->
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="flex flex-col sm:flex-row gap-3 mb-6">
             <a href="{% url 'games:madlibs_play' madlib.template.id %}"
-               class="btn-primary text-center py-3">
+               class="flex-1 btn-primary text-center py-3 shadow-md hover:shadow-lg transition-shadow">
                 🔄 Play Again
             </a>
 
             <a href="{% url 'games:madlibs_list' %}"
-               class="btn-secondary text-center py-3">
+               class="flex-1 btn-secondary text-center py-3 shadow-md hover:shadow-lg transition-shadow">
                 📚 Choose New Story
             </a>
 
             <button onclick="window.print()"
-                    class="bg-purple-600 text-white px-6 py-3 rounded hover:bg-purple-700 transition font-bold">
-                🖨️ Print Story
+                    class="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all font-bold shadow-md hover:shadow-lg">
+                🖨️ Print
             </button>
         </div>
 
