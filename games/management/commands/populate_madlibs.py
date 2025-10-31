@@ -40,7 +40,7 @@ As of someone [ADVERB] [VERB] at my chamber [NOUN].'''
                 'author': 'ShriekedIn Original',
                 'difficulty': 'easy',
                 'word_count': 5,
-                'original_text': '',
+                'original_text': 'A fun Halloween adventure about dressing up in costume and going trick-or-treating around the neighborhood collecting candy.',
                 'template_text': '''On Halloween night, I dressed up as a [NOUN] and went trick-or-treating.
 My costume was so [ADJECTIVE] that everyone [VERB] when they saw me!
 I collected candy in my [ADJECTIVE] [NOUN] and had a [ADJECTIVE] time!'''
@@ -50,7 +50,7 @@ I collected candy in my [ADJECTIVE] [NOUN] and had a [ADJECTIVE] time!'''
                 'author': 'ShriekedIn Original',
                 'difficulty': 'easy',
                 'word_count': 8,
-                'original_text': '',
+                'original_text': 'A spooky tale about an old house at the end of the street that everyone says is haunted by mysterious creatures.',
                 'template_text': '''There was an old [ADJECTIVE] house at the end of [NOUN] Street.
 Everyone said it was [ADJECTIVE] by a [NOUN] and a [NOUN].
 One night, I [ADVERB] walked up to the [ADJECTIVE] door and heard someone [VERB].
@@ -61,7 +61,7 @@ I [VERB] away as fast as I could!'''
                 'author': 'ShriekedIn Original',
                 'difficulty': 'easy',
                 'word_count': 7,
-                'original_text': '',
+                'original_text': 'A heartwarming story about a friendly ghost who loves making friends with children every Halloween.',
                 'template_text': '''Once there was a [ADJECTIVE] ghost named [NOUN].
 Unlike other ghosts, [NOUN] was very [ADJECTIVE] and loved to [VERB].
 Every Halloween, [NOUN] would [ADVERB] [VERB] around the neighborhood,
@@ -88,7 +88,7 @@ Observe how [ADVERB], how [ADVERB], how [ADVERB] I proceeded!'''
                 'author': 'ShriekedIn Original',
                 'difficulty': 'medium',
                 'word_count': 10,
-                'original_text': '',
+                'original_text': 'A magical story about a witch brewing a mysterious potion in her cauldron with strange ingredients.',
                 'template_text': '''In a [ADJECTIVE] cauldron, the old witch began to [VERB].
 First, she added three [ADJECTIVE] [NOUN] and a pinch of [NOUN].
 Then she [ADVERB] stirred in some [ADJECTIVE] [NOUN].
@@ -100,7 +100,7 @@ The potion bubbled and turned [ADJECTIVE]!
                 'author': 'ShriekedIn Original',
                 'difficulty': 'medium',
                 'word_count': 12,
-                'original_text': '',
+                'original_text': 'A chilling encounter in a foggy graveyard at midnight where mysterious sounds and figures appear among the tombstones.',
                 'template_text': '''The old graveyard was [ADJECTIVE] and [ADJECTIVE] at midnight.
 Fog [ADVERB] [VERB] between the [ADJECTIVE] tombstones.
 Suddenly, I heard a [ADJECTIVE] [NOUN] coming from behind a [NOUN].
