@@ -3,6 +3,17 @@
 {% block title %}{{ place.story_title }} - ShriekedIn{% endblock %}
 
 {% block content %}
+    <!-- SVG Filter for Ragged Edges -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="roughEdges" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+                <feGaussianBlur stdDeviation="0.3"/>
+            </filter>
+        </defs>
+    </svg>
+
     <div class="container mx-auto px-4 py-8">
         <!-- Breadcrumb -->
         <div class="text-sm text-gray-600 mb-4">
@@ -49,9 +60,6 @@
             <div class="md:col-span-2 parchment-container">
                 <!-- Story Content -->
                 <div class="parchment-card mb-6 relative">
-                    <!-- Dog-eared corner -->
-                    <div class="dog-ear"></div>
-
                     <h2 class="text-2xl font-bold mb-4 parchment-heading">The Story</h2>
                     <div class="prose max-w-none whitespace-pre-line parchment-text">{{ place.story_content }}</div>
 
@@ -75,7 +83,6 @@
                 <!-- Historical Context -->
                 {% if place.historical_context %}
                     <div class="parchment-card mb-6 relative">
-                        <div class="dog-ear"></div>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">📜 Historical Context</h2>
                         <div class="prose max-w-none whitespace-pre-line parchment-text">{{ place.historical_context }}</div>
                     </div>
@@ -84,7 +91,6 @@
                 <!-- Reported Phenomena -->
                 {% if place.reported_phenomena %}
                     <div class="parchment-card mb-6 relative">
-                        <div class="dog-ear"></div>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">👁️ Reported Phenomena</h2>
                         <div class="prose max-w-none whitespace-pre-line parchment-text">{{ place.reported_phenomena }}</div>
                     </div>
@@ -93,7 +99,6 @@
                 <!-- Famous For -->
                 {% if place.famous_for %}
                     <div class="parchment-card parchment-highlight mb-6 relative">
-                        <div class="dog-ear"></div>
                         <h3 class="text-lg font-bold mb-2 parchment-heading">🌟 Famous For</h3>
                         <p class="parchment-text">{{ place.famous_for }}</p>
                     </div>
@@ -217,47 +222,33 @@
             pointer-events: none;
         }
 
-        /* Torn edge effect */
+        /* Ragged/torn edge effect using SVG filter */
+        .parchment-card {
+            filter: url(#roughEdges);
+        }
+
+        /* Alternative ragged border using repeating pattern */
         .parchment-card::after {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
             background: transparent;
-            border: 1px dashed rgba(139, 115, 85, 0.2);
-            border-radius: 4px;
+            /* Create ragged edge with multiple small shadows */
+            box-shadow:
+                0 0 0 1px rgba(139, 115, 85, 0.3),
+                2px 1px 0 0px rgba(139, 115, 85, 0.2),
+                -1px 2px 0 0px rgba(139, 115, 85, 0.2),
+                1px -2px 0 0px rgba(139, 115, 85, 0.2),
+                -2px -1px 0 0px rgba(139, 115, 85, 0.2),
+                3px 3px 0 0px rgba(139, 115, 85, 0.15),
+                -3px 3px 0 0px rgba(139, 115, 85, 0.15),
+                3px -3px 0 0px rgba(139, 115, 85, 0.15),
+                -3px -3px 0 0px rgba(139, 115, 85, 0.15);
+            border-radius: 2px;
             pointer-events: none;
-        }
-
-        /* Dog-eared corner effect */
-        .dog-ear {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 0 35px 35px 0;
-            border-color: transparent #b8a588 transparent transparent;
-            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.25);
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        /* Dog-ear fold underside (darker backside) */
-        .dog-ear::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -35px;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 35px 35px 0 0;
-            border-color: #d4c4a8 transparent transparent transparent;
-            filter: brightness(0.85);
         }
 
         /* Handwritten Font for Text */
