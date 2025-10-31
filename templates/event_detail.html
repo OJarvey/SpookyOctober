@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ event.title }} - ShriekedIn{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <!-- Breadcrumb -->
+        <div class="text-sm text-gray-600 mb-4">
+            <a href="{% url 'core:home' %}" class="hover:text-orange-600">Home</a> /
+            <a href="{% url 'core:events_list' %}" class="hover:text-orange-600">Events</a> /
+            <span class="text-gray-900">{{ event.title }}</span>
+        </div>
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-orange-600 via-purple-800 to-gray-900 text-white rounded-lg p-8 mb-8">
+            <div class="flex items-start justify-between flex-wrap">
+                <div class="flex-1 min-w-0">
+                    <h1 class="text-4xl font-bold mb-4">{{ event.title }}</h1>
+                    <div class="flex flex-wrap gap-4 mb-4">
+                        <!-- Category Badge -->
+                        <span class="inline-block bg-white text-purple-900 px-4 py-2 rounded-full text-sm font-semibold">
+                            {{ event.get_event_category_display }}
+                        </span>
+
+                        <!-- Age Badge -->
+                        <span class="inline-block bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            {{ event.get_age_appropriateness_display }}
+                        </span>
+
+                        <!-- Featured Badge -->
+                        {% if event.is_featured %}
+                            <span class="inline-block bg-yellow-400 text-gray-900 px-4 py-2 rounded-full text-sm font-semibold">⭐ Featured</span>
+                        {% endif %}
+
+                        <!-- Free Badge -->
+                        {% if event.is_free %}
+                            <span class="inline-block bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold">🎉 FREE</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date & Time -->
+            <div class="grid md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                    <div class="text-sm text-gray-200 mb-1">📅 Date</div>
+                    <div class="text-lg font-bold">{{ event.event_date|date:"F d, Y" }}</div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                    <div class="text-sm text-gray-200 mb-1">🕐 Time</div>
+                    <div class="text-lg font-bold">{{ event.start_time|time:"g:i A" }} - {{ event.end_time|time:"g:i A" }}</div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                    <div class="text-sm text-gray-200 mb-1">💰 Cost</div>
+                    <div class="text-lg font-bold">
+                        {% if event.is_free %}
+                            FREE
+                        {% else %}
+                            ${{ event.cost }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="md:col-span-2">
+                <!-- Description -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">About This Event</h2>
+                    <div class="prose max-w-none text-gray-700 whitespace-pre-line">{{ event.description }}</div>
+                </div>
+
+                <!-- Performing Artists -->
+                {% if event.performing_artists %}
+                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">🎭 Performing Artists</h2>
+                        <p class="text-gray-700">{{ event.performing_artists }}</p>
+                    </div>
+                {% endif %}
+
+                <!-- Location Map Placeholder -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">📍 Location</h2>
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ event.location.name }}</h3>
+                        <p class="text-gray-700">{{ event.location.address }}</p>
+                        <p class="text-gray-700">{{ event.location.city }}, {{ event.location.state }} {{ event.location.zip_code }}</p>
+                    </div>
+                    {% if event.location.latitude and event.location.longitude %}
+                        <div class="bg-gray-100 rounded-lg p-4 text-center text-gray-500">
+                            <p class="text-sm">📌 Map Integration Coming Soon</p>
+                            <p class="text-xs mt-2">Coordinates: {{ event.location.latitude }}, {{ event.location.longitude }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="md:col-span-1">
+                <!-- Quick Info -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6 sticky top-4">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Event Details</h3>
+
+                    <div class="space-y-4">
+                        <!-- Date & Time -->
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">📅 When</h4>
+                            <p class="text-gray-700">{{ event.event_date|date:"l, F d, Y" }}</p>
+                            <p class="text-gray-700 text-sm">{{ event.start_time|time:"g:i A" }} - {{ event.end_time|time:"g:i A" }}</p>
+                        </div>
+
+                        <!-- Price -->
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">💰 Price</h4>
+                            <p class="text-2xl font-bold text-orange-600">
+                                {% if event.is_free %}
+                                    FREE
+                                {% else %}
+                                    ${{ event.cost }}
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <!-- Capacity -->
+                        {% if event.capacity %}
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-2">👥 Capacity</h4>
+                                <p class="text-gray-700">{{ event.capacity }} people</p>
+                            </div>
+                        {% endif %}
+
+                        <!-- Contact Info -->
+                        {% if event.contact_info %}
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-2">📧 Contact</h4>
+                                <p class="text-gray-700 text-sm">{{ event.contact_info }}</p>
+                            </div>
+                        {% endif %}
+
+                        <!-- Website -->
+                        {% if event.website_url %}
+                            <div>
+                                <a href="{{ event.website_url }}" target="_blank" class="inline-block text-purple-600 hover:text-purple-800 text-sm">
+                                    🌐 Visit Website →
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        <!-- Stats -->
+                        <div class="border-t pt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-600 text-sm">👁️ Views</span>
+                                <span class="font-bold text-gray-900">{{ event.view_count }}</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600 text-sm">❤️ Likes</span>
+                                <span class="font-bold text-gray-900">{{ event.like_count }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="border-t pt-4 space-y-2">
+                            <button class="w-full bg-orange-600 text-white px-4 py-3 rounded-lg hover:bg-orange-700 transition duration-300 font-semibold">
+                                🎟️ Register / Get Tickets
+                            </button>
+                            <a href="{% url 'core:events_list' %}"
+                               class="block w-full text-center bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition duration-300">
+                                ← Back to All Events
+                            </a>
+                            {% if user.is_authenticated and user.is_staff %}
+                                <a href="/admin/core/event/{{ event.id }}/change/"
+                                   class="block w-full text-center bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-300 text-sm">
+                                    ✏️ Edit in Admin
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Organizer Info -->
+                <div class="bg-gray-100 rounded-lg p-4 text-sm text-gray-600">
+                    <p>
+                        <strong>Organized by:</strong> {{ event.created_by.username }}
+                    </p>
+                    <p>
+                        <strong>Posted:</strong> {{ event.created_date|date:"M d, Y" }}
+                    </p>
+                    <p>
+                        <strong>Last updated:</strong> {{ event.modified_date|date:"M d, Y" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

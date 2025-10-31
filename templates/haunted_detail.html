@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ place.story_title }} - ShriekedIn{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <!-- Breadcrumb -->
+        <div class="text-sm text-gray-600 mb-4">
+            <a href="{% url 'core:home' %}" class="hover:text-orange-600">Home</a> /
+            <a href="{% url 'core:haunted_places' %}" class="hover:text-orange-600">Haunted Places</a> /
+            <span class="text-gray-900">{{ place.story_title }}</span>
+        </div>
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-900 to-gray-900 text-white rounded-lg p-8 mb-8">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">{{ place.story_title }}</h1>
+                    <p class="text-xl text-purple-200 mb-4">
+                        <span class="text-2xl">📍</span> {{ place.location.name }}
+                    </p>
+                    <p class="text-lg text-gray-300">{{ place.location.city }}, {{ place.location.state }}</p>
+                </div>
+                <div class="text-right">
+                    <!-- Scare Level -->
+                    <div class="mb-4">
+                        <span class="text-sm text-gray-300 block mb-1">Scare Level</span>
+                        <div class="flex items-center justify-end space-x-1">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= place.scare_level %}
+                                    <span class="text-2xl">👻</span>
+                                {% else %}
+                                    <span class="text-2xl opacity-30">👻</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Educational Badge -->
+                    {% if place.is_educational %}
+                        <span class="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm">📚 Educational</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="md:col-span-2">
+                <!-- Story Content -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Story</h2>
+                    <div class="prose max-w-none text-gray-700 whitespace-pre-line">{{ place.story_content }}</div>
+                </div>
+
+                <!-- Historical Context -->
+                {% if place.historical_context %}
+                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">📜 Historical Context</h2>
+                        <div class="prose max-w-none text-gray-700 whitespace-pre-line">{{ place.historical_context }}</div>
+                    </div>
+                {% endif %}
+
+                <!-- Reported Phenomena -->
+                {% if place.reported_phenomena %}
+                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">👁️ Reported Phenomena</h2>
+                        <div class="prose max-w-none text-gray-700 whitespace-pre-line">{{ place.reported_phenomena }}</div>
+                    </div>
+                {% endif %}
+
+                <!-- Famous For -->
+                {% if place.famous_for %}
+                    <div class="bg-orange-50 border-l-4 border-orange-500 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-orange-900 mb-2">🌟 Famous For</h3>
+                        <p class="text-gray-700">{{ place.famous_for }}</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="md:col-span-1">
+                <!-- Quick Info -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6 sticky top-4">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Quick Info</h3>
+
+                    <div class="space-y-4">
+                        <!-- Location Details -->
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">📍 Location</h4>
+                            <p class="text-gray-700 text-sm">{{ place.location.address }}</p>
+                            <p class="text-gray-700 text-sm">
+                                {{ place.location.city }}, {{ place.location.state }} {{ place.location.zip_code }}
+                            </p>
+                        </div>
+
+                        <!-- Year Established -->
+                        {% if place.year_established %}
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-2">📅 Established</h4>
+                                <p class="text-gray-700">{{ place.year_established }}</p>
+                            </div>
+                        {% endif %}
+
+                        <!-- Scare Level -->
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">😱 Scare Level</h4>
+                            <p class="text-gray-700">{{ place.get_scare_level_display }}</p>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="border-t pt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-600 text-sm">👁️ Views</span>
+                                <span class="font-bold text-gray-900">{{ place.view_count }}</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600 text-sm">✅ Visits</span>
+                                <span class="font-bold text-gray-900">{{ place.visit_count }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="border-t pt-4 space-y-2">
+                            <a href="{% url 'core:haunted_places' %}"
+                               class="block w-full text-center bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300">
+                                ← Back to All Places
+                            </a>
+                            {% if user.is_authenticated and user.is_staff %}
+                                <a href="/admin/core/hauntedplace/{{ place.id }}/change/"
+                                   class="block w-full text-center bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-300">
+                                    ✏️ Edit in Admin
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Created By -->
+                <div class="bg-gray-100 rounded-lg p-4 text-sm text-gray-600">
+                    <p>
+                        <strong>Added by:</strong> {{ place.created_by.username }}
+                    </p>
+                    <p>
+                        <strong>Created:</strong> {{ place.created_date|date:"M d, Y" }}
+                    </p>
+                    <p>
+                        <strong>Last updated:</strong> {{ place.modified_date|date:"M d, Y" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -111,19 +111,25 @@ def dashboard(request):
     """
     Dashboard View
 
-    Displays technical statistics and system information.
-    This is a demonstration of how to gather and display system metrics.
+    Displays content management tools and platform statistics.
     Only accessible to logged-in users.
 
     Template: templates/dashboard.html
     URL: /dashboard/
     """
 
-    # Gather technical statistics
-    tech_stats = get_technical_stats()
+    # Gather content statistics
+    from .models import Coupon
+
+    stats = {
+        'total_events': Event.objects.filter(is_active=True).count(),
+        'total_haunted_places': HauntedPlace.objects.count(),
+        'total_businesses': Business.objects.filter(is_active=True).count(),
+        'total_coupons': Coupon.objects.filter(is_active=True).count(),
+    }
 
     return render(request, 'dashboard.html', {
-        'tech_stats': tech_stats
+        'stats': stats
     })
 
 
@@ -273,6 +279,98 @@ def haunted_detail(request, place_id):
     }
 
     return render(request, 'haunted_detail.html', context)
+
+
+def events_list(request):
+    """
+    Events Listing View
+
+    Displays all active Halloween events with filtering options.
+
+    Template: templates/events_list.html
+    URL: /events/
+    """
+    # Get all active events, ordered by date
+    events = Event.objects.filter(is_active=True).select_related('location', 'created_by').order_by('event_date')
+
+    # Count featured events
+    featured_count = events.filter(is_featured=True).count()
+
+    context = {
+        'events': events,
+        'featured_count': featured_count,
+    }
+
+    return render(request, 'events_list.html', context)
+
+
+def event_detail(request, event_id):
+    """
+    Event Detail View
+
+    Displays detailed information about a specific event.
+
+    Template: templates/event_detail.html
+    URL: /events/<int:event_id>/
+    """
+    # Get the event from database (or return 404 if not found)
+    event = get_object_or_404(Event.objects.select_related('location', 'created_by'), id=event_id, is_active=True)
+
+    # Increment view count
+    event.view_count += 1
+    event.save(update_fields=['view_count'])
+
+    context = {
+        'event': event,
+    }
+
+    return render(request, 'event_detail.html', context)
+
+
+def businesses_list(request):
+    """
+    Businesses Listing View
+
+    Displays all active Halloween businesses with filtering options.
+
+    Template: templates/businesses_list.html
+    URL: /businesses/
+    """
+    # Get all active businesses, ordered by name
+    businesses = Business.objects.filter(is_active=True).select_related('location', 'user').prefetch_related('coupons').order_by('business_name')
+
+    # Count verified businesses
+    verified_count = businesses.filter(verified=True).count()
+
+    context = {
+        'businesses': businesses,
+        'verified_count': verified_count,
+    }
+
+    return render(request, 'businesses_list.html', context)
+
+
+def business_detail(request, slug):
+    """
+    Business Detail View
+
+    Displays detailed information about a specific business.
+
+    Template: templates/business_detail.html
+    URL: /businesses/<slug:slug>/
+    """
+    # Get the business from database (or return 404 if not found)
+    business = get_object_or_404(
+        Business.objects.select_related('location', 'user').prefetch_related('coupons'),
+        slug=slug,
+        is_active=True
+    )
+
+    context = {
+        'business': business,
+    }
+
+    return render(request, 'business_detail.html', context)
 
 
 def terms(request):

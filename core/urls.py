@@ -131,6 +131,38 @@ urlpatterns = [
     path('haunted/<int:place_id>/', views.haunted_detail, name='haunted_detail'),
 
     #################################################################
+    # EVENTS
+    #################################################################
+    # URL: /events/
+    # View: views.events_list
+    # Template: templates/events_list.html
+    # Purpose: Display a list of all active Halloween events
+    path('events/', views.events_list, name='events_list'),
+
+    # EVENT DETAIL
+    # URL: /events/<int:event_id>/
+    # View: views.event_detail
+    # Template: templates/event_detail.html
+    # Purpose: Display detailed information about a specific event
+    path('events/<int:event_id>/', views.event_detail, name='event_detail'),
+
+    #################################################################
+    # BUSINESSES
+    #################################################################
+    # URL: /businesses/
+    # View: views.businesses_list
+    # Template: templates/businesses_list.html
+    # Purpose: Display a list of all active Halloween businesses
+    path('businesses/', views.businesses_list, name='businesses_list'),
+
+    # BUSINESS DETAIL
+    # URL: /businesses/<slug:slug>/
+    # View: views.business_detail
+    # Template: templates/business_detail.html
+    # Purpose: Display detailed information about a specific business
+    path('businesses/<slug:slug>/', views.business_detail, name='business_detail'),
+
+    #################################################################
     # FUTURE URLs (Coming in later sprints)
     #################################################################
     # These will be added as we develop more features:
