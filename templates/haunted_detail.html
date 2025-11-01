@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load markdown_extras %}
 
 {% block title %}{{ place.story_title }} - ShriekedIn{% endblock %}
 
@@ -52,7 +53,7 @@
                 <!-- Story Content -->
                 <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="story_content" data-field-type="markdown"{% endif %}>
                     <h2 class="text-2xl font-bold mb-4 parchment-heading">The Story</h2>
-                    <div class="prose max-w-none whitespace-pre-line parchment-text" data-field-content>{{ place.story_content }}</div>
+                    <div class="prose max-w-none parchment-text" data-field-content>{{ place.story_content|markdown }}</div>
 
                     <!-- Wax Seal -->
                     <svg class="absolute -bottom-6 right-8 w-14 h-14 transform rotate-12"
@@ -73,7 +74,7 @@
                 {% if place.historical_context %}
                     <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="historical_context" data-field-type="markdown"{% endif %}>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">📜 Historical Context</h2>
-                        <div class="prose max-w-none whitespace-pre-line parchment-text" data-field-content>{{ place.historical_context }}</div>
+                        <div class="prose max-w-none parchment-text" data-field-content>{{ place.historical_context|markdown }}</div>
                     </div>
                 {% endif %}
 
@@ -81,7 +82,7 @@
                 {% if place.reported_phenomena %}
                     <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="reported_phenomena" data-field-type="markdown"{% endif %}>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">👁️ Reported Phenomena</h2>
-                        <div class="prose max-w-none whitespace-pre-line parchment-text" data-field-content>{{ place.reported_phenomena }}</div>
+                        <div class="prose max-w-none parchment-text" data-field-content>{{ place.reported_phenomena|markdown }}</div>
                     </div>
                 {% endif %}
 
@@ -173,6 +174,8 @@
 {% block extra_js %}
     {% if user.is_staff %}
         {% load static %}
+        <!-- Marked.js for client-side markdown rendering -->
+        <script src="https://cdn.jsdelivr.net/npm/marked@11.0.0/marked.min.js"></script>
         <script src="{% static 'js/haunted-place-editor.js' %}"></script>
         <script>
             // Get CSRF token
@@ -295,6 +298,95 @@
 
         .parchment-card .prose p {
             margin-bottom: 1rem;
+        }
+
+        /* Markdown rendered content styling */
+        .parchment-text h1,
+        .parchment-text h2,
+        .parchment-text h3,
+        .parchment-text h4 {
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #2c1810;
+        }
+
+        .parchment-text h1 { font-size: 1.75rem; }
+        .parchment-text h2 { font-size: 1.5rem; }
+        .parchment-text h3 { font-size: 1.25rem; }
+        .parchment-text h4 { font-size: 1.1rem; }
+
+        .parchment-text strong {
+            font-weight: 700;
+            color: #2c1810;
+        }
+
+        .parchment-text em {
+            font-style: italic;
+        }
+
+        .parchment-text a {
+            color: #8B4513;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+
+        .parchment-text a:hover {
+            color: #A0522D;
+        }
+
+        .parchment-text ul,
+        .parchment-text ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .parchment-text ul {
+            list-style-type: disc;
+        }
+
+        .parchment-text ol {
+            list-style-type: decimal;
+        }
+
+        .parchment-text li {
+            margin-bottom: 0.5rem;
+        }
+
+        .parchment-text code {
+            background-color: rgba(139, 115, 85, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .parchment-text pre {
+            background-color: rgba(139, 115, 85, 0.1);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        .parchment-text pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .parchment-text blockquote {
+            border-left: 4px solid #c4a572;
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-bottom: 1rem;
+            font-style: italic;
+            color: #5a4a3a;
+        }
+
+        .parchment-text hr {
+            border: none;
+            border-top: 2px solid #c4a572;
+            margin: 1.5rem 0;
         }
 
         /* Ink stain decoration (optional subtle effect) */

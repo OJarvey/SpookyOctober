@@ -318,7 +318,16 @@ class HauntedPlaceEditor {
             if (data.success) {
                 // Update the content
                 const contentElement = field.querySelector('[data-field-content]');
-                contentElement.textContent = value;
+
+                // Check if this is a markdown field
+                const fieldType = field.dataset.fieldType;
+                if (fieldType === 'markdown' && typeof marked !== 'undefined') {
+                    // Render markdown to HTML
+                    contentElement.innerHTML = marked.parse(value);
+                } else {
+                    // Plain text or no markdown library
+                    contentElement.textContent = value;
+                }
 
                 // Show success message
                 this.showNotification('✅ ' + data.message, 'success');
