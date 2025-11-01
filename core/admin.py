@@ -7,6 +7,12 @@ and search fields for easy management.
 
 from django.contrib import admin
 from django.utils.html import format_html
+from django.shortcuts import render, redirect
+from django.urls import path
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+import csv
+import io
 from .models import (
     UserProfile,
     Location,
@@ -20,6 +26,7 @@ from .models import (
     Comment,
     ContactMessage
 )
+from .forms import ImportHauntedPlacesForm
 
 
 # ================================================================
@@ -194,6 +201,139 @@ class HauntedPlaceAdmin(admin.ModelAdmin):
             color, obj.get_scare_level_display()
         )
     scare_level_display.short_description = 'Scare Level'
+
+    def get_urls(self):
+        """Add custom URL for CSV import"""
+        urls = super().get_urls()
+        custom_urls = [
+            path('import-csv/', self.admin_site.admin_view(self.import_csv), name='core_hauntedplace_import_csv'),
+        ]
+        return custom_urls + urls
+
+    def import_csv(self, request):
+        """Handle CSV import view"""
+        if request.method == 'POST':
+            form = ImportHauntedPlacesForm(request.POST, request.FILES)
+            if form.is_valid():
+                csv_file = request.FILES['csv_file']
+                update_existing = form.cleaned_data['update_existing']
+
+                # Decode the CSV file
+                try:
+                    decoded_file = csv_file.read().decode('utf-8')
+                    io_string = io.StringIO(decoded_file)
+                    reader = csv.DictReader(io_string)
+
+                    imported_count = 0
+                    updated_count = 0
+                    skipped_count = 0
+                    errors = []
+
+                    for row_num, row in enumerate(reader, start=2):
+                        try:
+                            # Create or update Location
+                            location, created = Location.objects.get_or_create(
+                                name=row['name'],
+                                defaults={
+                                    'address': row['address'],
+                                    'city': row['city'],
+                                    'state': row['state'],
+                                    'zip_code': row['zip_code'],
+                                    'country': row['country'],
+                                    'location_type': row['location_type'],
+                                    'created_by': request.user,
+                                    'is_verified': True
+                                }
+                            )
+
+                            if not created:
+                                # Update existing location
+                                location.address = row['address']
+                                location.city = row['city']
+                                location.state = row['state']
+                                location.zip_code = row['zip_code']
+                                location.country = row['country']
+                                location.location_type = row['location_type']
+                                location.save()
+
+                            # Create or update HauntedPlace
+                            try:
+                                haunted_place = HauntedPlace.objects.get(location=location)
+
+                                if update_existing:
+                                    # Update existing
+                                    haunted_place.story_title = row['story_title']
+                                    haunted_place.story_content = row['story_content']
+                                    haunted_place.historical_context = row['historical_context']
+                                    haunted_place.scare_level = int(row['scare_level'])
+                                    haunted_place.year_established = int(row['year_established']) if row['year_established'] else None
+                                    haunted_place.reported_phenomena = row['reported_phenomena']
+                                    haunted_place.famous_for = row['famous_for']
+                                    haunted_place.view_count = int(row['view_count']) if row['view_count'] else 0
+                                    haunted_place.visit_count = int(row['visit_count']) if row['visit_count'] else 0
+                                    haunted_place.save()
+                                    updated_count += 1
+                                else:
+                                    skipped_count += 1
+
+                            except HauntedPlace.DoesNotExist:
+                                # Create new
+                                HauntedPlace.objects.create(
+                                    location=location,
+                                    story_title=row['story_title'],
+                                    story_content=row['story_content'],
+                                    historical_context=row['historical_context'],
+                                    scare_level=int(row['scare_level']),
+                                    year_established=int(row['year_established']) if row['year_established'] else None,
+                                    reported_phenomena=row['reported_phenomena'],
+                                    famous_for=row['famous_for'],
+                                    created_by=request.user,
+                                    view_count=int(row['view_count']) if row['view_count'] else 0,
+                                    visit_count=int(row['visit_count']) if row['visit_count'] else 0,
+                                )
+                                imported_count += 1
+
+                        except KeyError as e:
+                            errors.append(f'Row {row_num}: Missing column {e}')
+                        except Exception as e:
+                            errors.append(f'Row {row_num}: {str(e)}')
+
+                    # Display results
+                    if imported_count > 0:
+                        messages.success(request, f'Successfully imported {imported_count} haunted place(s).')
+                    if updated_count > 0:
+                        messages.success(request, f'Successfully updated {updated_count} haunted place(s).')
+                    if skipped_count > 0:
+                        messages.warning(request, f'Skipped {skipped_count} existing haunted place(s).')
+                    if errors:
+                        for error in errors[:10]:  # Show first 10 errors
+                            messages.error(request, error)
+                        if len(errors) > 10:
+                            messages.error(request, f'... and {len(errors) - 10} more errors')
+
+                    return redirect('..')
+
+                except Exception as e:
+                    messages.error(request, f'Error processing CSV file: {str(e)}')
+
+        else:
+            form = ImportHauntedPlacesForm()
+
+        context = {
+            'site_title': 'Import Haunted Places',
+            'title': 'Import Haunted Places from CSV',
+            'form': form,
+            'opts': self.model._meta,
+            'has_view_permission': self.has_view_permission(request),
+        }
+
+        return render(request, 'admin/core/hauntedplace/import_csv.html', context)
+
+    def changelist_view(self, request, extra_context=None):
+        """Add import button to changelist"""
+        extra_context = extra_context or {}
+        extra_context['import_csv_url'] = 'import-csv/'
+        return super().changelist_view(request, extra_context=extra_context)
 
 
 # ================================================================

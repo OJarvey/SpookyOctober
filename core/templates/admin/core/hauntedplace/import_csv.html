@@ -1,0 +1,79 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <h1>Import Haunted Places from CSV</h1>
+
+        <p>Upload a CSV file to import haunted places into the database. The CSV file should contain the following columns:</p>
+
+        <ul style="margin: 20px 0; padding-left: 20px;">
+            <li><strong>name</strong> - Location name</li>
+            <li><strong>address</strong> - Street address</li>
+            <li><strong>city</strong> - City name</li>
+            <li><strong>state</strong> - State/region</li>
+            <li><strong>zip_code</strong> - Postal code</li>
+            <li><strong>country</strong> - Country name</li>
+            <li><strong>location_type</strong> - Type (e.g., "haunted")</li>
+            <li><strong>story_title</strong> - Title of the ghost story</li>
+            <li><strong>story_content</strong> - The complete story</li>
+            <li><strong>historical_context</strong> - Historical background</li>
+            <li><strong>scare_level</strong> - Scare level (1-5)</li>
+            <li><strong>year_established</strong> - Year location was established</li>
+            <li><strong>reported_phenomena</strong> - Paranormal activity reported</li>
+            <li><strong>famous_for</strong> - What makes it notable</li>
+            <li><strong>view_count</strong> - Number of views (optional)</li>
+            <li><strong>visit_count</strong> - Number of visits (optional)</li>
+        </ul>
+
+        <div style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 15px; margin: 20px 0;">
+            <strong>Note:</strong>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li>Locations will be created automatically if they don't exist</li>
+                <li>Existing haunted places will be skipped unless "Update Existing" is checked</li>
+                <li>All locations will be marked as verified</li>
+                <li>The currently logged-in user will be set as the creator</li>
+            </ul>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" style="margin-top: 30px;">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div style="background-color: #f8d7da; border: 1px solid #dc3545; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
+                <strong>Please correct the following errors:</strong>
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+            <div style="margin-bottom: 20px;">
+                <label for="{{ form.csv_file.id_for_label }}" style="display: block; font-weight: bold; margin-bottom: 5px;">
+                    {{ form.csv_file.label }}
+                </label>
+                {{ form.csv_file }}
+                <p style="color: #666; font-size: 0.9em; margin-top: 5px;">{{ form.csv_file.help_text }}</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">
+                    {{ form.update_existing }}
+                    {{ form.update_existing.label }}
+                </label>
+                <p style="color: #666; font-size: 0.9em; margin-top: 5px;">{{ form.update_existing.help_text }}</p>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <input type="submit" value="Import CSV" class="button default" style="background-color: #417690; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">
+                <a href="{% url 'admin:core_hauntedplace_changelist' %}" class="button" style="padding: 10px 20px; margin-left: 10px;">Cancel</a>
+            </div>
+        </form>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+            <h3>Sample CSV Format</h3>
+            <pre style="background-color: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto; font-size: 0.85em;">name,address,city,state,zip_code,country,location_type,story_title,story_content,historical_context,scare_level,year_established,reported_phenomena,famous_for,view_count,visit_count
+Ordsall Hall,"322 Ordsall Ln, Salford",Salford,Greater Manchester,M5 3AN,United Kingdom,haunted,The White Lady of Ordsall Hall,"Possibly the most...",Built in the 15th century...,4,1500,The White Lady...,Most famously haunted...,1341,245</pre>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -20,6 +20,10 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.db import connection
 from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+import json
 import sys
 
 # Import our models
@@ -634,3 +638,108 @@ def custom_404(request, exception=None):
     Template: templates/404.html
     """
     return render(request, '404.html', status=404)
+
+
+@require_http_methods(["POST"])
+@login_required(login_url='core:login')
+def update_haunted_place_field(request, place_id):
+    """
+    API endpoint for updating a single field of a haunted place.
+
+    This endpoint allows authorized users (staff/admin) to update individual fields
+    of a haunted place in-place from the detail page.
+
+    Only staff users can update haunted places.
+
+    Expected POST data (JSON):
+    {
+        "field": "story_title",
+        "value": "New title"
+    }
+
+    Returns JSON:
+    {
+        "success": true,
+        "field": "story_title",
+        "value": "New title"
+    }
+    """
+    # Check if user is staff
+    if not request.user.is_staff:
+        return JsonResponse({
+            'success': False,
+            'error': 'You do not have permission to edit this content.'
+        }, status=403)
+
+    # Get the haunted place
+    try:
+        place = HauntedPlace.objects.get(id=place_id)
+    except HauntedPlace.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'error': 'Haunted place not found.'
+        }, status=404)
+
+    # Parse JSON body
+    try:
+        data = json.loads(request.body)
+        field = data.get('field')
+        value = data.get('value')
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid JSON data.'
+        }, status=400)
+
+    # Validate field name (only allow specific fields to be edited)
+    allowed_fields = [
+        'story_title',
+        'story_content',
+        'historical_context',
+        'reported_phenomena',
+        'famous_for',
+        'scare_level',
+        'year_established',
+        'is_educational'
+    ]
+
+    if field not in allowed_fields:
+        return JsonResponse({
+            'success': False,
+            'error': f'Field "{field}" is not editable.'
+        }, status=400)
+
+    # Validate and set the field value
+    try:
+        # Special handling for different field types
+        if field == 'scare_level':
+            value = int(value)
+            if value < 1 or value > 5:
+                raise ValueError("Scare level must be between 1 and 5")
+        elif field == 'year_established':
+            value = int(value) if value else None
+        elif field == 'is_educational':
+            value = bool(value)
+
+        # Update the field
+        setattr(place, field, value)
+        place.save(update_fields=[field, 'modified_date'])
+
+        # Return success response
+        return JsonResponse({
+            'success': True,
+            'field': field,
+            'value': value,
+            'message': f'{field.replace("_", " ").title()} updated successfully.'
+        })
+
+    except ValueError as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=400)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': f'Error updating field: {str(e)}'
+        }, status=500)

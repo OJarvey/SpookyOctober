@@ -145,6 +145,12 @@ urlpatterns = [
     #   <a href="{% url 'core:haunted_detail' place.id %}">View Details</a>
     path('haunted/<int:place_id>/', views.haunted_detail, name='haunted_detail'),
 
+    # HAUNTED PLACE UPDATE API
+    # URL: /haunted/<int:place_id>/update/
+    # View: views.update_haunted_place_field
+    # Purpose: API endpoint for in-place editing of haunted place fields
+    path('haunted/<int:place_id>/update/', views.update_haunted_place_field, name='update_haunted_place_field'),
+
     #################################################################
     # EVENTS
     #################################################################

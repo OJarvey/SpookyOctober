@@ -14,8 +14,10 @@
         <!-- Header -->
         <div class="bg-gradient-to-r from-purple-900 to-gray-900 text-white rounded-lg p-8 mb-8">
             <div class="flex items-start justify-between">
-                <div>
-                    <h1 class="text-4xl font-bold mb-2">{{ place.story_title }}</h1>
+                <div style="flex: 1;">
+                    <div {% if user.is_staff %}data-editable="story_title" data-field-type="text" style="display: inline-block; min-width: 300px;"{% endif %}>
+                        <h1 class="text-4xl font-bold mb-2" data-field-content>{{ place.story_title }}</h1>
+                    </div>
                     <p class="text-xl text-purple-200 mb-4">
                         <span class="text-2xl">📍</span> {{ place.location.name }}
                     </p>
@@ -48,9 +50,9 @@
             <!-- Main Content -->
             <div class="md:col-span-2 parchment-container">
                 <!-- Story Content -->
-                <div class="parchment-card mb-6 relative">
+                <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="story_content" data-field-type="markdown"{% endif %}>
                     <h2 class="text-2xl font-bold mb-4 parchment-heading">The Story</h2>
-                    <div class="prose max-w-none whitespace-pre-line parchment-text">{{ place.story_content }}</div>
+                    <div class="prose max-w-none whitespace-pre-line parchment-text" data-field-content>{{ place.story_content }}</div>
 
                     <!-- Wax Seal -->
                     <svg class="absolute -bottom-6 right-8 w-14 h-14 transform rotate-12"
@@ -69,25 +71,25 @@
 
                 <!-- Historical Context -->
                 {% if place.historical_context %}
-                    <div class="parchment-card mb-6 relative">
+                    <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="historical_context" data-field-type="markdown"{% endif %}>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">📜 Historical Context</h2>
-                        <div class="prose max-w-none whitespace-pre-line parchment-text">{{ place.historical_context }}</div>
+                        <div class="prose max-w-none whitespace-pre-line parchment-text" data-field-content>{{ place.historical_context }}</div>
                     </div>
                 {% endif %}
 
                 <!-- Reported Phenomena -->
                 {% if place.reported_phenomena %}
-                    <div class="parchment-card mb-6 relative">
+                    <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="reported_phenomena" data-field-type="markdown"{% endif %}>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">👁️ Reported Phenomena</h2>
-                        <div class="prose max-w-none whitespace-pre-line parchment-text">{{ place.reported_phenomena }}</div>
+                        <div class="prose max-w-none whitespace-pre-line parchment-text" data-field-content>{{ place.reported_phenomena }}</div>
                     </div>
                 {% endif %}
 
                 <!-- Famous For -->
                 {% if place.famous_for %}
-                    <div class="parchment-card parchment-highlight mb-6 relative">
+                    <div class="parchment-card parchment-highlight mb-6 relative" {% if user.is_staff %}data-editable="famous_for" data-field-type="textarea"{% endif %}>
                         <h3 class="text-lg font-bold mb-2 parchment-heading">🌟 Famous For</h3>
-                        <p class="parchment-text">{{ place.famous_for }}</p>
+                        <p class="parchment-text" data-field-content>{{ place.famous_for }}</p>
                     </div>
                 {% endif %}
             </div>
@@ -166,6 +168,37 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block extra_js %}
+    {% if user.is_staff %}
+        {% load static %}
+        <script src="{% static 'js/haunted-place-editor.js' %}"></script>
+        <script>
+            // Get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Initialize editor
+            document.addEventListener('DOMContentLoaded', function() {
+                const csrfToken = getCookie('csrftoken');
+                const placeId = {{ place.id }};
+                new HauntedPlaceEditor(placeId, csrfToken);
+            });
+        </script>
+    {% endif %}
 {% endblock %}
 
 {% block extra_css %}

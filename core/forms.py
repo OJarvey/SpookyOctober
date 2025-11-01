@@ -183,3 +183,21 @@ class ContactForm(forms.Form):
         # Additional cross-field validation can go here
 
         return cleaned_data
+
+
+class ImportHauntedPlacesForm(forms.Form):
+    """
+    Form for importing haunted places from CSV file in admin.
+    """
+    csv_file = forms.FileField(
+        label='CSV File',
+        help_text='Upload a CSV file with haunted places data. Required columns: name, address, city, state, zip_code, country, location_type, story_title, story_content, historical_context, scare_level, year_established, reported_phenomena, famous_for, view_count, visit_count',
+        widget=forms.FileInput(attrs={'accept': '.csv'})
+    )
+
+    update_existing = forms.BooleanField(
+        label='Update Existing',
+        required=False,
+        initial=False,
+        help_text='If checked, existing haunted places will be updated. Otherwise, they will be skipped.'
+    )
