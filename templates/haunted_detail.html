@@ -17,7 +17,7 @@
             <div class="flex items-start justify-between">
                 <div style="flex: 1;">
                     <div {% if user.is_staff %}data-editable="story_title" data-field-type="text" style="display: inline-block; min-width: 300px;"{% endif %}>
-                        <h1 class="text-4xl font-bold mb-2" data-field-content>{{ place.story_title }}</h1>
+                        <h1 class="text-4xl font-bold mb-2" data-field-content data-raw-content="{{ place.story_title|escapejs }}">{{ place.story_title }}</h1>
                     </div>
                     <p class="text-xl text-purple-200 mb-4">
                         <span class="text-2xl">📍</span> {{ place.location.name }}
@@ -53,7 +53,7 @@
                 <!-- Story Content -->
                 <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="story_content" data-field-type="markdown"{% endif %}>
                     <h2 class="text-2xl font-bold mb-4 parchment-heading">The Story</h2>
-                    <div class="prose max-w-none parchment-text" data-field-content>{{ place.story_content|markdown }}</div>
+                    <div class="prose max-w-none parchment-text" data-field-content data-raw-content="{{ place.story_content|escapejs }}">{{ place.story_content|markdown }}</div>
 
                     <!-- Wax Seal -->
                     <svg class="absolute -bottom-6 right-8 w-14 h-14 transform rotate-12"
@@ -74,7 +74,7 @@
                 {% if place.historical_context %}
                     <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="historical_context" data-field-type="markdown"{% endif %}>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">📜 Historical Context</h2>
-                        <div class="prose max-w-none parchment-text" data-field-content>{{ place.historical_context|markdown }}</div>
+                        <div class="prose max-w-none parchment-text" data-field-content data-raw-content="{{ place.historical_context|escapejs }}">{{ place.historical_context|markdown }}</div>
                     </div>
                 {% endif %}
 
@@ -82,7 +82,7 @@
                 {% if place.reported_phenomena %}
                     <div class="parchment-card mb-6 relative" {% if user.is_staff %}data-editable="reported_phenomena" data-field-type="markdown"{% endif %}>
                         <h2 class="text-2xl font-bold mb-4 parchment-heading">👁️ Reported Phenomena</h2>
-                        <div class="prose max-w-none parchment-text" data-field-content>{{ place.reported_phenomena|markdown }}</div>
+                        <div class="prose max-w-none parchment-text" data-field-content data-raw-content="{{ place.reported_phenomena|escapejs }}">{{ place.reported_phenomena|markdown }}</div>
                     </div>
                 {% endif %}
 
@@ -90,7 +90,7 @@
                 {% if place.famous_for %}
                     <div class="parchment-card parchment-highlight mb-6 relative" {% if user.is_staff %}data-editable="famous_for" data-field-type="textarea"{% endif %}>
                         <h3 class="text-lg font-bold mb-2 parchment-heading">🌟 Famous For</h3>
-                        <p class="parchment-text" data-field-content>{{ place.famous_for }}</p>
+                        <p class="parchment-text" data-field-content data-raw-content="{{ place.famous_for|escapejs }}">{{ place.famous_for }}</p>
                     </div>
                 {% endif %}
             </div>

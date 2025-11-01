@@ -96,7 +96,15 @@ class HauntedPlaceEditor {
 
         // Get current content
         const contentElement = field.querySelector('[data-field-content]');
-        const currentValue = contentElement.textContent.trim();
+
+        // For markdown fields, use the raw content (original markdown) if available
+        // Otherwise fall back to textContent
+        let currentValue;
+        if (contentElement.dataset.rawContent !== undefined) {
+            currentValue = contentElement.dataset.rawContent;
+        } else {
+            currentValue = contentElement.textContent.trim();
+        }
 
         // Hide the edit icon
         const editIcon = field.querySelector('.edit-icon');
@@ -319,10 +327,13 @@ class HauntedPlaceEditor {
                 // Update the content
                 const contentElement = field.querySelector('[data-field-content]');
 
+                // Store the raw value in data attribute for future edits
+                contentElement.dataset.rawContent = value;
+
                 // Check if this is a markdown field
                 const fieldType = field.dataset.fieldType;
                 if (fieldType === 'markdown' && typeof marked !== 'undefined') {
-                    // Render markdown to HTML
+                    // Render markdown to HTML for display
                     contentElement.innerHTML = marked.parse(value);
                 } else {
                     // Plain text or no markdown library
