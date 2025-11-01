@@ -16,19 +16,15 @@
         <!-- Accessibility CSS -->
         <link rel="stylesheet" href="{% static 'css/accessibility.css' %}">
 
-        <!-- Google Fonts for Halloween Theme -->
+        <!-- Preconnect to external domains for faster resource loading -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-        <!-- Three.js for 3D effects (using r140 for legacy loader support) -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-        <!-- Three.js GLTFLoader for loading 3D models -->
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-
-        <!-- html2canvas for viewport capture -->
-        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <!-- Google Fonts for Halloween Theme - async loading to prevent render blocking -->
+        <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+        <noscript><link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet"></noscript>
 
         {% block extra_css %}{% endblock %}
     </head>
@@ -211,8 +207,8 @@
             });
         </script>
 
-        <!-- Scary Mode Easter Egg -->
-        <script src="{% static 'js/scary-mode.js' %}"></script>
+        <!-- Scary Mode Easter Egg - deferred for better performance -->
+        <script defer src="{% static 'js/scary-mode.js' %}"></script>
 
         {% block extra_js %}
 

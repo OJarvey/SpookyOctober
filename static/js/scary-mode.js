@@ -16,6 +16,10 @@ class ScaryModeEasterEgg {
         this.isInitialized = false;
         this.autoStart = options.autoStart || false; // Testing mode
 
+        // Dependency loading state
+        this.dependenciesLoaded = false;
+        this.dependenciesLoading = false;
+
         // Three.js objects
         this.scene = null;
         this.camera = null;
@@ -44,6 +48,73 @@ class ScaryModeEasterEgg {
         this.viewportTexture = null;
 
         this.init();
+    }
+
+    async loadDependencies() {
+        if (this.dependenciesLoaded) return true;
+        if (this.dependenciesLoading) {
+            // Wait for existing load to complete
+            while (this.dependenciesLoading) {
+                await this.wait(100);
+            }
+            return this.dependenciesLoaded;
+        }
+
+        this.dependenciesLoading = true;
+        console.log('📦 Loading scary mode dependencies...');
+
+        try {
+            // Load Three.js
+            await this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'THREE');
+            console.log('✅ Three.js loaded');
+
+            // Load GLTFLoader
+            await this.loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js', 'THREE.GLTFLoader');
+            console.log('✅ GLTFLoader loaded');
+
+            // Load html2canvas
+            await this.loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js', 'html2canvas');
+            console.log('✅ html2canvas loaded');
+
+            this.dependenciesLoaded = true;
+            this.dependenciesLoading = false;
+            return true;
+        } catch (error) {
+            console.error('❌ Failed to load dependencies:', error);
+            this.dependenciesLoading = false;
+            throw new Error('Failed to load required libraries: ' + error.message);
+        }
+    }
+
+    loadScript(url, globalCheck) {
+        return new Promise((resolve, reject) => {
+            // Check if already loaded
+            if (globalCheck && this.getNestedProperty(window, globalCheck)) {
+                resolve();
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = url;
+            script.async = true;
+
+            script.onload = () => {
+                // Verify the global is now available
+                if (globalCheck && !this.getNestedProperty(window, globalCheck)) {
+                    reject(new Error(`Global ${globalCheck} not found after loading ${url}`));
+                } else {
+                    resolve();
+                }
+            };
+
+            script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+
+            document.head.appendChild(script);
+        });
+    }
+
+    getNestedProperty(obj, path) {
+        return path.split('.').reduce((current, prop) => current?.[prop], obj);
     }
 
     init() {
@@ -102,32 +173,39 @@ class ScaryModeEasterEgg {
         this.isActive = true;
 
         try {
-            // Check WebGL support first
-            console.log('Step 1: Checking WebGL support...');
+            // Load dependencies first
+            console.log('Step 1: Loading dependencies...');
+            this.setupUI();
+            this.updateProgress('Loading scary libraries...', 5);
+
+            await this.loadDependencies();
+            this.updateProgress('Libraries loaded!', 15);
+
+            // Check WebGL support
+            console.log('Step 2: Checking WebGL support...');
             if (!this.checkWebGLSupport()) {
                 throw new Error('WebGL is not supported in your browser. Try Chrome, Firefox, or Edge.');
             }
 
-            console.log('Step 2: Setting up UI...');
-            this.setupUI();
-            this.updateProgress('Preparing spooky magic...', 10);
+            console.log('Step 3: Preparing interface...');
+            this.updateProgress('Preparing spooky magic...', 25);
 
-            await this.wait(500);
-            console.log('Step 3: Capturing viewport...');
-            this.updateProgress('Capturing your screen...', 30);
+            await this.wait(300);
+            console.log('Step 4: Capturing viewport...');
+            this.updateProgress('Capturing your screen...', 40);
 
             await this.captureViewport();
-            console.log('Step 4: Setting up Three.js...');
-            this.updateProgress('Generating 3D mesh...', 60);
+            console.log('Step 5: Setting up Three.js...');
+            this.updateProgress('Generating 3D mesh...', 65);
 
             await this.wait(300);
             this.setupThreeJS();
-            console.log('Step 5: Creating extrusion mesh...');
-            this.updateProgress('Applying scary effects...', 80);
+            console.log('Step 6: Creating extrusion mesh...');
+            this.updateProgress('Applying scary effects...', 85);
 
             await this.wait(300);
             await this.createExtrusionMesh();
-            console.log('Step 6: Starting animation...');
+            console.log('Step 7: Starting animation...');
             this.updateProgress('Ready to haunt!', 100);
 
             await this.wait(500);
